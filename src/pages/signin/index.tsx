@@ -23,38 +23,16 @@ import {
 const initialValues = initialValuesSignIn;
 
 export default function SignIn() {
-  // const [startAnimation, setStartAnimation] = React.useState(false);
-  // const [showPassword, setShowPassword] = React.useState({
-  //     showPassword: false,
-  // });
-  // const { t } = useTranslation();
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { /*loading, */ token } = useSelector(allLoginSelector);
-  // const {currentLocale} = useSelector(allLocaleSelector);
   const { /*isAuthenticated,*/ oneSignalId } = useSelector(allSessionSelector);
-
-  // const handleClickShowPassword = () => {
-  //     setShowPassword({
-  //         showPassword: !showPassword.showPassword,
-  //     });
-  // };
-  //
-  // const handleMouseDownPassword = (event: any) => {
-  //     event.preventDefault();
-  // };
-
-  React.useEffect(() => {
-    // setStartAnimation(true);
-  }, []);
 
   React.useEffect(() => {
     if (token) {
       dispatch(sessionUser({}));
       router.push("/dashboard");
-      // dispatch(getNumberOfNotificationsNotSee({}));
-      // dispatch(getNumberOfMessagesNotSee({}));
     }
   }, [token]);
 

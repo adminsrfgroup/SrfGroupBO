@@ -5,6 +5,8 @@ export interface ICategory {
   titleAr?: string | null;
   titleFr?: string | null;
   titleEn?: string | null;
+  imageContent?: string | null;
+  index?: number;
   subCategories?: ISubCategory[] | null;
 }
 

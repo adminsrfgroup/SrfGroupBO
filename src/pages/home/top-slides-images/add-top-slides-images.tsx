@@ -2,7 +2,7 @@ import React from "react";
 import SideBar from "../../../components/SideBar";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
-import { dataUrlToFile, getBase64 } from "../../../lib/utils-functions";
+import { getBase64 } from "../../../lib/utils-functions";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import {
@@ -43,16 +43,11 @@ export default function AddUpdateTopSlidesImages() {
       };
       console.log("entity ", entity);
       dispatch(addTopSlides({ ...entity }));
-      // props.createEntity(entity);
     }
   });
 
   const selectFile = (event: any) => {
     getBase64(event.target.files[0]).then((result: any) => {
-      dataUrlToFile(result, event.target.files[0].name).then((value: any) => {
-        console.log("value ", value);
-        // setImageUpload(value);
-      });
       setFileState(result);
     });
   };

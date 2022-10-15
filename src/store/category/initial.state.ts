@@ -5,6 +5,8 @@ export const initialState = {
     loadingEntities: false,
     entities: [],
     updateSuccess: false,
+    addSuccess: false,
+    updateIndexSuccess: false,
     loadingReport: false,
     reportSuccess: false,
     errorMessage: null,

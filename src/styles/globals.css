@@ -26,3 +26,6 @@ main, header, footer{
   margin-left: 250px;
 }
 
+.bg-brown {
+  background-color: #e2c498 !important;
+}

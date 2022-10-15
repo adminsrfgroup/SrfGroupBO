@@ -23,6 +23,26 @@ export const {
   importCategoriesSuccess,
   importCategoriesFailure,
 
+  //? ********************| ADD CATEGORY ACTIONS |*******************/
+  addCategory,
+  addCategorySuccess,
+  addCategoryFailure,
+
+  //? ********************| UPDATE INDEX CATEGORIES ACTIONS |*******************/
+  updateIndexCategory,
+  updateIndexCategorySuccess,
+  updateIndexCategoryFailure,
+
+  //? ********************| FETCH CATEGORY ACTIONS |*******************/
+  fetchCategory,
+  fetchCategorySuccess,
+  fetchCategoryFailure,
+
+  //? ********************| UPDATE CATEGORY ACTIONS |*******************/
+  updateCategory,
+  updateCategorySuccess,
+  updateCategoryFailure,
+
   //? ********************| RESET CATEGORIES ACTIONS |*******************/
   resetCategories
 } = categorySlice.actions;
@@ -42,3 +62,7 @@ export const totalPagesCategories = (state: any) =>
   state[CATEGORY_KEY_IN_STORE].category.totalPages;
 export const importSuccessCategories = (state: any) =>
   state[CATEGORY_KEY_IN_STORE].category.importSuccess;
+export const addSuccessCategories = (state: any) =>
+  state[CATEGORY_KEY_IN_STORE].category.addSuccess;
+export const updateSuccessCategories = (state: any) =>
+  state[CATEGORY_KEY_IN_STORE].category.updateSuccess;

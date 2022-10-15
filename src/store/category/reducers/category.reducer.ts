@@ -28,6 +28,53 @@ const reducer = {
     state.category.loadingImport = false;
   },
 
+  addCategory: (state: any) => {
+    state.category.loading = true;
+    state.category.addSuccess = false;
+  },
+  addCategorySuccess: (state: any) => {
+    state.category.loading = false;
+    state.category.addSuccess = true;
+  },
+  addCategoryFailure: (state: any) => {
+    state.category.loading = false;
+  },
+
+  updateIndexCategory: (state: any) => {
+    state.category.loading = true;
+    state.category.updateIndexSuccess = false;
+  },
+  updateIndexCategorySuccess: (state: any) => {
+    state.category.loading = false;
+    state.category.updateIndexSuccess = true;
+  },
+  updateIndexCategoryFailure: (state: any) => {
+    state.category.loading = false;
+  },
+
+  fetchCategory: (state: any) => {
+    state.category.loading = true;
+  },
+  fetchCategorySuccess: (state: any, action: PayloadAction) => {
+    state.category.loading = false;
+    state.category.entity = action.payload;
+  },
+  fetchCategoryFailure: (state: any) => {
+    state.category.loading = false;
+  },
+
+  updateCategory: (state: any) => {
+    state.category.loading = true;
+    state.category.updateSuccess = false;
+  },
+  updateCategorySuccess: (state: any) => {
+    state.category.loading = false;
+    state.category.updateSuccess = true;
+  },
+  updateCategoryFailure: (state: any) => {
+    state.category.loading = false;
+  },
+
   resetCategories: (state: any) => {
     state.category = initialState.category;
   }
