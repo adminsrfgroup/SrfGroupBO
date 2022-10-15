@@ -7,7 +7,7 @@ export interface ICategory {
   titleEn?: string | null;
   imageContent?: string | null;
   index?: number;
-  subCategories?: ISubCategory[] | null;
+  subCategories?: ISubCategory[] | null; // Optional
 }
 
 export const defaultValue: Readonly<ICategory> = {};
