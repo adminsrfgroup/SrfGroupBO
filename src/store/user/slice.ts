@@ -101,6 +101,11 @@ export const {
   addRemoveAdminSuccess,
   addRemoveAdminFailure,
 
+  //? ********************| FETCH ONESIGNALS ACTIONS |*******************/
+  fetchOneSignalsByUser,
+  fetchOneSignalsByUserSuccess,
+  fetchOneSignalsByUserFailure,
+
   //? ********************| CHANGE LOCALE ACTIONS |*******************/
   changeLocale,
 
@@ -176,3 +181,9 @@ export const loadingAddRemoveAdminUser = (state: any) =>
   state[USER_KEY_IN_STORE].user.loadingAddRemoveAdmin;
 export const addRemoveAdminUser = (state: any) =>
   state[USER_KEY_IN_STORE].user.addRemoveAdmin;
+
+//? ********************| ONESIGNAL SELECTORS |*******************/
+export const loadingEntitiesOnesignal = (state: any) =>
+  state[USER_KEY_IN_STORE].onesignal.loadingEntities;
+export const entitiesOnesignal = (state: any) =>
+  state[USER_KEY_IN_STORE].onesignal.entities;

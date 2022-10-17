@@ -12,6 +12,7 @@ import {
   fetchProfileUser,
   fetchUsers,
   blockedUnblockeUser,
+  fetchOneSignalsByUser,
   addRemoveAdmin,
   logout
 } from "./slice";
@@ -31,6 +32,7 @@ import {
   sessionUserHandler,
   updateAvatarAccountHandler
 } from "./saga-handler/user.generator";
+import { fetchOneSignalsByUserHandler } from "@store/user/saga-handler/one_signal.generator";
 
 export function* userSaga() {
   yield all([
@@ -50,6 +52,7 @@ export function* userSaga() {
     takeEvery(fetchUsers, fetchUsersHandler),
     takeEvery(blockedUnblockeUser, blockedUnblockeUserHandler),
     takeEvery(addRemoveAdmin, addRemoveAdminHandler),
+    takeEvery(fetchOneSignalsByUser, fetchOneSignalsByUserHandler),
     takeEvery(logout, logoutHandler)
   ]);
 }

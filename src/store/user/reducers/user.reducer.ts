@@ -37,6 +37,18 @@ const reducer = {
   },
   addRemoveAdminFailure: (state: any) => {
     state.user.loadingAddRemoveAdmin = false;
+  },
+
+  fetchOneSignalsByUser: (state: any) => {
+    state.user.loadingEntities = true;
+    state.onesignal.entities = false;
+  },
+  fetchOneSignalsByUserSuccess: (state: any, action: any) => {
+    state.onesignal.loadingEntities = false;
+    state.onesignal.entities = action.payload;
+  },
+  fetchOneSignalsByUserFailure: (state: any) => {
+    state.onesignal.loadingEntities = false;
   }
 };
 

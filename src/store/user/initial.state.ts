@@ -57,5 +57,9 @@ export const initialState = {
     blockedUnblocked: false,
     loadingAddRemoveAdmin: false,
     addRemoveAdmin: false
+  },
+  onesignal: {
+    loadingEntities: false,
+    entities: []
   }
 };

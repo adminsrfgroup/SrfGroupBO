@@ -16,10 +16,11 @@ import {
   addRemoveAdminUser,
   blockedUnblockedUser,
   blockedUnblockeUser,
+  entitiesOnesignal,
   entitiesUsers,
   entityProfile,
+  fetchOneSignalsByUser,
   fetchProfileUser,
-  fetchUsers,
   loadingProfile
 } from "@store/user/slice";
 import { AUTHORITIES } from "../../../constants/authorities";
@@ -34,6 +35,7 @@ export default function UserDetails() {
   const dispatch = useDispatch();
 
   const entitiesUsersSelector = useSelector(entitiesUsers) ?? [];
+  const entitiesOnesignalSelector = useSelector(entitiesOnesignal) ?? [];
   // const totalItemsUsersSelector = useSelector(totalItemsUsers) ?? -1;
   // const totalPagesUsersSelector = useSelector(totalPagesUsers) ?? 0;
 
@@ -68,16 +70,6 @@ export default function UserDetails() {
   const [loading, setLoading] = React.useState(true);
   const [globalFilterValue2, setGlobalFilterValue2] = React.useState("");
 
-  // React.useEffect(() => {
-  //   if (userId) {
-  //     dispatch(
-  //       fetchProfileUser({
-  //         userId: userId
-  //       })
-  //     );
-  //   }
-  // }, [userId]);
-
   React.useEffect(() => {
     if (userId || blockedUnblockedUserSelector || addRemoveAdminUserSelector) {
       dispatch(
@@ -90,18 +82,11 @@ export default function UserDetails() {
 
   React.useEffect(() => {
     console.log("entityProfileSelector ", entityProfileSelector);
-  }, [entityProfileSelector]);
 
-  React.useEffect(() => {
-    setLoading(true);
-    dispatch(
-      fetchUsers({
-        page: 0,
-        size: 20,
-        queryParams: ""
-      })
-    );
-  }, []);
+    if (entityProfileSelector?.id) {
+      dispatch(fetchOneSignalsByUser({ id: entityProfileSelector?.id }));
+    }
+  }, [entityProfileSelector]);
 
   React.useEffect(() => {
     if (entitiesUsersSelector?.length) {
@@ -430,7 +415,7 @@ export default function UserDetails() {
                                 id="registerDate"
                                 type="text"
                                 readOnly={true}
-                                value={entityProfileSelector.registerDate}
+                                value={entityProfileSelector.registerDate || ""}
                                 className="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
                               />
                             </div>
@@ -511,6 +496,24 @@ export default function UserDetails() {
                             </div>
                           </div>
                         </div>
+                      </div>
+
+                      <div className="card mt-5">
+                        <h5>List OneSignal</h5>
+                        <DataTable
+                          value={entitiesOnesignalSelector}
+                          responsiveLayout="scroll">
+                          <Column field="id" header="id"></Column>
+                          <Column
+                            field="idOneSignal"
+                            header="idOneSignal"></Column>
+                          <Column
+                            field="registerDate"
+                            header="registerDate"></Column>
+                          <Column
+                            field="sourceConnectedDevice"
+                            header="sourceConnectedDevice"></Column>
+                        </DataTable>
                       </div>
                     </div>
                   </div>
