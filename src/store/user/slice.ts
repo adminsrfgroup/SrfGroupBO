@@ -101,7 +101,7 @@ export const {
   addRemoveAdminSuccess,
   addRemoveAdminFailure,
 
-  //? ********************| FETCH ONESIGNALS ACTIONS |*******************/
+  //? ********************| FETCH ONE SIGNALS ACTIONS |*******************/
   fetchOneSignalsByUser,
   fetchOneSignalsByUserSuccess,
   fetchOneSignalsByUserFailure,
