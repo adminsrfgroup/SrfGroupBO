@@ -3,7 +3,11 @@ import {
   addTopSlidesSuccess,
   addTopSlidesFailure,
   fetchTopSlidesSuccess,
-  fetchTopSlidesFailure
+  fetchTopSlidesFailure,
+  fetchTopSlidesByIdSuccess,
+  fetchTopSlidesByIdFailure,
+  updateTopSlidesSuccess,
+  updateTopSlidesFailure
 } from "../slice";
 import { invokeWS, MethodHttp } from "../../../lib/api-service";
 
@@ -43,5 +47,42 @@ export function* fetchTopSlidesHandler(): Generator<any, any, any> {
   } catch (e) {
     console.error(e);
     yield put(fetchTopSlidesFailure(e));
+  }
+}
+
+/**
+ *
+ * @param data
+ */
+export function* fetchTopSlidesByIdHandler(
+  data: any
+): Generator<any, any, any> {
+  try {
+    const requestUrl = `${apiUrl}/admin/${data.payload.id}`;
+    const result = yield invokeWS({
+      url: `${requestUrl}`,
+      method: MethodHttp.get
+    });
+    yield put(fetchTopSlidesByIdSuccess(result?.data));
+  } catch (e) {
+    console.error(e);
+    yield put(fetchTopSlidesByIdFailure(e));
+  }
+}
+
+export function* updateTopSlidesHandler(data: any): Generator<any, any, any> {
+  try {
+    const requestUrl = `${apiUrl}/admin/update/${data.payload.id}`;
+    const result = yield invokeWS(
+      {
+        url: `${requestUrl}`,
+        method: MethodHttp.put
+      },
+      { ...data.payload }
+    );
+    yield put(updateTopSlidesSuccess(result?.data));
+  } catch (e) {
+    console.error(e);
+    yield put(updateTopSlidesFailure(e));
   }
 }

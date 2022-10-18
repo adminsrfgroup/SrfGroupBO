@@ -8,7 +8,7 @@ import {
   initialValuesPostHomeFeature,
   validationSchemaPostHomeFeature
 } from "../../../lib/home/validation/validation-home";
-import { dataUrlToFile, getBase64 } from "../../../lib/utils-functions";
+import { getBase64 } from "../../../lib/utils-functions";
 import { isEmpty } from "fast-glob/out/utils/string";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -16,14 +16,17 @@ import {
   addSuccessFeatureHome,
   entityFeatureHome,
   addFeatureHome,
-  resetFeatureHome
+  resetFeatureHome,
+  fetchFeatureHomeById,
+  updateFeatureHome,
+  updateSuccessFeatureHome
 } from "@store/home/slice";
+import { Button } from "primereact/button";
 
 const initialValues = initialValuesPostHomeFeature;
 
-export default function AddUpdateFeatureHome() {
+export default function AddFeatureHome({ id }: { id: string | string[] }) {
   const [fileState, setFileState] = React.useState("");
-  // const [imageUpload, setImageUpload] = React.useState<any>(null);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -31,10 +34,8 @@ export default function AddUpdateFeatureHome() {
   const entityFeatureHomeSelector = useSelector(entityFeatureHome) ?? {};
   const addSuccessFeatureHomeSelector =
     useSelector(addSuccessFeatureHome) ?? false;
-
-  // const history = useHistory();
-
-  const id = ""; // useParams<{ id: string }>();
+  const updateSuccessFeatureHomeSelector =
+    useSelector(updateSuccessFeatureHome) ?? false;
 
   const formik = useFormik({
     initialValues,
@@ -44,26 +45,30 @@ export default function AddUpdateFeatureHome() {
         ...values,
         image: fileState
       };
-      dispatch(addFeatureHome({ ...entity }));
+      if (id) {
+        dispatch(
+          updateFeatureHome({
+            id: id,
+            ...entity
+          })
+        );
+      } else {
+        dispatch(addFeatureHome({ ...entity }));
+      }
     }
   });
 
+  React.useEffect(() => {
+    if (id) {
+      dispatch(fetchFeatureHomeById({ id: id }));
+    }
+  }, [id]);
+
   const selectFile = (event: any) => {
     getBase64(event.target.files[0]).then((result: any) => {
-      dataUrlToFile(result, event.target.files[0].name).then((value: any) => {
-        console.log("value ", value);
-        // setImageUpload(value);
-      });
       setFileState(result);
     });
   };
-
-  React.useEffect(() => {
-    console.log("id = ", id);
-    if (id) {
-      // props.getEntity(Number(id));
-    }
-  }, [id]);
 
   React.useEffect(() => {
     if (!isEmpty(entityFeatureHomeSelector)) {
@@ -85,11 +90,11 @@ export default function AddUpdateFeatureHome() {
   }, [entityFeatureHomeSelector]);
 
   React.useEffect(() => {
-    if (addSuccessFeatureHomeSelector) {
+    if (addSuccessFeatureHomeSelector || updateSuccessFeatureHomeSelector) {
       dispatch(resetFeatureHome({}));
       router.push("/home/feature-home");
     }
-  }, [addSuccessFeatureHomeSelector]);
+  }, [addSuccessFeatureHomeSelector, updateSuccessFeatureHomeSelector]);
 
   const onEditorStateChangeAr = (editorState: any) => {
     formik.setFieldValue("descriptionAr", editorState);
@@ -105,7 +110,7 @@ export default function AddUpdateFeatureHome() {
     <div>
       <SideBar />
       <Header />
-      <main className="container-main">
+      <main className="container-main p-2">
         <div className="mb-5">
           <div className="p-5 text-gray-700">
             <label className="block mb-1" htmlFor="responseAr">
@@ -122,9 +127,6 @@ export default function AddUpdateFeatureHome() {
               aria-describedby="responseAr"
               onChange={selectFile}
             />
-            <span className="text-xs text-red-700" id="responseAr">
-              aze
-            </span>
           </div>
 
           <div>
@@ -201,13 +203,15 @@ export default function AddUpdateFeatureHome() {
           </table>
 
           <div className="flex flex-row-reverse ...">
-            <div>
-              <button
-                className="px-6 py-2  my-2 rounded bg-stone-400 hover:bg-stone-500 text-stone-100"
-                type="submit">
-                Add Feature Home
-              </button>
-            </div>
+            {id ? (
+              <Button
+                type="submit"
+                label={"Update"}
+                className={"p-button-info"}
+              />
+            ) : (
+              <Button type="submit" label={"Add"} className={"p-button-info"} />
+            )}
           </div>
         </form>
       </main>

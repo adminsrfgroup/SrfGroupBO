@@ -11,8 +11,8 @@ export function* fetchAllOffersHandler(data: any): Generator<any, any, any> {
       url: `${requestUrl}`,
       method: MethodHttp.get
     });
-    yield put(fetchAllOffersFailure(result?.data));
+    yield put(fetchAllOffersSuccess(result?.data));
   } catch (e) {
-    yield put(fetchAllOffersSuccess(e));
+    yield put(fetchAllOffersFailure(e));
   }
 }

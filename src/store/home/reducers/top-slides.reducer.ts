@@ -29,6 +29,31 @@ const reducer = {
     state.topSlides.errorMessage = action.payload;
   },
 
+  fetchTopSlidesById: (state: any) => {
+    state.topSlides.loading = true;
+  },
+  fetchTopSlidesByIdSuccess: (state: any, action: any) => {
+    state.topSlides.loading = false;
+    state.topSlides.entity = action.payload;
+  },
+  fetchTopSlidesByIdFailure: (state: any, action: PayloadAction) => {
+    state.topSlides.loading = false;
+    state.topSlides.errorMessage = action.payload;
+  },
+
+  updateTopSlides: (state: any) => {
+    state.topSlides.loading = true;
+    state.topSlides.updateSuccess = false;
+  },
+  updateTopSlidesSuccess: (state: any) => {
+    state.topSlides.loading = false;
+    state.topSlides.updateSuccess = true;
+  },
+  updateTopSlidesFailure: (state: any, action: PayloadAction) => {
+    state.topSlides.loading = false;
+    state.topSlides.errorMessage = action.payload;
+  },
+
   resetTopSlides: (state: any) => {
     state.topSlides = initialState.topSlides;
   }

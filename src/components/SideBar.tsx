@@ -56,7 +56,7 @@ const SideBar = () => (
           </li>
 
           <li className="py-4">
-            <Link href="/offer/description-new-offer">
+            <Link href="/offer/description-add-offer/description-new-offer">
               <a>Description new offer</a>
             </Link>
           </li>

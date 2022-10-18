@@ -28,6 +28,31 @@ const reducer = {
     state.featureHome.errorMessage = action.payload;
   },
 
+  fetchFeatureHomeById: (state: any) => {
+    state.featureHome.loading = true;
+  },
+  fetchFeatureHomeByIdSuccess: (state: any, action: any) => {
+    state.featureHome.loading = false;
+    state.featureHome.entity = action.payload;
+  },
+  fetchFeatureHomeByIdFailure: (state: any, action: PayloadAction) => {
+    state.featureHome.loading = false;
+    state.featureHome.errorMessage = action.payload;
+  },
+
+  updateFeatureHome: (state: any) => {
+    state.featureHome.loading = true;
+    state.featureHome.updateSuccess = false;
+  },
+  updateFeatureHomeSuccess: (state: any) => {
+    state.featureHome.loading = false;
+    state.featureHome.updateSuccess = true;
+  },
+  updateFeatureHomeFailure: (state: any, action: PayloadAction) => {
+    state.featureHome.loading = false;
+    state.featureHome.errorMessage = action.payload;
+  },
+
   resetFeatureHome: (state: any) => {
     state.featureHome = initialState.featureHome;
   }

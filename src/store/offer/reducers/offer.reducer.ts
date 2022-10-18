@@ -48,6 +48,30 @@ const reducer = {
     state.descriptionNewOffer.loading = false;
   },
 
+  fetchDescriptionByIdNewOffer: (state: any) => {
+    state.descriptionNewOffer.loading = true;
+  },
+  fetchDescriptionByIdNewOfferSuccess: (state: any, action: any) => {
+    state.descriptionNewOffer.loading = false;
+    state.descriptionNewOffer.entity = action.payload;
+  },
+  fetchDescriptionByIdNewOfferFailure: (state: any, action: PayloadAction) => {
+    state.descriptionNewOffer.loading = false;
+    state.descriptionNewOffer.errorMessage = action.payload;
+  },
+
+  updateDescriptionNewOffer: (state: any) => {
+    state.descriptionNewOffer.loading = true;
+    state.descriptionNewOffer.updateSuccess = false;
+  },
+  updateDescriptionNewOfferSuccess: (state: any) => {
+    state.descriptionNewOffer.loading = false;
+    state.descriptionNewOffer.updateSuccess = true;
+  },
+  updateDescriptionNewOfferFailure: (state: any) => {
+    state.descriptionNewOffer.loading = false;
+  },
+
   resetDescriptionNewOffer: (state: any) => {
     state.descriptionNewOffer = initialState.descriptionNewOffer;
   }

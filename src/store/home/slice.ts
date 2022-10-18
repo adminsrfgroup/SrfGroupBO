@@ -26,6 +26,16 @@ export const {
   fetchTopSlidesFailure,
   resetTopSlides,
 
+  //? ********************| FETCH TOP SLIDES BY ID ACTIONS |*******************/
+  fetchTopSlidesById,
+  fetchTopSlidesByIdSuccess,
+  fetchTopSlidesByIdFailure,
+
+  //? ********************| UPDATE TOP SLIDES ACTIONS |*******************/
+  updateTopSlides,
+  updateTopSlidesSuccess,
+  updateTopSlidesFailure,
+
   //? ********************| FETCH FEATURE HOME ACTIONS |*******************/
   fetchFeatureHome,
   fetchFeatureHomeSuccess,
@@ -35,7 +45,17 @@ export const {
   addFeatureHome,
   addFeatureHomeSuccess,
   addFeatureHomeFailure,
-  resetFeatureHome
+  resetFeatureHome,
+
+  //? ********************| FETCH FEATURE BY ID ACTIONS |*******************/
+  fetchFeatureHomeById,
+  fetchFeatureHomeByIdSuccess,
+  fetchFeatureHomeByIdFailure,
+
+  //? ********************| UPDATE FEATURE HOME ACTIONS |*******************/
+  updateFeatureHome,
+  updateFeatureHomeSuccess,
+  updateFeatureHomeFailure
 } = topSlidesSlice.actions;
 
 //? ********************| FETCH TOP SLIDES SELECTORS |*******************/
@@ -53,6 +73,8 @@ export const totalPagesTopSlides = (state: any) =>
   state[TOP_SLIDES_KEY_IN_STORE].topSlides.totalPages;
 export const addSuccessTopSlides = (state: any) =>
   state[TOP_SLIDES_KEY_IN_STORE].topSlides.addSuccess;
+export const updateSuccessTopSlides = (state: any) =>
+  state[TOP_SLIDES_KEY_IN_STORE].topSlides.updateSuccess;
 
 //? ********************| FETCH FEATURE HOME SELECTORS |*******************/
 export const loadingFeatureHome = (state: any) =>
@@ -69,3 +91,5 @@ export const totalPagesFeatureHome = (state: any) =>
   state[TOP_SLIDES_KEY_IN_STORE].featureHome.totalPages;
 export const addSuccessFeatureHome = (state: any) =>
   state[TOP_SLIDES_KEY_IN_STORE].featureHome.addSuccess;
+export const updateSuccessFeatureHome = (state: any) =>
+  state[TOP_SLIDES_KEY_IN_STORE].featureHome.updateSuccess;

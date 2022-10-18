@@ -16,22 +16,25 @@ import {
   addSuccessTopSlides,
   entityTopSlides,
   addTopSlides,
-  resetTopSlides
+  resetTopSlides,
+  fetchTopSlidesById,
+  updateTopSlides,
+  updateSuccessTopSlides
 } from "@store/home/slice";
+import { Button } from "primereact/button";
 
 const initialValues = initialValuesTopHomeSlidesImage;
 
-export default function AddUpdateTopSlidesImages() {
+export default function AddTopSlidesImages({ id }: { id: string | string[] }) {
   const [fileState, setFileState] = React.useState("");
-  // const [imageUpload, setImageUpload] = React.useState<any>(null);
 
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const id = 1; // useParams<{ id: string }>();
-
   const entityTopSlidesSelector = useSelector(entityTopSlides) ?? {};
   const addSuccessTopSlidesSelector = useSelector(addSuccessTopSlides) ?? false;
+  const updateSuccessTopSlidesSelector =
+    useSelector(updateSuccessTopSlides) ?? false;
 
   const formik = useFormik({
     initialValues,
@@ -42,22 +45,33 @@ export default function AddUpdateTopSlidesImages() {
         image: fileState
       };
       console.log("entity ", entity);
-      dispatch(addTopSlides({ ...entity }));
+
+      if (id) {
+        dispatch(
+          updateTopSlides({
+            id: id,
+            ...entity
+          })
+        );
+      } else {
+        dispatch(addTopSlides({ ...entity }));
+      }
+      //
     }
   });
+
+  React.useEffect(() => {
+    console.log("id == ", id);
+    if (id) {
+      dispatch(fetchTopSlidesById({ id: id }));
+    }
+  }, [id]);
 
   const selectFile = (event: any) => {
     getBase64(event.target.files[0]).then((result: any) => {
       setFileState(result);
     });
   };
-
-  React.useEffect(() => {
-    console.log("id = ", id);
-    if (id) {
-      // props.getEntity(Number(id));
-    }
-  }, [id]);
 
   React.useEffect(() => {
     if (!isEmpty(entityTopSlidesSelector)) {
@@ -79,11 +93,11 @@ export default function AddUpdateTopSlidesImages() {
   }, [entityTopSlidesSelector]);
 
   React.useEffect(() => {
-    if (addSuccessTopSlidesSelector) {
+    if (addSuccessTopSlidesSelector || updateSuccessTopSlidesSelector) {
       dispatch(resetTopSlides({}));
       router.push("/home/top-slides-images");
     }
-  }, [addSuccessTopSlidesSelector]);
+  }, [addSuccessTopSlidesSelector, updateSuccessTopSlidesSelector]);
 
   const onEditorStateChangeAr = (editorState: any) => {
     formik.setFieldValue("descriptionAr", editorState);
@@ -99,7 +113,7 @@ export default function AddUpdateTopSlidesImages() {
     <div>
       <SideBar />
       <Header />
-      <main className="container-main">
+      <main className="container-main p-2">
         <div className="mb-5">
           <div className="p-5 text-gray-700">
             <label className="block mb-1" htmlFor="responseAr">
@@ -186,13 +200,15 @@ export default function AddUpdateTopSlidesImages() {
           </table>
 
           <div className="flex flex-row-reverse ...">
-            <div>
-              <button
-                className="px-6 py-2  my-2 rounded bg-stone-400 hover:bg-stone-500 text-stone-100"
-                type="submit">
-                Add new TopHomeSlidesImage
-              </button>
-            </div>
+            {id ? (
+              <Button
+                type="submit"
+                label={"Update"}
+                className={"p-button-info"}
+              />
+            ) : (
+              <Button type="submit" label={"Add"} className={"p-button-info"} />
+            )}
           </div>
         </form>
       </main>

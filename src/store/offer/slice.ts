@@ -19,15 +19,25 @@ export const {
   fetchAllOffersFailure,
   resetAllOffers,
 
-  //? ********************| FETCH DESCRIPTION NEW OFFER ACTIONS |*******************/
+  //? ********************| FETCH ALL DESCRIPTIONS ACTIONS |*******************/
   fetchDescriptionNewOffer,
   fetchDescriptionNewOfferSuccess,
   fetchDescriptionNewOfferFailure,
+
+  //? ********************| FETCH DESCRIPTION BY ID NEW OFFER ACTIONS |*******************/
+  fetchDescriptionByIdNewOffer,
+  fetchDescriptionByIdNewOfferSuccess,
+  fetchDescriptionByIdNewOfferFailure,
 
   //? ********************| ADD DESCRIPTION NEW OFFER ACTIONS |*******************/
   addDescriptionNewOffer,
   addDescriptionNewOfferSuccess,
   addDescriptionNewOfferFailure,
+
+  //? ********************| UPDATE DESCRIPTION NEW OFFER ACTIONS |*******************/
+  updateDescriptionNewOffer,
+  updateDescriptionNewOfferSuccess,
+  updateDescriptionNewOfferFailure,
 
   //? ********************| RESET DESCRIPTION NEW OFFER ACTIONS |*******************/
   resetDescriptionNewOffer
@@ -60,3 +70,5 @@ export const totalPagesDescriptionNewOffer = (state: any) =>
   state[OFFER_KEY_IN_STORE].descriptionNewOffer.totalPages;
 export const addSuccessDescriptionNewOffer = (state: any) =>
   state[OFFER_KEY_IN_STORE].descriptionNewOffer.addSuccess;
+export const updateSuccessDescriptionNewOffer = (state: any) =>
+  state[OFFER_KEY_IN_STORE].descriptionNewOffer.updateSuccess;

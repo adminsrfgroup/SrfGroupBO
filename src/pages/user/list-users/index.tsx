@@ -173,38 +173,6 @@ function ListUsers() {
     );
   };
 
-  // const representativeBodyAcitvityTemplate = (rowData: any) => {
-  //   return (
-  //     <React.Fragment>
-  //       {!hasAnyAuthority(rowData.authorities || [], [
-  //         AUTHORITIES.SUPER_ADMIN,
-  //       ]) ? (
-  //         <Button
-  //           label={rowData.blockedByAdmin ? 'UnBlock' : 'Block'}
-  //           className={
-  //             rowData.blockedByAdmin ? 'p-button-info' : 'p-button-warning'
-  //           }
-  //           onClick={() => onOpenBlockedModal(rowData)}
-  //         />
-  //       ) : null}
-  //
-  //       {!hasAnyAuthority(rowData.authorities || [], [
-  //         AUTHORITIES.SUPER_ADMIN,
-  //       ]) ? (
-  //         <Button
-  //           label={
-  //             hasAnyAuthority(rowData.authorities || [], [AUTHORITIES.ADMIN])
-  //               ? 'Remove Admin'
-  //               : 'Add Admin'
-  //           }
-  //           className="p-button-success"
-  //           onClick={() => onOpenAddRemovedModal(rowData)}
-  //         />
-  //       ) : null}
-  //     </React.Fragment>
-  //   )
-  // }
-
   const representativeBodyTemplateName = (rowData: any) => {
     return (
       <React.Fragment>

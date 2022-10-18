@@ -24,7 +24,7 @@ export function CustomSunEditor({
   return (
     <SunEditor
       lang="en"
-      defaultValue={defaultValue || ""}
+      setContents={defaultValue || ""}
       setOptions={{
         height: "200",
         buttonList: [["undo", "redo", "font", "fontSize", "formatBlock"]]

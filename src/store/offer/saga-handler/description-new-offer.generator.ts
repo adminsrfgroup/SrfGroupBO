@@ -5,7 +5,11 @@ import {
   fetchDescriptionNewOfferFailure,
   fetchDescriptionNewOfferSuccess,
   fetchAllOffersSuccess,
-  fetchAllOffersFailure
+  fetchAllOffersFailure,
+  fetchDescriptionByIdNewOfferSuccess,
+  fetchDescriptionByIdNewOfferFailure,
+  updateDescriptionNewOfferSuccess,
+  updateDescriptionNewOfferFailure
 } from "../slice";
 import { invokeWS, MethodHttp } from "../../../lib/api-service";
 
@@ -52,5 +56,38 @@ export function* fetchAllOffersHandler(data: any): Generator<any, any, any> {
     yield put(fetchAllOffersSuccess(result?.data));
   } catch (e) {
     yield put(fetchAllOffersFailure(e));
+  }
+}
+
+export function* fetchDescriptionByIdNewOfferHandler(
+  data: any
+): Generator<any, any, any> {
+  try {
+    const requestUrl = `${apiUrl}/admin/${data.payload?.id}`;
+    const result = yield invokeWS({
+      url: `${requestUrl}`,
+      method: MethodHttp.get
+    });
+    yield put(fetchDescriptionByIdNewOfferSuccess(result?.data));
+  } catch (e) {
+    yield put(fetchDescriptionByIdNewOfferFailure(e));
+  }
+}
+
+export function* updateDescriptionNewOfferHandler(
+  data: any
+): Generator<any, any, any> {
+  try {
+    const requestUrl = `${apiUrl}/admin/${data.payload?.id}`;
+    const result = yield invokeWS(
+      {
+        url: `${requestUrl}`,
+        method: MethodHttp.put
+      },
+      { ...data.payload }
+    );
+    yield put(updateDescriptionNewOfferSuccess(result?.data));
+  } catch (e) {
+    yield put(updateDescriptionNewOfferFailure(e));
   }
 }

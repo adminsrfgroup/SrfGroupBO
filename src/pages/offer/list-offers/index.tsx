@@ -65,11 +65,12 @@ function ListOffers() {
     );
   };
 
-  const representativeBodyTemplateName = (rowData: any) => {
+  const representativeBodyTemplateDescription = (rowData: any) => {
     return (
-      <React.Fragment>
-        <span className="image-text">{rowData.title}</span>
-      </React.Fragment>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: rowData.description || ""
+        }}></div>
     );
   };
 
@@ -77,7 +78,6 @@ function ListOffers() {
 
   React.useEffect(() => {
     setLoading(true);
-
     dispatch(
       fetchAllOffers({
         page: 0,
@@ -128,7 +128,6 @@ function ListOffers() {
               field="title"
               filter
               filterPlaceholder="Search by Title"
-              body={representativeBodyTemplateName}
               style={{ minWidth: "12rem" }}
             />
             <Column
@@ -137,6 +136,7 @@ function ListOffers() {
               field="description"
               filter
               filterPlaceholder="Search by description"
+              body={representativeBodyTemplateDescription}
               style={{ minWidth: "12rem" }}
             />
             <Column

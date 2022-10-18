@@ -2,24 +2,36 @@ import { all, takeEvery } from "redux-saga/effects";
 import {
   addTopSlides,
   fetchTopSlides,
+  updateTopSlides,
+  fetchTopSlidesById,
   fetchFeatureHome,
-  addFeatureHome
+  addFeatureHome,
+  fetchFeatureHomeById,
+  updateFeatureHome
 } from "./slice";
 import {
   addTopSlidesHandler,
-  fetchTopSlidesHandler
+  fetchTopSlidesByIdHandler,
+  fetchTopSlidesHandler,
+  updateTopSlidesHandler
 } from "./saga-handler/top-slides.generator";
 import {
   addFeatureHomeHandler,
-  fetchFeatureHomeHandler
+  fetchFeatureHomeByIdHandler,
+  fetchFeatureHomeHandler,
+  updateFeatureHomeHandler
 } from "./saga-handler/featrue-home.generator";
 
 export function* topSlidesSaga() {
   yield all([
     takeEvery(addTopSlides, addTopSlidesHandler),
     takeEvery(fetchTopSlides, fetchTopSlidesHandler),
+    takeEvery(updateTopSlides, updateTopSlidesHandler),
+    takeEvery(fetchTopSlidesById, fetchTopSlidesByIdHandler),
     takeEvery(fetchFeatureHome, fetchFeatureHomeHandler),
-    takeEvery(addFeatureHome, addFeatureHomeHandler)
+    takeEvery(addFeatureHome, addFeatureHomeHandler),
+    takeEvery(fetchFeatureHomeById, fetchFeatureHomeByIdHandler),
+    takeEvery(updateFeatureHome, updateFeatureHomeHandler)
   ]);
 }
 
