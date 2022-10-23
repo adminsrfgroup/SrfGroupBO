@@ -36,6 +36,11 @@ export const {
   updateTopSlidesSuccess,
   updateTopSlidesFailure,
 
+  //? ********************| DELETE TOP SLIDES ACTIONS |*******************/
+  deleteTopSlides,
+  deleteTopSlidesSuccess,
+  deleteTopSlidesFailure,
+
   //? ********************| FETCH FEATURE HOME ACTIONS |*******************/
   fetchFeatureHome,
   fetchFeatureHomeSuccess,
@@ -75,6 +80,8 @@ export const addSuccessTopSlides = (state: any) =>
   state[TOP_SLIDES_KEY_IN_STORE].topSlides.addSuccess;
 export const updateSuccessTopSlides = (state: any) =>
   state[TOP_SLIDES_KEY_IN_STORE].topSlides.updateSuccess;
+export const deleteSuccessTopSlides = (state: any) =>
+  state[TOP_SLIDES_KEY_IN_STORE].topSlides.deleteSuccess;
 
 //? ********************| FETCH FEATURE HOME SELECTORS |*******************/
 export const loadingFeatureHome = (state: any) =>

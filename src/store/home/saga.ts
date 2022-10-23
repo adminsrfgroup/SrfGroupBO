@@ -7,10 +7,12 @@ import {
   fetchFeatureHome,
   addFeatureHome,
   fetchFeatureHomeById,
-  updateFeatureHome
+  updateFeatureHome,
+  deleteTopSlides
 } from "./slice";
 import {
   addTopSlidesHandler,
+  deleteTopSlidesHandler,
   fetchTopSlidesByIdHandler,
   fetchTopSlidesHandler,
   updateTopSlidesHandler
@@ -27,6 +29,7 @@ export function* topSlidesSaga() {
     takeEvery(addTopSlides, addTopSlidesHandler),
     takeEvery(fetchTopSlides, fetchTopSlidesHandler),
     takeEvery(updateTopSlides, updateTopSlidesHandler),
+    takeEvery(deleteTopSlides, deleteTopSlidesHandler),
     takeEvery(fetchTopSlidesById, fetchTopSlidesByIdHandler),
     takeEvery(fetchFeatureHome, fetchFeatureHomeHandler),
     takeEvery(addFeatureHome, addFeatureHomeHandler),

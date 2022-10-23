@@ -7,7 +7,9 @@ import {
   fetchTopSlidesByIdSuccess,
   fetchTopSlidesByIdFailure,
   updateTopSlidesSuccess,
-  updateTopSlidesFailure
+  updateTopSlidesFailure,
+  deleteTopSlidesSuccess,
+  deleteTopSlidesFailure
 } from "../slice";
 import { invokeWS, MethodHttp } from "../../../lib/api-service";
 
@@ -84,5 +86,19 @@ export function* updateTopSlidesHandler(data: any): Generator<any, any, any> {
   } catch (e) {
     console.error(e);
     yield put(updateTopSlidesFailure(e));
+  }
+}
+
+export function* deleteTopSlidesHandler(data: any): Generator<any, any, any> {
+  try {
+    const requestUrl = `${apiUrl}/admin/${data.payload.id}`;
+    const result = yield invokeWS({
+      url: `${requestUrl}`,
+      method: MethodHttp.delete
+    });
+    yield put(deleteTopSlidesSuccess(result?.data));
+  } catch (e) {
+    console.error(e);
+    yield put(deleteTopSlidesFailure(e));
   }
 }

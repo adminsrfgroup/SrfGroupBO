@@ -11,7 +11,8 @@ export const initialState = {
     totalItems: -1,
     totalPages: 0,
     loadingImport: false,
-    addSuccess: false
+    addSuccess: false,
+    deleteSuccess: false
   },
   featureHome: {
     loading: false,

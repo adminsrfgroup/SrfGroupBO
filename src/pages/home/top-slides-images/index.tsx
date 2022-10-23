@@ -4,20 +4,37 @@ import Footer from "../../../components/Footer";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { entitiesTopSlides, fetchTopSlides } from "@store/home/slice";
+import {
+  deleteSuccessTopSlides,
+  deleteTopSlides,
+  entitiesTopSlides,
+  fetchTopSlides
+} from "@store/home/slice";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Dialog } from "primereact/dialog";
 
 export default function TopSlidesImages() {
+  const [openBlockedModal, setOpenBlockedModal] = React.useState(false);
+  const [deleteItem, setDeleteItem] = React.useState<any>(null);
+
   const dispatch = useDispatch();
   const router = useRouter();
 
   const entitiesTopSlidesSelector = useSelector(entitiesTopSlides) ?? [];
+  const deleteSuccessTopSlidesSelector =
+    useSelector(deleteSuccessTopSlides) ?? false;
 
   React.useEffect(() => {
     dispatch(fetchTopSlides({}));
   }, []);
+
+  React.useEffect(() => {
+    if (deleteSuccessTopSlidesSelector) {
+      dispatch(fetchTopSlides({}));
+    }
+  }, [deleteSuccessTopSlidesSelector]);
 
   const redirectToAddUpdate = () => {
     router.push("/home/top-slides-images/add-top-slides-images");
@@ -62,7 +79,11 @@ export default function TopSlidesImages() {
           className={"p-button-info"}
           onClick={() => edit(rowData)}
         />
-        <Button label={"Delete"} className={"p-button-danger"} />
+        <Button
+          label={"Delete"}
+          className={"p-button-danger"}
+          onClick={() => onOpenBlockedModal(rowData)}
+        />
       </React.Fragment>
     );
   };
@@ -83,6 +104,38 @@ export default function TopSlidesImages() {
         {rowData.imageMobile ? (
           <img src={rowData.imageMobile} width={250} height={250} />
         ) : null}
+      </div>
+    );
+  };
+
+  const onOpenBlockedModal = (item: any) => {
+    console.log("onOpenBlockedModal ", item);
+    setDeleteItem(item);
+    setOpenBlockedModal(true);
+  };
+  const onHideBlockedModal = () => {
+    setOpenBlockedModal(false);
+  };
+  const confirmBlockedUser = () => {
+    setOpenBlockedModal(false);
+    dispatch(deleteTopSlides({ id: deleteItem?.id }));
+  };
+
+  const renderFooterBlockedModal = () => {
+    return (
+      <div>
+        <Button
+          label="No"
+          icon="pi pi-times"
+          onClick={() => onHideBlockedModal()}
+          className="p-button-text"
+        />
+        <Button
+          label="Yes"
+          icon="pi pi-check"
+          onClick={() => confirmBlockedUser()}
+          autoFocus
+        />
       </div>
     );
   };
@@ -142,6 +195,14 @@ export default function TopSlidesImages() {
               body={representativeBodyActionTemplate}></Column>
           </DataTable>
         </div>
+
+        <Dialog
+          header="Delete item"
+          visible={openBlockedModal}
+          footer={renderFooterBlockedModal()}
+          onHide={() => onHideBlockedModal()}>
+          <p>Are you sur to delete this item ?</p>
+        </Dialog>
       </main>
       <Footer />
     </div>

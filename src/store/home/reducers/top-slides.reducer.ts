@@ -54,6 +54,19 @@ const reducer = {
     state.topSlides.errorMessage = action.payload;
   },
 
+  deleteTopSlides: (state: any) => {
+    state.topSlides.loading = true;
+    state.topSlides.deleteSuccess = false;
+  },
+  deleteTopSlidesSuccess: (state: any) => {
+    state.topSlides.loading = false;
+    state.topSlides.deleteSuccess = true;
+  },
+  deleteTopSlidesFailure: (state: any, action: PayloadAction) => {
+    state.topSlides.loading = false;
+    state.topSlides.errorMessage = action.payload;
+  },
+
   resetTopSlides: (state: any) => {
     state.topSlides = initialState.topSlides;
   }
