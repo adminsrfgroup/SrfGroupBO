@@ -67,11 +67,21 @@ export default function TopSlidesImages() {
     );
   };
 
-  const representativeBodyImageTemplate = (rowData: any) => {
+  const representativeBodyImageDesktopTemplate = (rowData: any) => {
     return (
       <div>
-        {rowData.image ? (
-          <img src={rowData.image} width={250} height={250} />
+        {rowData.imageDesktop ? (
+          <img src={rowData.imageDesktop} width={250} height={250} />
+        ) : null}
+      </div>
+    );
+  };
+
+  const representativeBodyImageMobileTemplate = (rowData: any) => {
+    return (
+      <div>
+        {rowData.imageMobile ? (
+          <img src={rowData.imageMobile} width={250} height={250} />
         ) : null}
       </div>
     );
@@ -117,9 +127,14 @@ export default function TopSlidesImages() {
                 representativeBodyDescriptionTemplate(item, "en")
               }></Column>
             <Column
-              header="Image"
+              header="Image Desktop"
               body={(item: any) =>
-                representativeBodyImageTemplate(item)
+                representativeBodyImageDesktopTemplate(item)
+              }></Column>
+            <Column
+              header="Image Mobile"
+              body={(item: any) =>
+                representativeBodyImageMobileTemplate(item)
               }></Column>
             <Column
               field="sourceConnectedDevice"

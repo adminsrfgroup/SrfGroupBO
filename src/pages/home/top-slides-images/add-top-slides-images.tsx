@@ -26,7 +26,14 @@ import { Button } from "primereact/button";
 const initialValues = initialValuesTopHomeSlidesImage;
 
 export default function AddTopSlidesImages({ id }: { id: string | string[] }) {
-  const [fileState, setFileState] = React.useState("");
+  const [fileStateDesktop, setFileStateDesktop] = React.useState("");
+  const [fileStateMobile, setFileStateMobile] = React.useState("");
+  const [errorImageDesktop, setErrorImageDesktop] = React.useState<boolean>(
+    false
+  );
+  const [errorImageMobile, setErrorImageMobile] = React.useState<boolean>(
+    false
+  );
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -42,21 +49,22 @@ export default function AddTopSlidesImages({ id }: { id: string | string[] }) {
     onSubmit: (values) => {
       const entity = {
         ...values,
-        image: fileState
+        imageDesktop: fileStateDesktop,
+        imageMobile: fileStateMobile
       };
       console.log("entity ", entity);
-
-      if (id) {
-        dispatch(
-          updateTopSlides({
-            id: id,
-            ...entity
-          })
-        );
-      } else {
-        dispatch(addTopSlides({ ...entity }));
+      if (!errorImageDesktop && !errorImageMobile) {
+        if (id) {
+          dispatch(
+            updateTopSlides({
+              id: id,
+              ...entity
+            })
+          );
+        } else {
+          dispatch(addTopSlides({ ...entity }));
+        }
       }
-      //
     }
   });
 
@@ -67,9 +75,15 @@ export default function AddTopSlidesImages({ id }: { id: string | string[] }) {
     }
   }, [id]);
 
-  const selectFile = (event: any) => {
+  const selectFileDesktop = (event: any) => {
     getBase64(event.target.files[0]).then((result: any) => {
-      setFileState(result);
+      setFileStateDesktop(result);
+    });
+  };
+
+  const selectFileMobile = (event: any) => {
+    getBase64(event.target.files[0]).then((result: any) => {
+      setFileStateMobile(result);
     });
   };
 
@@ -88,7 +102,8 @@ export default function AddTopSlidesImages({ id }: { id: string | string[] }) {
         "descriptionEn",
         entityTopSlidesSelector.descriptionEn
       );
-      setFileState(entityTopSlidesSelector.image || "");
+      setFileStateDesktop(entityTopSlidesSelector.imageDesktop || "");
+      setFileStateMobile(entityTopSlidesSelector.imageMobile || "");
     }
   }, [entityTopSlidesSelector]);
 
@@ -109,31 +124,104 @@ export default function AddTopSlidesImages({ id }: { id: string | string[] }) {
     formik.setFieldValue("descriptionEn", editorState);
   };
 
+  const loadImageDesktop = (img: any) => {
+    console.log("img naturalHeight ", img.target.naturalHeight);
+    console.log("img naturalWidth", img.target.naturalWidth);
+
+    if (img.target.naturalWidth != 2000 || img.target.naturalHeight != 1000) {
+      setErrorImageDesktop(true);
+    } else {
+      setErrorImageDesktop(false);
+    }
+  };
+
+  const loadImageMobile = (img: any) => {
+    console.log("img naturalHeight ", img.target.naturalHeight);
+    console.log("img naturalWidth", img.target.naturalWidth);
+    if (img.target.naturalWidth != 500 || img.target.naturalHeight != 300) {
+      setErrorImageMobile(true);
+    } else {
+      setErrorImageMobile(false);
+    }
+  };
+
   return (
     <div>
       <SideBar />
       <Header />
       <main className="container-main p-2">
-        <div className="mb-5">
-          <div className="p-5 text-gray-700">
-            <label className="block mb-1" htmlFor="responseAr">
-              Image
-            </label>
-            <input
-              id="descriptionAr"
-              name="descriptionAr"
-              type="file"
-              placeholder="descriptionAr..."
-              className={
-                "w-full px-3 text-base placeholder-gray-600 border border-green-700 rounded-lg focus:shadow-outline"
-              }
-              aria-describedby="responseAr"
-              onChange={selectFile}
-            />
-          </div>
+        <div className="card">
+          <div className="card-container yellow-container overflow-hidden">
+            <div className="flex">
+              <div className="flex-1 align-items-center justify-content-center bg-yellow-500 font-bold text-gray-900 m-2 px-5 py-3 border-round">
+                <h5 className="m-0">For Desktop</h5>
 
-          <div>
-            <img src={fileState} width={250} height={250} />
+                <div className="mb-5">
+                  <div className="p-5 text-gray-700">
+                    <label className="block mb-1" htmlFor="responseAr">
+                      Image (Width: 2000, height: 1000)
+                    </label>
+                    <input
+                      id="descriptionAr"
+                      name="descriptionAr"
+                      type="file"
+                      placeholder="descriptionAr..."
+                      className={
+                        "w-full px-3 text-base placeholder-gray-600 border border-green-700 rounded-lg focus:shadow-outline"
+                      }
+                      aria-describedby="responseAr"
+                      onChange={selectFileDesktop}
+                    />
+                  </div>
+
+                  <div>
+                    <img
+                      src={fileStateDesktop}
+                      width={250}
+                      height={250}
+                      onLoad={(event: any) => loadImageDesktop(event)}
+                    />
+                    {errorImageDesktop ? (
+                      <p style={{ color: "red" }}>With or Heith invalid</p>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+              <div className="flex-1 align-items-center justify-content-center bg-yellow-500 font-bold text-gray-900 m-2 px-5 py-3 border-round">
+                <h5 className="m-0">For Mobile</h5>
+
+                <div className="mb-5">
+                  <div className="p-5 text-gray-700">
+                    <label className="block mb-1" htmlFor="responseAr">
+                      Image (Width: 500, height: 300)
+                    </label>
+                    <input
+                      id="descriptionAr"
+                      name="descriptionAr"
+                      type="file"
+                      placeholder="descriptionAr..."
+                      className={
+                        "w-full px-3 text-base placeholder-gray-600 border border-green-700 rounded-lg focus:shadow-outline"
+                      }
+                      aria-describedby="responseAr"
+                      onChange={selectFileMobile}
+                    />
+                  </div>
+
+                  <div>
+                    <img
+                      src={fileStateMobile}
+                      width={250}
+                      height={250}
+                      onLoad={(event: any) => loadImageMobile(event)}
+                    />
+                    {errorImageMobile ? (
+                      <p style={{ color: "red" }}>With or Heith invalid</p>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
