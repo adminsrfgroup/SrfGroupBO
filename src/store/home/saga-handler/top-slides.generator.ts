@@ -38,7 +38,7 @@ export function* addTopSlidesHandler(data: any): Generator<any, any, any> {
  */
 export function* fetchTopSlidesHandler(): Generator<any, any, any> {
   try {
-    const requestUrl = `${apiUrl}/public/slides`;
+    const requestUrl = `${apiUrl}/admin/slides`;
     const result = yield invokeWS({
       url: `${requestUrl}`,
       method: MethodHttp.get
