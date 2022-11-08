@@ -1,0 +1,5 @@
+export const AUTHORITIES = {
+  SUPER_ADMIN: "ROLE_SUPER_ADMIN",
+  ADMIN: "ROLE_ADMIN",
+  USER: "ROLE_USER"
+};
