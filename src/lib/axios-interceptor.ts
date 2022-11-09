@@ -1,6 +1,7 @@
 import axios from "axios";
 import { StorageService } from "./services/storage.service";
 import { AllAppConfig } from "../config/all-config";
+import { checkMobileDesktopBrowser } from "./utils-functions";
 
 const TIMEOUT = 1 * 60 * 1000;
 axios.defaults.timeout = TIMEOUT;
@@ -16,6 +17,9 @@ const setupAxiosInterceptors = (onUnauthenticated: () => void) => {
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    config.headers.sourceConnectedDevice = checkMobileDesktopBrowser();
+    config.headers.langKey = "fr";
 
     return config;
   };

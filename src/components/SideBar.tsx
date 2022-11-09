@@ -16,48 +16,40 @@ const SideBar = () => (
       <AccordionTab header="Dashboard Mangment">
         <ul>
           <li className="py-4">
-            <Link href="/dashboard">
-              <a>Dashboard</a>
-            </Link>
+            <Link href="/dashboard">Dashboard</Link>
           </li>
           <li className="py-4">
-            <Link href="/dashboard/logs">
-              <a>Logs</a>
-            </Link>
+            <Link href="/dashboard/logs">Logs</Link>
+          </li>
+
+          <li className="py-4">
+            <Link href="/dashboard/organigramme">Organigramme</Link>
           </li>
         </ul>
       </AccordionTab>
       <AccordionTab header="User Mangment">
         <ul>
           <li className="py-4">
-            <Link href="/user/list-users">
-              <a>List users</a>
-            </Link>
+            <Link href="/user/list-users">List users</Link>
           </li>
           <li className="py-4">
-            <Link href="/about">
-              <a>Add user</a>
-            </Link>
+            <Link href="/about">Add user</Link>
           </li>
         </ul>
       </AccordionTab>
       <AccordionTab header="Offer Mangment">
         <ul>
           <li className="py-4">
-            <Link href="/offer/list-offers">
-              <a>List offers</a>
-            </Link>
+            <Link href="/offer/list-offers">List offers</Link>
           </li>
 
           <li className="py-4">
-            <Link href="/offer/statistics">
-              <a>Statistics offers</a>
-            </Link>
+            <Link href="/offer/statistics">Statistics offers</Link>
           </li>
 
           <li className="py-4">
             <Link href="/offer/description-add-offer/description-new-offer">
-              <a>Description new offer</a>
+              Description new offer
             </Link>
           </li>
         </ul>
@@ -66,14 +58,10 @@ const SideBar = () => (
       <AccordionTab header="Home Mangment">
         <ul>
           <li className="py-4">
-            <Link href="/home/top-slides-images">
-              <a>Top Slides Images</a>
-            </Link>
+            <Link href="/home/top-slides-images">Top Slides Images</Link>
           </li>
           <li className="py-4">
-            <Link href="/home/feature-home">
-              <a>Feature Home</a>
-            </Link>
+            <Link href="/home/feature-home">Feature Home</Link>
           </li>
         </ul>
       </AccordionTab>
@@ -81,29 +69,19 @@ const SideBar = () => (
       <AccordionTab header="Support Mangment">
         <ul>
           <li className="py-4">
-            <Link href="/contact-us">
-              <a>Contact us</a>
-            </Link>
+            <Link href="/contact-us">Contact us</Link>
           </li>
           <li className="py-4">
-            <Link href="/about-us">
-              <a>About US</a>
-            </Link>
+            <Link href="/about-us">About US</Link>
           </li>
           <li className="py-4">
-            <Link href="/faq">
-              <a>FAQ</a>
-            </Link>
+            <Link href="/faq">FAQ</Link>
           </li>
           <li className="py-4">
-            <Link href="/news-letter">
-              <a>NewsLetter</a>
-            </Link>
+            <Link href="/news-letter">NewsLetter</Link>
           </li>
           <li className="py-4">
-            <Link href="/declaration">
-              <a>Declaration</a>
-            </Link>
+            <Link href="/declaration">Declaration</Link>
           </li>
         </ul>
       </AccordionTab>
@@ -111,14 +89,10 @@ const SideBar = () => (
       <AccordionTab header="Category Mangment">
         <ul>
           <li className="py-4">
-            <Link href="/category/list-categories">
-              <a>List categories</a>
-            </Link>
+            <Link href="/category/list-categories">List categories</Link>
           </li>
           <li className="py-4">
-            <Link href="/category/add-category">
-              <a>Add category</a>
-            </Link>
+            <Link href="/category/add-category">Add category</Link>
           </li>
         </ul>
       </AccordionTab>
@@ -126,14 +100,10 @@ const SideBar = () => (
       <AccordionTab header="Address Mangment">
         <ul>
           <li className="py-4">
-            <Link href="/address/list-address">
-              <a>List address</a>
-            </Link>
+            <Link href="/address/list-address">List address</Link>
           </li>
           <li>
-            <Link href="/about">
-              <a>Add address</a>
-            </Link>
+            <Link href="/about">Add address</Link>
           </li>
         </ul>
       </AccordionTab>
