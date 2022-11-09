@@ -8,43 +8,19 @@ import JSONDigger from "json-digger";
 
 import "react-orgchart-nextjs/dist/ChartContainer.css";
 import "react-orgchart-nextjs/dist/ChartNode.css";
+import { useAdmin } from "../../../lib/admin/hooks/useAdmin";
+import { Button } from "primereact/button";
 
 function Organigramme() {
+  const {
+    entityOrganigrammeSelector,
+    getOrganigramme,
+    createOrganigramme
+  } = useAdmin();
+
   const orgchart = React.useRef<any>();
 
-  const datasource = {
-    id: "n1",
-    name: "Lao Lao",
-    title: "general manager",
-    children: [
-      { id: "n2", name: "Bo Miao", title: "department manager" },
-      {
-        id: "n3",
-        name: "Su Miao",
-        title: "department manager",
-        children: [
-          { id: "n4", name: "Tie Hua", title: "senior engineer" },
-          {
-            id: "n5",
-            name: "Hei Hei",
-            title: "senior engineer",
-            children: [
-              { id: "n6", name: "Dan Dan", title: "engineer" },
-              { id: "n7", name: "Xiang Xiang", title: "engineer" }
-            ]
-          },
-          { id: "n8", name: "Pang Pang", title: "senior engineer" }
-        ]
-      },
-      { id: "n9", name: "Hong Miao", title: "department manager" },
-      {
-        id: "n10",
-        name: "Chun Miao",
-        title: "department manager",
-        children: [{ id: "n11", name: "Yue Yue", title: "senior engineer" }]
-      }
-    ]
-  };
+  const datasource = {};
   const [ds, setDS] = React.useState(datasource);
   const dsDigger = new JSONDigger(ds, "id", "children");
 
@@ -52,6 +28,20 @@ function Organigramme() {
   const [newNodes, setNewNodes] = React.useState([{ name: "", title: "" }]);
   const [isEditMode, setIsEditMode] = React.useState(true);
   const [isMultipleSelect, setIsMultipleSelect] = React.useState(false);
+
+  React.useEffect(() => {
+    getOrganigramme();
+  }, []);
+
+  React.useEffect(() => {
+    if (entityOrganigrammeSelector?.id) {
+      console.log(
+        "entityOrganigrammeSelector ",
+        entityOrganigrammeSelector.content
+      );
+      setDS(JSON.parse(entityOrganigrammeSelector.content));
+    }
+  }, [entityOrganigrammeSelector]);
 
   const readSelectedNode = (nodeData: any) => {
     if (isMultipleSelect) {
@@ -95,7 +85,6 @@ function Organigramme() {
   };
 
   const addChildNodes = async () => {
-    console.log("selectedNodes ", selectedNodes);
     await dsDigger.addChildren([...selectedNodes][0].id, getNewNodes());
     setDS({ ...dsDigger.ds });
   };
@@ -127,12 +116,30 @@ function Organigramme() {
     }
   };
 
+  const updateOrganigramme = () => {
+    const entity = {
+      id: entityOrganigrammeSelector?.id,
+      content: JSON.stringify(ds)
+    };
+    createOrganigramme(entity);
+  };
+
   return (
     <div>
       <SideBar />
       <Header />
       <main className="container-main p-2">
-        <h1>Organigramme</h1>
+        <div className="flex mb-3">
+          <div className="flex-1">Organigramme</div>
+          <div className="">
+            <Button
+              label="Update "
+              className="p-button-success"
+              icon="pi pi-check"
+              onClick={updateOrganigramme}
+            />
+          </div>
+        </div>
 
         <div className="edit-chart-wrapper">
           <section className="toolbar">
@@ -170,7 +177,7 @@ function Organigramme() {
                       />
                       <input
                         type="text"
-                        placeholder="title"
+                        placeholder="Role"
                         value={node.title}
                         onChange={(e) => onTitleChange(e, index)}
                       />

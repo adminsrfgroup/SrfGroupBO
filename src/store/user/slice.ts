@@ -7,6 +7,7 @@ import profileReducer from "./reducers/profile.reducer";
 import registerReducer from "./reducers/register.reducer";
 import sessionReducer from "./reducers/session.reducer";
 import userReducer from "./reducers/user.reducer";
+import adminReducer from "./reducers/admin.reducer";
 
 export const USER_KEY_IN_STORE = "user";
 
@@ -20,7 +21,8 @@ export const userSlice: Slice = createSlice({
     ...accountReducer,
     ...profileReducer,
     ...localeReducer,
-    ...userReducer
+    ...userReducer,
+    ...adminReducer
   }
 });
 
@@ -106,6 +108,16 @@ export const {
   fetchOneSignalsByUserSuccess,
   fetchOneSignalsByUserFailure,
 
+  //? ********************| FETCH ONE ORGANIGRAMME ACTIONS |*******************/
+  fetchOrganigramme,
+  fetchOrganigrammeSuccess,
+  fetchOrganigrammeFailure,
+
+  //? ********************| ADD ONE ORGANIGRAMME ACTIONS |*******************/
+  addOrganigramme,
+  addOrganigrammeSuccess,
+  addOrganigrammeFailure,
+
   //? ********************| CHANGE LOCALE ACTIONS |*******************/
   changeLocale,
 
@@ -187,3 +199,9 @@ export const loadingEntitiesOnesignal = (state: any) =>
   state[USER_KEY_IN_STORE].onesignal.loadingEntities;
 export const entitiesOnesignal = (state: any) =>
   state[USER_KEY_IN_STORE].onesignal.entities;
+
+//? ********************| ORGANIGRAMME SELECTORS |*******************/
+export const loadingOrganigramme = (state: any) =>
+  state[USER_KEY_IN_STORE].organigramme.loading;
+export const entityOrganigramme = (state: any) =>
+  state[USER_KEY_IN_STORE].organigramme.entity;

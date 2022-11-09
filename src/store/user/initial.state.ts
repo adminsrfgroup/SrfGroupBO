@@ -61,5 +61,9 @@ export const initialState = {
   onesignal: {
     loadingEntities: false,
     entities: []
+  },
+  organigramme: {
+    loading: false,
+    entity: {}
   }
 };
