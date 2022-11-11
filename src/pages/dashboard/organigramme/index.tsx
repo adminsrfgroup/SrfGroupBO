@@ -11,6 +11,13 @@ import "react-orgchart-nextjs/dist/ChartNode.css";
 import { useAdmin } from "../../../lib/admin/hooks/useAdmin";
 import { Button } from "primereact/button";
 
+const defaultValueDataSource = {
+  id: "n1",
+  name: "Taki Eddine Rahal",
+  title: "CEO",
+  children: []
+};
+
 function Organigramme() {
   const {
     entityOrganigrammeSelector,
@@ -20,8 +27,7 @@ function Organigramme() {
 
   const orgchart = React.useRef<any>();
 
-  const datasource = {};
-  const [ds, setDS] = React.useState(datasource);
+  const [ds, setDS] = React.useState(defaultValueDataSource);
   const dsDigger = new JSONDigger(ds, "id", "children");
 
   const [selectedNodes, setSelectedNodes] = React.useState<any>(new Set());
@@ -34,12 +40,9 @@ function Organigramme() {
   }, []);
 
   React.useEffect(() => {
-    if (entityOrganigrammeSelector?.id) {
-      console.log(
-        "entityOrganigrammeSelector ",
-        entityOrganigrammeSelector.content
-      );
-      setDS(JSON.parse(entityOrganigrammeSelector.content));
+    console.log("entityOrganigrammeSelector ", entityOrganigrammeSelector);
+    if (entityOrganigrammeSelector?.content) {
+      setDS({ ...JSON.parse(entityOrganigrammeSelector.content) });
     }
   }, [entityOrganigrammeSelector]);
 

@@ -7,18 +7,10 @@ import {
 } from "@store/user/slice";
 import { useCallback } from "react";
 
-const defaultValueDataSource = {
-  id: "n1",
-  name: "Taki Eddine Rahal",
-  title: "CEO",
-  children: []
-};
-
 export const useAdmin = () => {
   const dispatch = useDispatch();
 
-  const entityOrganigrammeSelector =
-    useSelector(entityOrganigramme) ?? defaultValueDataSource;
+  const entityOrganigrammeSelector = useSelector(entityOrganigramme) ?? {}; // {content: JSON.stringify(defaultValueDataSource)};
   const loadingOrganigrammeSelector = useSelector(loadingOrganigramme) ?? false;
 
   const getOrganigramme = useCallback(() => {
