@@ -40,7 +40,6 @@ function Organigramme() {
   }, []);
 
   React.useEffect(() => {
-    console.log("entityOrganigrammeSelector ", entityOrganigrammeSelector);
     if (entityOrganigrammeSelector?.content) {
       setDS({ ...JSON.parse(entityOrganigrammeSelector.content) });
     }
