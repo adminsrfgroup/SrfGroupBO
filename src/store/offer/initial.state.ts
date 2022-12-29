@@ -5,6 +5,7 @@ export const initialState = {
     loadingEntities: false,
     entities: [],
     updateSuccess: false,
+    addSuccess: false,
     loadingReport: false,
     reportSuccess: false,
     errorMessage: null,
@@ -21,5 +22,10 @@ export const initialState = {
     errorMessage: null,
     totalItems: -1,
     totalPages: 0
+  },
+  advertisingOffer: {
+    loading: false,
+    entity: {},
+    addSuccess: false
   }
 };

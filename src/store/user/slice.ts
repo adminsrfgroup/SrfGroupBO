@@ -99,9 +99,9 @@ export const {
   blockedUnblockeUserFailure,
 
   //? ********************| ADD/REMOVE ADMIN USER ACTIONS |*******************/
-  addRemoveAdmin,
-  addRemoveAdminSuccess,
-  addRemoveAdminFailure,
+  // addRemoveAdmin,
+  // addRemoveAdminSuccess,
+  // addRemoveAdminFailure,
 
   //? ********************| FETCH ONE SIGNALS ACTIONS |*******************/
   fetchOneSignalsByUser,
@@ -138,6 +138,8 @@ export const allSessionSelector = (state: any) =>
   state[USER_KEY_IN_STORE].session;
 export const loadingSession = (state: any) =>
   state[USER_KEY_IN_STORE].session.loading;
+export const currentUser = (state: any) =>
+  state[USER_KEY_IN_STORE].session.currentUser;
 
 //? ********************| ACCOUNT SELECTORS |*******************/
 export const loadingUpdateInfosAccount = (state: any) =>

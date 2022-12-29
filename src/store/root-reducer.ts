@@ -10,6 +10,9 @@ import { declarationProblemSlice } from "./declaration/slice";
 import { aboutUsSlice } from "./about-us/slice";
 import { offerSlice } from "./offer/slice";
 import { dashboardSlice } from "./dashboard/slice";
+import { advertisingSlice } from "./advertising/slice";
+import { roleSlice } from "./role/slice";
+import { cguSlice } from "./cgu/slice";
 
 interface TypeCommonPayload {
   content: never[];
@@ -34,7 +37,10 @@ const rootReducer = combineReducers({
   declarationProblem: declarationProblemSlice.reducer,
   aboutUs: aboutUsSlice.reducer,
   offer: offerSlice.reducer,
-  dashboard: dashboardSlice.reducer
+  dashboard: dashboardSlice.reducer,
+  advertising: advertisingSlice.reducer,
+  role: roleSlice.reducer,
+  cgu: cguSlice.reducer
 });
 
 export default rootReducer;

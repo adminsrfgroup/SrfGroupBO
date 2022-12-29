@@ -54,9 +54,24 @@ export default function AboutUs() {
               <tr>
                 <td className="border border-slate-100">Ar</td>
                 <td className="border border-slate-100">{aboutUs.id}</td>
-                <td className="border border-slate-100">{aboutUs.contentAr}</td>
-                <td className="border border-slate-100">{aboutUs.contentFr}</td>
-                <td className="border border-slate-100">{aboutUs.contentEn}</td>
+                <td className="border border-slate-100">
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: aboutUs.contentAr || ""
+                    }}></div>
+                </td>
+                <td className="border border-slate-100">
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: aboutUs.contentFr || ""
+                    }}></div>
+                </td>
+                <td className="border border-slate-100">
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: aboutUs.contentEn || ""
+                    }}></div>
+                </td>
                 <td className="border border-slate-100">
                   <button className="px-6 py-2 rounded bg-rose-400 hover:bg-rose-500 text-rose-100">
                     Edit

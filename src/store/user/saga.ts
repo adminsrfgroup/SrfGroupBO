@@ -13,13 +13,13 @@ import {
   fetchUsers,
   blockedUnblockeUser,
   fetchOneSignalsByUser,
-  addRemoveAdmin,
+  // addRemoveAdmin,
   fetchOrganigramme,
   addOrganigramme,
   logout
 } from "./slice";
 import {
-  addRemoveAdminHandler,
+  // addRemoveAdminHandler,
   blockedUnblockeUserHandler,
   fetchProfileUserHandler,
   fetchUsersHandler,
@@ -57,7 +57,7 @@ export function* userSaga() {
     takeEvery(fetchProfileUser, fetchProfileUserHandler),
     takeEvery(fetchUsers, fetchUsersHandler),
     takeEvery(blockedUnblockeUser, blockedUnblockeUserHandler),
-    takeEvery(addRemoveAdmin, addRemoveAdminHandler),
+    // takeEvery(addRemoveAdmin, addRemoveAdminHandler),
     takeEvery(fetchOneSignalsByUser, fetchOneSignalsByUserHandler),
     takeEvery(fetchOrganigramme, fetchOrganigrammeHandler),
     takeEvery(addOrganigramme, addOrganigrammeHandler),

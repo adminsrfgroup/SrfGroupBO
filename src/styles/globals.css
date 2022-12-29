@@ -29,3 +29,10 @@ main, header, footer{
 .bg-brown {
   background-color: #e2c498 !important;
 }
+
+.p-togglebutton.p-highlight{
+  color: #ffffff !important;;
+  background: #22C55E !important;;
+  border: 1px solid #22C55E !important;
+}
+

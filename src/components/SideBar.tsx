@@ -37,10 +37,30 @@ const SideBar = () => (
           </li>
         </ul>
       </AccordionTab>
+      <AccordionTab header="Role Mangment">
+        <ul>
+          <li className="py-4">
+            <Link href="/role/list-roles">List roles</Link>
+          </li>
+          <li className="py-4">
+            <Link href="/role/add-role">Add Role</Link>
+          </li>
+          <li className="py-4">
+            <Link href="/role/list-permissions">List permissions</Link>
+          </li>
+          <li className="py-4">
+            <Link href="/role/add-permission">Add permission</Link>
+          </li>
+        </ul>
+      </AccordionTab>
       <AccordionTab header="Offer Mangment">
         <ul>
           <li className="py-4">
             <Link href="/offer/list-offers">List offers</Link>
+          </li>
+
+          <li className="py-4">
+            <Link href="/offer/list-advertising-offers">List advertisings</Link>
           </li>
 
           <li className="py-4">
@@ -82,6 +102,9 @@ const SideBar = () => (
           </li>
           <li className="py-4">
             <Link href="/declaration">Declaration</Link>
+          </li>
+          <li className="py-4">
+            <Link href="/cgu/list-cgu">CGU</Link>
           </li>
         </ul>
       </AccordionTab>

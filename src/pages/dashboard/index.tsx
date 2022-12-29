@@ -33,7 +33,7 @@ function Dashboard() {
 
         <h3>
           <a
-            href={`${process.env.NEXT_PUBLIC_API_END_POINT}actuator/logfile`}
+            href={`${process.env.NEXT_PUBLIC_API_END_POINT}api/management/logfile`}
             target={"_blank"}>
             Show log file
           </a>

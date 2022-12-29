@@ -20,3 +20,15 @@ export const validationSchemaAddUpdateDescriptionAddOffer = Yup.object({
     .min(5, "Min 5 digits")
     .max(50000, "Max 200 digits")
 });
+
+export const initialValuesPubOffer = {
+  startDate: "",
+  endDate: "",
+  module: ""
+};
+
+export const validationSchemaPubOffer = Yup.object({
+  startDate: Yup.string().required("Required"),
+  endDate: Yup.string().required("Required"),
+  module: Yup.string().required("Required")
+});

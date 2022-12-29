@@ -1,5 +1,7 @@
 import { AllAppConfig } from "../config/all-config";
 import { SourceProvider } from "../enums/source-provider";
+import dayjs from "dayjs";
+import { EAuthority } from "../constants/authorities";
 
 export const isPromise = (value: any): boolean => {
   if (value !== null && typeof value === "object") {
@@ -123,19 +125,41 @@ export async function dataUrlToFile(
  * @returns {any}
  */
 export const hasAnyAuthority = (
-  authorities: { name: string }[],
+  authorities: { name: string; permissions: any[] }[],
   hasAnyAuthorities: string[]
-) => {
+): boolean => {
+  return authorities?.some((authority: any) => {
+    if (
+      authority.name == EAuthority.ROLE_MODERATOR ||
+      authority.name == EAuthority.ROLE_ADMIN
+    ) {
+      return true;
+    }
+    return authority?.permissions?.some((permission: any) => {
+      return hasAnyAuthorities?.some((namePermission: string) => {
+        return namePermission?.includes(permission.name);
+      });
+    });
+  });
+
+  // return false;
+  /*
   if (authorities && authorities.length !== 0) {
     if (hasAnyAuthorities.length === 0) {
       return false;
     }
     return hasAnyAuthorities.some((auth) => {
       return authorities.some((role) => {
-        return role.name.includes(auth);
+        console.log('role?.permissions ', role?.permissions);
+        return role?.permissions?.some(permission => {
+          console.log('permission ', permission);
+          console.log('auth ', auth);
+          return permission?.name?.includes(auth);
+        })
       });
     });
   }
+  */
 };
 
 /**
@@ -158,7 +182,6 @@ export function checkMobileDesktopBrowser() {
 }
 
 // export const convertDateTimeFromServer = (date: Date) => (date ? dayjs(date).format(APP_LOCAL_DATETIME_FORMAT) : null);
-//
-// export const convertDateTimeToServer = (date: Date) => (date ? dayjs(date).toDate() : null);
-//
+export const convertDateTimeToServer = (date: string) =>
+  date ? dayjs(date).toISOString() : "";
 // export const displayDefaultDateTime = () => dayjs().startOf('day').format(APP_LOCAL_DATETIME_FORMAT);

@@ -72,6 +72,30 @@ const reducer = {
     state.descriptionNewOffer.loading = false;
   },
 
+  fetchDetailsPublicOffer: (state: any) => {
+    state.offers.loading = true;
+  },
+  fetchDetailsPublicOfferSuccess: (state: any, action: PayloadAction) => {
+    state.offers.loading = false;
+    state.offers.entity = action.payload;
+  },
+  fetchDetailsPublicOfferFailure: (state: any) => {
+    state.offers.loading = false;
+  },
+
+  addAdvertisingOffer: (state: any) => {
+    state.advertisingOffer.loading = true;
+    state.advertisingOffer.addSuccess = false;
+  },
+  addAdvertisingOfferSuccess: (state: any, action: PayloadAction) => {
+    state.advertisingOffer.loading = false;
+    state.advertisingOffer.addSuccess = true;
+    state.advertisingOffer.entity = action.payload;
+  },
+  addAdvertisingOfferFailure: (state: any) => {
+    state.advertisingOffer.loading = false;
+  },
+
   resetDescriptionNewOffer: (state: any) => {
     state.descriptionNewOffer = initialState.descriptionNewOffer;
   }

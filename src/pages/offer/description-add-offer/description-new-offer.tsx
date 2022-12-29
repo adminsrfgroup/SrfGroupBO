@@ -20,7 +20,9 @@ export default function DescriptionNewOffer() {
     useSelector(entitiesDescriptionNewOffer) ?? [];
 
   const redirectTo = () => {
-    router.push("/offer/add-update-description-new-offer");
+    router.push(
+      "/offer/description-add-offer/add-update-description-new-offer"
+    );
   };
 
   React.useEffect(() => {
@@ -78,7 +80,9 @@ export default function DescriptionNewOffer() {
       <main className="container-main p-2">
         <div>
           <div className="flex">
-            <div className="flex-1">List of categories</div>
+            <div className="flex-1">
+              <h5 className="m-0">Description for add new offer</h5>
+            </div>
             <div className="">
               <Button
                 label="Add new Description Offer"

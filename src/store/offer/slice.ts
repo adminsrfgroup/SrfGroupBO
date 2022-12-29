@@ -39,13 +39,20 @@ export const {
   updateDescriptionNewOfferSuccess,
   updateDescriptionNewOfferFailure,
 
+  //? ********************| DETAILS PUBLIC OFFER ACTIONS |*******************/
+  fetchDetailsPublicOffer,
+  fetchDetailsPublicOfferSuccess,
+  fetchDetailsPublicOfferFailure,
+
   //? ********************| RESET DESCRIPTION NEW OFFER ACTIONS |*******************/
   resetDescriptionNewOffer
 } = offerSlice.actions;
 
 //? ********************| ALL OFFER SELECTORS |*******************/
-// export const loadingOffer = (state: any) => state[OFFER_KEY_IN_STORE].offer.loading;
-// export const entityOffer = (state: any) => state[OFFER_KEY_IN_STORE].offer.entity;
+export const loadingPublicOffer = (state: any) =>
+  state[OFFER_KEY_IN_STORE].offers.loading;
+export const entityPublicOffer = (state: any) =>
+  state[OFFER_KEY_IN_STORE].offers.entity;
 export const loadingEntitiesOffer = (state: any) =>
   state[OFFER_KEY_IN_STORE].offers.loadingEntities;
 export const entitiesOffer = (state: any) =>

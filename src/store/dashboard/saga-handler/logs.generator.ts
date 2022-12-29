@@ -11,7 +11,7 @@ export function* fetchLogsHandler(): Generator<any, any, any> {
   try {
     const result = yield invokeWS(
       {
-        url: `${apiUrl}/actuator/loggers`,
+        url: `${apiUrl}/api/management/loggers`,
         method: MethodHttp.get
       },
       {}

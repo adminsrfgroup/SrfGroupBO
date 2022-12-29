@@ -4,7 +4,8 @@ import {
   addDescriptionNewOffer,
   fetchAllOffers,
   fetchDescriptionByIdNewOffer,
-  updateDescriptionNewOffer
+  updateDescriptionNewOffer,
+  fetchDetailsPublicOffer
 } from "./slice";
 import {
   addDescriptionNewOfferHandler,
@@ -12,7 +13,10 @@ import {
   fetchDescriptionNewOfferHandler,
   updateDescriptionNewOfferHandler
 } from "./saga-handler/description-new-offer.generator";
-import { fetchAllOffersHandler } from "@store/offer/saga-handler/offer.generator";
+import {
+  fetchAllOffersHandler,
+  fetchDetailsPublicOfferHandler
+} from "@store/offer/saga-handler/offer.generator";
 
 export function* offerSaga() {
   yield all([
@@ -23,7 +27,8 @@ export function* offerSaga() {
       fetchDescriptionByIdNewOffer,
       fetchDescriptionByIdNewOfferHandler
     ),
-    takeEvery(updateDescriptionNewOffer, updateDescriptionNewOfferHandler)
+    takeEvery(updateDescriptionNewOffer, updateDescriptionNewOfferHandler),
+    takeEvery(fetchDetailsPublicOffer, fetchDetailsPublicOfferHandler)
   ]);
 }
 

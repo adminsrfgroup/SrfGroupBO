@@ -22,8 +22,8 @@ import {
   getNumberOfMessagesNotSeeFailure,
   fetchUsersSuccess,
   fetchUsersFailure,
-  addRemoveAdminSuccess,
-  addRemoveAdminFailure,
+  // addRemoveAdminSuccess,
+  // addRemoveAdminFailure,
   blockedUnblockeUserSuccess,
   blockedUnblockeUserFailure
 } from "../slice";
@@ -306,7 +306,7 @@ export function* blockedUnblockeUserHandler(
     console.log("blockedUnblockeUserHandler data ", data.payload.blockUnblock);
     const result = yield invokeWS(
       {
-        url: `${apiUrl}admin/blocked-user/${data.payload.userId}`,
+        url: `${apiUrl}blocked-user/${data.payload.userId}`,
         method: MethodHttp.post
       },
       data.payload.blockUnblock ? "true" : "false",
@@ -322,6 +322,7 @@ export function* blockedUnblockeUserHandler(
 /**
  *
  */
+/*
 export function* addRemoveAdminHandler(data: any): Generator<any, any, any> {
   try {
     const result = yield invokeWS(
@@ -338,6 +339,7 @@ export function* addRemoveAdminHandler(data: any): Generator<any, any, any> {
     yield put(addRemoveAdminFailure(e));
   }
 }
+*/
 
 export function logoutHandler() {
   if (StorageService.local.get(AllAppConfig.NAME_TOKEN_CURRENT_USER)) {

@@ -150,12 +150,16 @@ export default function AddTopSlidesImages({ id }: { id: string | string[] }) {
       <SideBar />
       <Header />
       <main className="container-main p-2">
+        <div className="flex">
+          <div className="flex-1">
+            <h5 className="m-0">List of TopHomeSlidesImage</h5>
+          </div>
+        </div>
         <div className="card">
           <div className="card-container yellow-container overflow-hidden">
             <div className="flex">
               <div className="flex-1 align-items-center justify-content-center bg-yellow-500 font-bold text-gray-900 m-2 px-5 py-3 border-round">
                 <h5 className="m-0">For Desktop</h5>
-
                 <div className="mb-5">
                   <div className="p-5 text-gray-700">
                     <label className="block mb-1" htmlFor="responseAr">

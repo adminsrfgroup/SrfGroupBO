@@ -9,15 +9,16 @@ import { DataTable } from "primereact/datatable";
 import { FilterMatchMode } from "primereact/api";
 import { entitiesOffer, fetchAllOffers } from "@store/offer/slice";
 import { AllAppConfig } from "../../../config/all-config";
+import { Button } from "primereact/button";
+import { useRouter } from "next/router";
 
 function ListOffers() {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const entitiesOfferSelector = useSelector(entitiesOffer) ?? [];
-  // const totalItemsUsersSelector = useSelector(totalItemsUsers) ?? -1;
-  // const totalPagesUsersSelector = useSelector(totalPagesUsers) ?? 0;
-
   const [offers, setOffers] = React.useState<any[]>([]);
+
   const [filters, setFilters] = React.useState({
     title: { value: null, matchMode: FilterMatchMode.CONTAINS },
     description: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -39,15 +40,6 @@ function ListOffers() {
     setFilters(_filters);
     setGlobalFilterValue2(value);
   };
-
-  // const statuses = [
-  //   'WebBrowser',
-  //   'qualified',
-  //   'new',
-  //   'negotiation',
-  //   'renewal',
-  //   'proposal',
-  // ]
 
   const renderHeader = () => {
     return (
@@ -90,9 +82,21 @@ function ListOffers() {
   React.useEffect(() => {
     if (entitiesOfferSelector?.length) {
       setOffers(entitiesOfferSelector.slice());
-      setLoading(false);
     }
+    setLoading(false);
   }, [entitiesOfferSelector]);
+
+  const representativeBodyAcitvityTemplate = (rowData: any) => {
+    return (
+      <React.Fragment>
+        <Button
+          label={"View"}
+          className={"p-button-info"}
+          onClick={() => router.push("/offer/offer-details/" + rowData.id)}
+        />
+      </React.Fragment>
+    );
+  };
 
   return (
     <div>
@@ -187,6 +191,12 @@ function ListOffers() {
               filterPlaceholder="Search by typeContactClient"
               showFilterMenu={false}
               filterMenuStyle={{ width: "14rem" }}
+              style={{ minWidth: "12rem" }}
+            />
+            <Column
+              header="Activity"
+              sortable
+              body={representativeBodyAcitvityTemplate}
               style={{ minWidth: "12rem" }}
             />
           </DataTable>

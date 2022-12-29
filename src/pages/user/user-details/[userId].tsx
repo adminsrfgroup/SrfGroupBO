@@ -12,7 +12,7 @@ import { Dialog } from "primereact/dialog";
 import { DataTable } from "primereact/datatable";
 import { FilterMatchMode } from "primereact/api";
 import {
-  addRemoveAdmin,
+  // addRemoveAdmin,
   addRemoveAdminUser,
   blockedUnblockedUser,
   blockedUnblockeUser,
@@ -23,10 +23,14 @@ import {
   fetchProfileUser,
   loadingProfile
 } from "@store/user/slice";
-import { AUTHORITIES } from "../../../constants/authorities";
+import { EPermission, LIST_AUTHORITIES } from "../../../constants/authorities";
 import { TabPanel, TabView } from "primereact/tabview";
 import { useRouter } from "next/router";
 import { Image } from "primereact/image";
+import { TreeSelect } from "primereact/treeselect";
+import TreeNode from "primereact/treenode";
+import { useAuthority } from "../../../lib/role/hooks/useAuthority";
+import { useSession } from "../../../lib/signin/hooks/useSession";
 
 export default function UserDetails() {
   const router = useRouter();
@@ -34,29 +38,45 @@ export default function UserDetails() {
 
   const dispatch = useDispatch();
 
+  const {
+    updateSelectUserAuthority,
+    updateSuccessUserAuthoritySelector
+  } = useAuthority();
+
+  const { currentUserSelector } = useSession();
+
   const entitiesUsersSelector = useSelector(entitiesUsers) ?? [];
   const entitiesOnesignalSelector = useSelector(entitiesOnesignal) ?? [];
-  // const totalItemsUsersSelector = useSelector(totalItemsUsers) ?? -1;
-  // const totalPagesUsersSelector = useSelector(totalPagesUsers) ?? 0;
 
   const loadingProfileSelector = useSelector(loadingProfile) ?? false;
   const entityProfileSelector = useSelector(entityProfile) ?? {};
 
-  // const loadingBlockedUnblockedUserSelector = useSelector(loadingBlockedUnblockedUser) ?? false;
   const blockedUnblockedUserSelector =
     useSelector(blockedUnblockedUser) ?? false;
   const addRemoveAdminUserSelector = useSelector(addRemoveAdminUser) ?? false;
 
   const [openBlockedModal, setOpenBlockedModal] = React.useState(false);
-  const [openRemoveAddModal, setOpenRemoveAddModal] = React.useState(false);
-  const [userBlocked, setUserBlocked] = React.useState<any>({});
-  const [titleAddRemoveAdmin, setTitleAddRemoveAdmin] = React.useState<string>(
-    ""
-  );
+
   const [
-    descriptionAddRemoveAdmin,
-    setDescriptionAddRemoveAdmin
-  ] = React.useState<string>("");
+    openChangeAuthorityModal,
+    setOpenChangeAuthorityModal
+  ] = React.useState(false);
+  const [selectedNodeKey, setSelectedNodeKey] = React.useState(null);
+  const [nodes, setNodes] = React.useState<TreeNode[]>([]);
+
+  // const [openRemoveAddModal, setOpenRemoveAddModal] = React.useState(false);
+  const [hasAuthorityBlock, setHasAuthorityBlock] = React.useState(false);
+  const [hasAuthorityUpdateAuth, setHasAuthorityUpdateAuth] = React.useState(
+    false
+  );
+  const [userBlocked, setUserBlocked] = React.useState<any>({});
+  // const [titleAddRemoveAdmin, setTitleAddRemoveAdmin] = React.useState<string>(
+  //   ""
+  // );
+  // const [
+  //   descriptionAddRemoveAdmin,
+  //   setDescriptionAddRemoveAdmin
+  // ] = React.useState<string>("");
   const [customers, setCustomers] = React.useState<any[]>([]);
   const [filters, setFilters] = React.useState({
     name: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -69,6 +89,44 @@ export default function UserDetails() {
   });
   const [loading, setLoading] = React.useState(true);
   const [globalFilterValue2, setGlobalFilterValue2] = React.useState("");
+
+  React.useEffect(() => {
+    ["ROLE_USER", ...LIST_AUTHORITIES].map((authority) => {
+      setNodes((prevState) => [
+        ...prevState,
+        {
+          key: authority,
+          data: authority,
+          label: authority,
+          icon: "",
+          children: []
+        }
+      ]);
+    });
+  }, []);
+
+  React.useEffect(() => {
+    console.log("currentUserSelector ", currentUserSelector);
+    if (currentUserSelector) {
+      setHasAuthorityBlock(
+        hasAnyAuthority(currentUserSelector?.authorities || [], [
+          EPermission.BLOCKED_USER
+        ])
+      );
+
+      setHasAuthorityUpdateAuth(
+        hasAnyAuthority(currentUserSelector?.authorities || [], [
+          EPermission.UPDATE_USER_AUTHORITY
+        ])
+      );
+    }
+  }, [currentUserSelector]);
+
+  React.useEffect(() => {
+    if (updateSuccessUserAuthoritySelector) {
+      setOpenChangeAuthorityModal(false);
+    }
+  }, [updateSuccessUserAuthoritySelector]);
 
   React.useEffect(() => {
     if (userId || blockedUnblockedUserSelector || addRemoveAdminUserSelector) {
@@ -84,6 +142,10 @@ export default function UserDetails() {
     console.log("entityProfileSelector ", entityProfileSelector);
 
     if (entityProfileSelector?.id) {
+      // Set Default Authority
+      setSelectedNodeKey(entityProfileSelector?.authorities[0]?.name);
+
+      // Get List OneSignal
       dispatch(fetchOneSignalsByUser({ id: entityProfileSelector?.id }));
     }
   }, [entityProfileSelector]);
@@ -130,6 +192,42 @@ export default function UserDetails() {
     );
   };
 
+  const handleChangeName = (event: any) => {
+    console.log("event.value ", event.value);
+    setSelectedNodeKey(event.value);
+  };
+
+  const onHideChangeAuthorityModal = () => {
+    setOpenChangeAuthorityModal(false);
+  };
+
+  const onConfirmChangeAuthority = () => {
+    updateSelectUserAuthority({
+      id: userId,
+      nameAuthority: selectedNodeKey
+    });
+  };
+
+  const renderFooterChangeAuthorityModal = () => {
+    return (
+      <div>
+        <Button
+          label="Cancel"
+          icon="pi pi-times"
+          onClick={() => onHideChangeAuthorityModal()}
+          className="p-button-text"
+        />
+        <Button
+          label="Change"
+          icon="pi pi-check"
+          className={"p-button-success"}
+          onClick={() => onConfirmChangeAuthority()}
+          autoFocus
+        />
+      </div>
+    );
+  };
+
   const renderFooterBlockedModal = () => {
     return (
       <div>
@@ -149,24 +247,24 @@ export default function UserDetails() {
     );
   };
 
-  const renderFooterAddRemoveAdminModal = () => {
-    return (
-      <div>
-        <Button
-          label="No"
-          icon="pi pi-times"
-          onClick={() => onHideAddRemoveModal()}
-          className="p-button-text"
-        />
-        <Button
-          label="Yes"
-          icon="pi pi-check"
-          onClick={() => confirmAddRemoveAdmindUser()}
-          autoFocus
-        />
-      </div>
-    );
-  };
+  // const renderFooterAddRemoveAdminModal = () => {
+  //   return (
+  //     <div>
+  //       <Button
+  //         label="No"
+  //         icon="pi pi-times"
+  //         onClick={() => onHideAddRemoveModal()}
+  //         className="p-button-text"
+  //       />
+  //       <Button
+  //         label="Yes"
+  //         icon="pi pi-check"
+  //         onClick={() => confirmAddRemoveAdmindUser()}
+  //         autoFocus
+  //       />
+  //     </div>
+  //   );
+  // };
 
   const onOpenBlockedModal = (user: any) => {
     console.log("onOpenBlockedModal ", user);
@@ -177,6 +275,7 @@ export default function UserDetails() {
     setOpenBlockedModal(false);
   };
 
+  /*
   const onOpenAddRemovedModal = () => {
     setOpenRemoveAddModal(true);
     setTitleAddRemoveAdmin(
@@ -197,6 +296,7 @@ export default function UserDetails() {
   const onHideAddRemoveModal = () => {
     setOpenRemoveAddModal(false);
   };
+  */
 
   const confirmBlockedUser = () => {
     setOpenBlockedModal(false);
@@ -208,24 +308,23 @@ export default function UserDetails() {
     );
   };
 
-  const confirmAddRemoveAdmindUser = () => {
-    setOpenRemoveAddModal(false);
-    dispatch(
-      addRemoveAdmin({
-        userId: entityProfileSelector.id,
-        addRemove: !hasAnyAuthority(entityProfileSelector.authorities || [], [
-          AUTHORITIES.ADMIN
-        ])
-      })
-    );
-    // props.addRemoveAdmin(userAddRemoveAdmin.id, (!hasAnyAuthority(userAddRemoveAdmin.authorities || [], [AUTHORITIES.ADMIN])).toString());
-  };
+  // const confirmAddRemoveAdmindUser = () => {
+  //   setOpenRemoveAddModal(false);
+  //   dispatch(
+  //     addRemoveAdmin({
+  //       userId: entityProfileSelector.id,
+  //       addRemove: !hasAnyAuthority(entityProfileSelector.authorities || [], [
+  //         AUTHORITIES.ADMIN
+  //       ])
+  //     })
+  //   );
+  // };
 
   const representativeBodyAcitvityTemplate = (rowData: any) => {
     return (
       <React.Fragment>
         {!hasAnyAuthority(rowData.authorities || [], [
-          AUTHORITIES.SUPER_ADMIN
+          EPermission.BLOCKED_USER
         ]) ? (
           <Button
             label={rowData.blockedByAdmin ? "UnBlock" : "Block"}
@@ -234,19 +333,19 @@ export default function UserDetails() {
           />
         ) : null}
 
-        {!hasAnyAuthority(rowData.authorities || [], [
-          AUTHORITIES.SUPER_ADMIN
-        ]) ? (
-          <Button
-            label={
-              hasAnyAuthority(rowData.authorities || [], [AUTHORITIES.ADMIN])
-                ? "Remove Admin"
-                : "Add Admin"
-            }
-            className="p-button-success"
-            onClick={() => onOpenAddRemovedModal()}
-          />
-        ) : null}
+        {/*{!hasAnyAuthority(rowData.authorities || [], [*/}
+        {/*  AUTHORITIES.SUPER_ADMIN*/}
+        {/*]) ? (*/}
+        {/*  <Button*/}
+        {/*    label={*/}
+        {/*      hasAnyAuthority(rowData.authorities || [], [AUTHORITIES.ADMIN])*/}
+        {/*        ? "Remove Admin"*/}
+        {/*        : "Add Admin"*/}
+        {/*    }*/}
+        {/*    className="p-button-success"*/}
+        {/*    onClick={() => onOpenAddRemovedModal()}*/}
+        {/*  />*/}
+        {/*) : null}*/}
       </React.Fragment>
     );
   };
@@ -313,10 +412,7 @@ export default function UserDetails() {
                     </div>
                     <div className="flex flex-column font-bold m-2 px-5 py-3 border-round">
                       <div className="flex flex-row-reverse">
-                        {!hasAnyAuthority(
-                          entityProfileSelector?.authorities || [],
-                          [AUTHORITIES.SUPER_ADMIN]
-                        ) ? (
+                        {hasAuthorityBlock ? (
                           <Button
                             label={
                               entityProfileSelector.blocked
@@ -325,8 +421,8 @@ export default function UserDetails() {
                             }
                             className={
                               entityProfileSelector.blocked
-                                ? "p-button-info"
-                                : "p-button-warning"
+                                ? "p-button-warning"
+                                : "p-button-danger"
                             }
                             onClick={() =>
                               onOpenBlockedModal(entityProfileSelector)
@@ -334,21 +430,29 @@ export default function UserDetails() {
                           />
                         ) : null}
 
-                        {!hasAnyAuthority(
-                          entityProfileSelector?.authorities || [],
-                          [AUTHORITIES.SUPER_ADMIN]
-                        ) ? (
+                        {/*{!hasAnyAuthority(*/}
+                        {/*  entityProfileSelector?.authorities || [],*/}
+                        {/*  [AUTHORITIES.SUPER_ADMIN]*/}
+                        {/*) ? (*/}
+                        {/*  <Button*/}
+                        {/*    label={*/}
+                        {/*      hasAnyAuthority(*/}
+                        {/*        entityProfileSelector?.authorities || [],*/}
+                        {/*        [AUTHORITIES.ADMIN]*/}
+                        {/*      )*/}
+                        {/*        ? "Remove Admin"*/}
+                        {/*        : "Add Admin"*/}
+                        {/*    }*/}
+                        {/*    className="p-button-success mr-1"*/}
+                        {/*    onClick={() => onOpenAddRemovedModal()}*/}
+                        {/*  />*/}
+                        {/*) : null}*/}
+
+                        {hasAuthorityUpdateAuth ? (
                           <Button
-                            label={
-                              hasAnyAuthority(
-                                entityProfileSelector?.authorities || [],
-                                [AUTHORITIES.ADMIN]
-                              )
-                                ? "Remove Admin"
-                                : "Add Admin"
-                            }
-                            className="p-button-success mr-1"
-                            onClick={() => onOpenAddRemovedModal()}
+                            label="Update Authority"
+                            className={"p-button-info mr-1"}
+                            onClick={() => setOpenChangeAuthorityModal(true)}
                           />
                         ) : null}
                       </div>
@@ -470,11 +574,11 @@ export default function UserDetails() {
                                 type="text"
                                 readOnly={true}
                                 value={
-                                  entityProfileSelector?.address?.city ||
-                                  "" +
-                                    ", " +
-                                    entityProfileSelector?.address?.country ||
-                                  ""
+                                  entityProfileSelector?.address
+                                    ? entityProfileSelector?.address?.city +
+                                      ", " +
+                                      entityProfileSelector?.address?.country
+                                    : ""
                                 }
                                 className="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
                               />
@@ -617,6 +721,22 @@ export default function UserDetails() {
         </TabView>
 
         <Dialog
+          header="Change Authority"
+          visible={openChangeAuthorityModal}
+          footer={renderFooterChangeAuthorityModal()}
+          onHide={() => onHideChangeAuthorityModal()}
+          breakpoints={{ "960px": "75vw" }}
+          style={{ width: "50vw" }}>
+          <p>Change authority for this user</p>
+          <TreeSelect
+            value={selectedNodeKey}
+            onChange={(e: any) => handleChangeName(e)}
+            options={nodes}
+            filter
+            placeholder="Select a role"></TreeSelect>
+        </Dialog>
+
+        <Dialog
           header="Blocked user"
           visible={openBlockedModal}
           footer={renderFooterBlockedModal()}
@@ -624,13 +744,13 @@ export default function UserDetails() {
           <p>Are you sur to block this user ?</p>
         </Dialog>
 
-        <Dialog
-          header={titleAddRemoveAdmin}
-          visible={openRemoveAddModal}
-          footer={renderFooterAddRemoveAdminModal()}
-          onHide={() => onHideAddRemoveModal()}>
-          <p>{descriptionAddRemoveAdmin}</p>
-        </Dialog>
+        {/*<Dialog*/}
+        {/*  header={titleAddRemoveAdmin}*/}
+        {/*  visible={openRemoveAddModal}*/}
+        {/*  footer={renderFooterAddRemoveAdminModal()}*/}
+        {/*  onHide={() => onHideAddRemoveModal()}>*/}
+        {/*  <p>{descriptionAddRemoveAdmin}</p>*/}
+        {/*</Dialog>*/}
       </main>
       <Footer />
     </div>

@@ -26,8 +26,8 @@ export default function SignIn() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { /*loading, */ token } = useSelector(allLoginSelector);
-  const { /*isAuthenticated,*/ oneSignalId } = useSelector(allSessionSelector);
+  const { token } = useSelector(allLoginSelector);
+  const { oneSignalId } = useSelector(allSessionSelector);
 
   React.useEffect(() => {
     if (token) {

@@ -146,7 +146,9 @@ export default function TopSlidesImages() {
       <Header />
       <main className="container-main p-2">
         <div className="flex">
-          <div className="flex-1">List of TopHomeSlidesImage</div>
+          <div className="flex-1">
+            <h5 className="m-0">List of TopHomeSlidesImage</h5>
+          </div>
           <div className="">
             <Button
               label="Add new TopHomeSlidesImage"

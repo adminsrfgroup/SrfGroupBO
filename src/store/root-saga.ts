@@ -10,6 +10,9 @@ import declarationProblemSaga from "./declaration/saga";
 import aboutUsSaga from "./about-us/saga";
 import offerSaga from "./offer/saga";
 import metricsSaga from "@store/dashboard/saga";
+import { advertisingSaga } from "@store/advertising/saga";
+import roleSaga from "@store/role/saga";
+import cguSaga from "@store/cgu/saga";
 
 export default function* rootSaga() {
   yield all([
@@ -23,6 +26,9 @@ export default function* rootSaga() {
     fork(declarationProblemSaga),
     fork(aboutUsSaga),
     fork(offerSaga),
-    fork(metricsSaga)
+    fork(metricsSaga),
+    fork(advertisingSaga),
+    fork(roleSaga),
+    fork(cguSaga)
   ]);
 }

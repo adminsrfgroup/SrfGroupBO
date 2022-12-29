@@ -3,3 +3,36 @@ export const AUTHORITIES = {
   ADMIN: "ROLE_ADMIN",
   USER: "ROLE_USER"
 };
+
+export enum EAuthority {
+  ROLE_MODERATOR = "ROLE_MODERATOR",
+  ROLE_ADMIN = "ROLE_ADMIN",
+  ROLE_USER = "ROLE_USER",
+  RESPONSABLE_QUALITE = "RESPONSABLE_QUALITE",
+  RESPONSABLE_PUBLICITE = "RESPONSABLE_PUBLICITE"
+}
+export enum EPermission {
+  UPDATE_USER_AUTHORITY = "UPDATE_USER_AUTHORITY",
+  BLOCKED_USER = "BLOCKED_USER"
+}
+
+// List of all authorities
+export const LIST_ALL_AUTHORITIES = [
+  EAuthority.ROLE_MODERATOR,
+  EAuthority.ROLE_ADMIN,
+  EAuthority.ROLE_USER,
+  EAuthority.RESPONSABLE_QUALITE,
+  EAuthority.RESPONSABLE_PUBLICITE
+];
+
+// List of authorities
+export const LIST_AUTHORITIES = [
+  "RESPONSABLE_QUALITE",
+  "RESPONSABLE_PUBLICITE"
+];
+
+// List of permissions
+export const LIST_PERMISSIONS = [
+  EPermission.UPDATE_USER_AUTHORITY,
+  EPermission.BLOCKED_USER
+];
