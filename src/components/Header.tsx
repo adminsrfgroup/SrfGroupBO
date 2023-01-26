@@ -1,7 +1,16 @@
 import { InputText } from "primereact/inputtext";
 import { Menubar } from "primereact/menubar";
+import { Dialog } from "primereact/dialog";
+import React from "react";
+import { Button } from "primereact/button";
+import { useDispatch } from "react-redux";
+import { logout } from "@store/user/slice";
 
 const Header = () => {
+  const [openBlockedModal, setOpenBlockedModal] = React.useState(false);
+
+  const dispatch = useDispatch();
+
   const items = [
     {
       label: "File",
@@ -124,10 +133,38 @@ const Header = () => {
       label: "Quit",
       icon: "pi pi-fw pi-power-off",
       command: () => {
-        // logoutCallback();
+        setOpenBlockedModal(true);
       }
     }
   ];
+
+  const confirmLogoutUser = () => {
+    setOpenBlockedModal(false);
+    dispatch(logout({}));
+  };
+  const onHideLogoutModal = () => {
+    setOpenBlockedModal(false);
+  };
+
+  const renderFooterBlockedModal = () => {
+    return (
+      <div>
+        <Button
+          label="Cancel"
+          icon="pi pi-times"
+          onClick={() => onHideLogoutModal()}
+          className="p-button-text"
+        />
+        <Button
+          label="Logout"
+          icon="pi pi-check"
+          onClick={() => confirmLogoutUser()}
+          className="p-button-danger"
+          autoFocus
+        />
+      </div>
+    );
+  };
 
   const start = (
     <img
@@ -145,6 +182,13 @@ const Header = () => {
   return (
     <header>
       <Menubar model={items} start={start} end={end} />
+      <Dialog
+        header="Logout"
+        visible={openBlockedModal}
+        footer={renderFooterBlockedModal()}
+        onHide={() => onHideLogoutModal()}>
+        <p>Are you sur to logout ?</p>
+      </Dialog>
     </header>
   );
 };

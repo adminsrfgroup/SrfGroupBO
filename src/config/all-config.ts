@@ -20,6 +20,7 @@ export const AllAppConfig = {
     "/assets/images/defaults/default_image_loading.gif",
   KeyGoogleMaps: "AIzaSyAe3rSYWX0QyDedMkgg9Mguzj-zd_1sO9k",
   NAME_TOKEN_CURRENT_USER: "tokenCurrentUser",
+  NAME_REFRESH_TOKEN_CURRENT_USER: "refreshTokenCurrentUser",
   VALUE_CURRENT_USER: "currentUser",
   APP_ID_FACEBOOK: "667046544674033",
   PAGEFACEBOO__ID: "100054409273167",

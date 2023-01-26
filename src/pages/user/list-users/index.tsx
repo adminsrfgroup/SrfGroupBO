@@ -218,21 +218,21 @@ function ListUsers() {
   const header = renderHeader();
 
   React.useEffect(() => {
-    setLoading(true);
-    dispatch(
-      fetchUsers({
-        page: 0,
-        size: 20,
-        queryParams: ""
-      })
-    );
+    if (entitiesUsersSelector?.length == 0) {
+      setLoading(true);
+      dispatch(
+        fetchUsers({
+          page: 0,
+          size: 20,
+          queryParams: ""
+        })
+      );
+    }
   }, []);
 
   React.useEffect(() => {
-    if (entitiesUsersSelector?.length) {
-      setCustomers(entitiesUsersSelector.slice());
-      setLoading(false);
-    }
+    setCustomers(entitiesUsersSelector.slice());
+    setLoading(false);
   }, [entitiesUsersSelector]);
 
   return (

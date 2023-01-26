@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+import i18n from "i18next";
 
 export enum MethodHttp {
   post = "POST",
@@ -143,12 +145,14 @@ const getHeaders = () => {
   return headers;
 };
 
+let blockErrorMessage = false;
 const showNotification = (success: boolean, result: any) => {
+  console.log("result ", result);
   if (success && result?.headers) {
     const headers = result?.headers;
 
     let alert: string | null = null;
-    // var alertParams: string | null = '';
+    // let alertParams: string | null = null;
     Object.entries<string>(headers).forEach(([k, v]) => {
       if (k.toLowerCase().endsWith("app-alert")) {
         alert = v;
@@ -158,13 +162,24 @@ const showNotification = (success: boolean, result: any) => {
     });
     if (alert) {
       // toast.success(i18n.t<string>(alert));
+      toast.success(alert);
     }
   } else if (!success) {
     const response = result?.response;
     const data = response?.data;
-
     if (data?.message) {
       // toast.error(i18n.t<string>(data?.message));
+      toast.error(data?.message);
+    } else if (response.status === 401) {
+      if (!blockErrorMessage) {
+        blockErrorMessage = true;
+        toast.error(i18n.t<string>("unauthorized"));
+        setTimeout(() => {
+          blockErrorMessage = false;
+        }, 5000);
+      }
+    } else if (response.status === 403) {
+      toast.error(i18n.t<string>("forbidden"));
     }
   }
 };

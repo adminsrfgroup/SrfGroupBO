@@ -69,20 +69,20 @@ function ListOffers() {
   const header = renderHeader();
 
   React.useEffect(() => {
-    setLoading(true);
-    dispatch(
-      fetchAllOffers({
-        page: 0,
-        size: AllAppConfig.OFFERS_PER_PAGE,
-        queryParams: ""
-      })
-    );
-  }, []);
+    if (entitiesOfferSelector?.length == 0) {
+      setLoading(true);
+      dispatch(
+        fetchAllOffers({
+          page: 0,
+          size: AllAppConfig.OFFERS_PER_PAGE,
+          queryParams: ""
+        })
+      );
+    }
+  }, [entitiesOfferSelector]);
 
   React.useEffect(() => {
-    if (entitiesOfferSelector?.length) {
-      setOffers(entitiesOfferSelector.slice());
-    }
+    setOffers(entitiesOfferSelector.slice());
     setLoading(false);
   }, [entitiesOfferSelector]);
 

@@ -8,7 +8,13 @@ import { useCgu } from "../../../lib/cgu/hooks/useCgu";
 
 export default function AddCgu() {
   const router = useRouter();
-  const { entityCguSelector, fetchListCgu } = useCgu();
+  const { entityCguSelector, fetchListCgu, addSuccessCguSelector } = useCgu();
+
+  React.useEffect(() => {
+    if (addSuccessCguSelector) {
+      router.push("/cgu/list-cgu");
+    }
+  }, [addSuccessCguSelector]);
 
   React.useEffect(() => {
     fetchListCgu();
@@ -41,7 +47,7 @@ export default function AddCgu() {
             <Button
               label="Add CGU"
               className="p-button-link"
-              onClick={() => redirect}
+              onClick={() => redirect(false)}
             />
           </div>
         </div>

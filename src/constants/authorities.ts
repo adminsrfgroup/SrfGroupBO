@@ -13,7 +13,9 @@ export enum EAuthority {
 }
 export enum EPermission {
   UPDATE_USER_AUTHORITY = "UPDATE_USER_AUTHORITY",
-  BLOCKED_USER = "BLOCKED_USER"
+  BLOCKED_USER = "BLOCKED_USER",
+  CRUD_DESCRIPTION_NEW_OFFER = "CRUD_DESCRIPTION_NEW_OFFER",
+  CRUD_CGU = "CRUD_CGU"
 }
 
 // List of all authorities
@@ -34,5 +36,7 @@ export const LIST_AUTHORITIES = [
 // List of permissions
 export const LIST_PERMISSIONS = [
   EPermission.UPDATE_USER_AUTHORITY,
-  EPermission.BLOCKED_USER
+  EPermission.BLOCKED_USER,
+  EPermission.CRUD_DESCRIPTION_NEW_OFFER,
+  EPermission.CRUD_CGU
 ];
