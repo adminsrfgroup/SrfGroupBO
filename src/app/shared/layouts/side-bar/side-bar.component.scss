@@ -1,0 +1,18 @@
+.container-side-bar{
+  .p-accordion-content{
+    padding: 0;
+    ul{
+      list-style: none;
+      padding-left: 0;
+      li{
+        padding: 10px 10px;
+        color: purple;
+        text-decoration: underline;
+        &:hover{
+          background-color: #e8e9ec;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

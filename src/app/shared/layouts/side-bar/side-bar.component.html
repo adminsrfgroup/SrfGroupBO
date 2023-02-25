@@ -1,0 +1,40 @@
+<h5>Multiple</h5>
+<div class="container-side-bar">
+  <p-accordion [multiple]="true">
+    <p-accordionTab header="Dashboard Mangment">
+      <ul>
+        <li className="py-4" routerLink="/private/dashboard/home">
+          Dashboard
+        </li>
+        <li className="py-4" routerLink="/private/dashboard/logs">
+          Logs
+        </li>
+
+        <li className="py-4" routerLink="/private/dashboard/organigramme">
+          Organigramme
+        </li>
+      </ul>
+    </p-accordionTab>
+    <p-accordionTab header="User Managment">
+      <ul>
+        <li className="py-4" routerLink="/private/user/list">
+          List Users
+        </li>
+        <li className="py-4" routerLink="/private/dashboard/logs">
+          Logs
+        </li>
+
+        <li className="py-4" routerLink="/private/dashboard/organigramme">
+          Organigramme
+        </li>
+      </ul>
+    </p-accordionTab>
+    <p-accordionTab header="Home Management">
+      <ul>
+        <li className="py-4" routerLink="/private/home/top-slides">
+          Top Slides
+        </li>
+      </ul>
+    </p-accordionTab>
+  </p-accordion>
+</div>
