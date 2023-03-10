@@ -26,8 +26,8 @@ export const loginReducer: ActionReducer<LoginState, Action> = createReducer(
         };
     }),
     on(fromLoginActions.resetLoginAction, () => {
-      return {
-        ...initLoginState
-      };
-    }),
+        return {
+            ...initLoginState,
+        };
+    })
 );

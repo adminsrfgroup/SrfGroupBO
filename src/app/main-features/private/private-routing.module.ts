@@ -12,12 +12,12 @@ const routes: Routes = [
                 loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
             },
             {
-              path: 'user',
-              loadChildren: () => import('./user-managment/user-managment.module').then(m => m.UserManagmentModule),
+                path: 'user',
+                loadChildren: () => import('./user-managment/user-managment.module').then(m => m.UserManagmentModule),
             },
             {
-              path: 'home',
-              loadChildren: () => import('./home-managment/home-managment.module').then(m => m.HomeManagmentModule),
+                path: 'home',
+                loadChildren: () => import('./home-managment/home-managment.module').then(m => m.HomeManagmentModule),
             },
         ],
     },

@@ -1,5 +1,4 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { LoginState } from '../state/login.state';
 import { SessionState } from '../state/session.state';
 
 export const sessionSelectKey = 'session';
@@ -13,3 +12,5 @@ export const selectorNbeMessagesNotReadSession = createSelector(selectSessionSta
 export const selectorNbeCartsSession = createSelector(selectSessionState, (state: SessionState) => state.nbeCarts);
 export const selectorCurrentSession = createSelector(selectSessionState, (state: SessionState) => state);
 export const selectorOneSignalIdSession = createSelector(selectSessionState, (state: SessionState) => state.oneSignalId);
+
+export const selectorSession = createSelector(selectSessionState, (state: SessionState) => state);

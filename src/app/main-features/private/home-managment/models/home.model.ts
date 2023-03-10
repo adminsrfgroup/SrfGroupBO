@@ -1,3 +1,3 @@
-export interface IFetchOneTopSlide{
-  id: number;
+export interface IFetchOneTopSlide {
+    id: number;
 }

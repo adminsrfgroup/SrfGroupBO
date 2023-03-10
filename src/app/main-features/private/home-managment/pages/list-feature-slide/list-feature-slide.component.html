@@ -1,19 +1,21 @@
-<div class="list-top-slides">
-    <div class="card">
-        <div class="flex justify-content-between flex-wrap card-container purple-container">
-            <div class="flex align-items-center justify-content-center border-round m-2">
-                <h3>List of Top Slides</h3>
-            </div>
-            <div class="flex align-items-center justify-content-center border-round m-2">
-                <a pButton pRipple label="Add new Slide" class="p-button-outlined p-button-secondary" routerLink="/private/home/add-top-slides"></a>
+<div class="list-feature-slides">
+    <div class="list-top-slides">
+        <div class="card">
+            <div class="flex justify-content-between flex-wrap card-container purple-container">
+                <div class="flex align-items-center justify-content-center border-round m-2">
+                    <h3>List of Feature Slides</h3>
+                </div>
+                <div class="flex align-items-center justify-content-center border-round m-2">
+                    <a pButton pRipple label="Add new Slide" class="p-button-outlined p-button-secondary" routerLink="/private/home/add-feature-slide"></a>
+                </div>
             </div>
         </div>
     </div>
 
     <p-table
         #dt
-        [value]="listTopSlides"
-        [(selection)]="selectedTopSlides"
+        [value]="listFeatureSlides"
+        [(selection)]="selectedFeatureSlides"
         dataKey="id"
         styleClass="p-datatable-customers"
         [rowHover]="true"
@@ -41,8 +43,7 @@
                 <th pSortableColumn="descriptionAr">descriptionAr <p-sortIcon field="descriptionAr"></p-sortIcon></th>
                 <th pSortableColumn="descriptionFr">descriptionFr <p-sortIcon field="descriptionFr"></p-sortIcon></th>
                 <th pSortableColumn="descriptionEn">descriptionEn <p-sortIcon field="descriptionEn"></p-sortIcon></th>
-                <th pSortableColumn="imageDesktop">imageDesktop <p-sortIcon field="imageDesktop"></p-sortIcon></th>
-                <th pSortableColumn="imageMobile">imageMobile <p-sortIcon field="imageMobile"></p-sortIcon></th>
+                <th pSortableColumn="image">image <p-sortIcon field="image"></p-sortIcon></th>
                 <th pSortableColumn="activity">Activity <p-sortIcon field="activity"></p-sortIcon></th>
                 <th style="width: 8rem"></th>
             </tr>
@@ -110,12 +111,8 @@
                     <div [innerHTML]="customer.descriptionEn"></div>
                 </td>
                 <td>
-                    <span class="p-column-title">imageDesktop</span>
-                    <img [src]="customer.imageDesktop" width="150" height="150" />
-                </td>
-                <td>
-                    <span class="p-column-title">imageMobile</span>
-                    <img [src]="customer.imageMobile" width="150" height="150" />
+                    <span class="p-column-title">image</span>
+                    <img [src]="customer.image" width="150" height="150" />
                 </td>
                 <td style="text-align: center">
                     <div class="container-action">

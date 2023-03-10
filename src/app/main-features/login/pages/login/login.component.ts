@@ -1,18 +1,18 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {LoginFacadeService} from '../../store/facade/login-facade.service';
-import {ILogin, IResponseLogin, IResponseSession} from '../../models/login.model';
-import {SessionFacadeService} from '../../store/facade/session-facade.service';
-import {Subject, takeUntil} from 'rxjs';
-import {StorageService} from '../../../../shared/services/storage.service';
-import {AllAppConfig} from '../../../../config';
-import {Router} from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { LoginFacadeService } from '../../store/facade/login-facade.service';
+import { ILogin, IResponseLogin, IResponseSession } from '../../models/login.model';
+import { SessionFacadeService } from '../../store/facade/session-facade.service';
+import { Subject, takeUntil } from 'rxjs';
+import { StorageService } from '../../../../shared/services/storage.service';
+import { AllAppConfig } from '../../../../config';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent implements OnInit, OnDestroy {
     fgLogin!: FormGroup;
@@ -26,6 +26,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.initForm();
+
+        const t = this.fgLogin.get('email')?.value;
+        console.log(typeof t);
 
         this.loginFacadeService
             .fetchToken()
@@ -44,19 +47,18 @@ export class LoginComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (response: IResponseSession) => {
                     console.log('response for session ', response);
-                    if( response.isAuthenticated ){
-                      StorageService.local.set(AllAppConfig.VALUE_CURRENT_USER, JSON.stringify(response.currentUser));
-                      this.router.navigate(['/private/dashboard/home']);
+                    if (response.isAuthenticated) {
+                        StorageService.local.set(AllAppConfig.VALUE_CURRENT_USER, JSON.stringify(response.currentUser));
+                        this.router.navigate(['/private/dashboard/home']);
                     }
-
                 },
             });
     }
 
     private initForm(): void {
-        this.fgLogin = this.fb.group({
-            email: new FormControl('', [Validators.email, Validators.required]),
-            password: new FormControl('', [Validators.required]),
+        this.fgLogin = this.fb.nonNullable.group({
+            email: new FormControl<string>('', [Validators.email, Validators.required]),
+            password: new FormControl<string>('', [Validators.required]),
         });
     }
 

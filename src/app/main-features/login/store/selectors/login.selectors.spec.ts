@@ -1,40 +1,40 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { LoginState } from '../state/login.state';
-import {selectorLoadingLogin, selectorTokenLogin} from "./login.selectors";
+import { selectorLoadingLogin, selectorTokenLogin } from './login.selectors';
 
 describe('Login  Selectors', () => {
-  it('should select the loading', () => {
-    // Given
-    const initialState: LoginState = {
-      loading: false,
-      errorMessage: null,
-      token: 'azerty',
-      refreshToken: 'azerty',
-    };
+    it('should select the loading', () => {
+        // Given
+        const initialState: LoginState = {
+            loading: false,
+            errorMessage: null,
+            token: 'azerty',
+            refreshToken: 'azerty',
+        };
 
-    // When
-    const result = selectorLoadingLogin.projector(initialState);
+        // When
+        const result = selectorLoadingLogin.projector(initialState);
 
-    // Then
-    expect(result).toEqual(false);
-  });
-
-  it('should select the token', () => {
-    // Given
-    const initialState: LoginState = {
-      loading: false,
-      errorMessage: null,
-      token: 'azerty',
-      refreshToken: 'azerty',
-    };
-
-    // When
-    const result = selectorTokenLogin.projector(initialState);
-
-    // Then
-    expect(result).toEqual({
-      token: 'azerty',
-      refreshToken: 'azerty'
+        // Then
+        expect(result).toEqual(false);
     });
-  });
+
+    it('should select the token', () => {
+        // Given
+        const initialState: LoginState = {
+            loading: false,
+            errorMessage: null,
+            token: 'azerty',
+            refreshToken: 'azerty',
+        };
+
+        // When
+        const result = selectorTokenLogin.projector(initialState);
+
+        // Then
+        expect(result).toEqual({
+            token: 'azerty',
+            refreshToken: 'azerty',
+        });
+    });
 });

@@ -3,13 +3,16 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('AppComponent', () => {
+    const initialState = {};
+
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [RouterTestingModule, ToastModule],
             declarations: [AppComponent],
-            providers: [MessageService],
+            providers: [MessageService, provideMockStore({ initialState })],
         }).compileComponents();
     });
 

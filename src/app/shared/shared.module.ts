@@ -15,23 +15,68 @@ import { MessagesHelpComponent } from './components/messages-help/messages-help.
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { PasswordModule } from 'primeng/password';
-import {DialogModule} from "primeng/dialog";
-import {TableModule} from "primeng/table";
-import {DropdownModule} from "primeng/dropdown";
-import {CalendarModule} from "primeng/calendar";
-import {MultiSelectModule} from "primeng/multiselect";
-import {ProgressBarModule} from "primeng/progressbar";
-import {SliderModule} from "primeng/slider";
-import {ContextMenuModule} from "primeng/contextmenu";
-import {InputTextModule} from "primeng/inputtext";
-import {EditorModule} from 'primeng/editor';
+import { DialogModule } from 'primeng/dialog';
+import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { SliderModule } from 'primeng/slider';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { InputTextModule } from 'primeng/inputtext';
+import { EditorModule } from 'primeng/editor';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessagesModule } from 'primeng/messages';
 
 @NgModule({
     declarations: [SideBarComponent, HeaderComponent, FooterComponent, BreadcrumbComponent, MessagesHelpComponent],
-    imports: [CommonModule, ReactiveFormsModule, ToolbarModule, CardModule, ButtonModule, SplitButtonModule, AccordionModule, BreadcrumbModule, ToastModule, PasswordModule, FormsModule, DialogModule, TableModule,
-      DropdownModule, CalendarModule, MultiSelectModule, ProgressBarModule, SliderModule, ContextMenuModule, InputTextModule, EditorModule],
-    exports: [CardModule, ButtonModule, SideBarComponent, HeaderComponent, FooterComponent, BreadcrumbComponent, ToastModule, PasswordModule, FormsModule, TableModule, DropdownModule, CalendarModule,
-      MultiSelectModule, ProgressBarModule, SliderModule, ContextMenuModule, InputTextModule, EditorModule],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        ToolbarModule,
+        CardModule,
+        ButtonModule,
+        SplitButtonModule,
+        AccordionModule,
+        BreadcrumbModule,
+        ToastModule,
+        PasswordModule,
+        FormsModule,
+        DialogModule,
+        TableModule,
+        DropdownModule,
+        CalendarModule,
+        MultiSelectModule,
+        ProgressBarModule,
+        SliderModule,
+        ContextMenuModule,
+        InputTextModule,
+        EditorModule,
+        ConfirmDialogModule,
+        MessagesModule,
+    ],
+    exports: [
+        CardModule,
+        ButtonModule,
+        SideBarComponent,
+        HeaderComponent,
+        FooterComponent,
+        BreadcrumbComponent,
+        ToastModule,
+        PasswordModule,
+        FormsModule,
+        TableModule,
+        DropdownModule,
+        CalendarModule,
+        MultiSelectModule,
+        ProgressBarModule,
+        SliderModule,
+        ContextMenuModule,
+        InputTextModule,
+        EditorModule,
+        ConfirmDialogModule,
+        MessagesModule,
+    ],
     providers: [MessageService],
 })
 export class SharedModule {}

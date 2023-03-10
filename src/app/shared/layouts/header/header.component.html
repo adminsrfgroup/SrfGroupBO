@@ -14,11 +14,10 @@
         <p-button icon="pi pi-times" styleClass="p-button-danger" (click)="showModalDialog()"></p-button>
     </div>
 </p-toolbar>
-<p-dialog header="Logout" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
-          [draggable]="false" [resizable]="false">
-  <p class="m-0">Are you loged out !</p>
-  <ng-template pTemplate="footer">
-    <p-button icon="pi pi-check" (click)="displayModal=false" label="Cancel" class="p-button-text"></p-button>
-    <button pButton type="button" label="Logout" class="p-button-danger" (click)="logout()"></button>
-  </ng-template>
+<p-dialog header="Logout" [(visible)]="displayModal" [modal]="true" [style]="{ width: '50vw' }" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <p class="m-0">Are you loged out !</p>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="displayModal = false" label="Cancel" class="p-button-text"></p-button>
+        <button pButton type="button" label="Logout" class="p-button-danger" (click)="logout()"></button>
+    </ng-template>
 </p-dialog>

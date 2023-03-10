@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import {ILogin, IResponseLogin, IResponseSession} from '../../models/login.model';
+import { ILogin, IResponseLogin, IResponseSession } from '../../models/login.model';
 import { IUser } from '../../../../shared/models/user.model';
 
 enum SessionActions {

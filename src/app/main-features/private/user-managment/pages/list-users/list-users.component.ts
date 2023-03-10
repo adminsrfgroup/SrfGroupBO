@@ -1,137 +1,127 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {Table} from "primeng/table";
-import {PrimeNGConfig} from "primeng/api";
-import {Store} from "@ngrx/store";
-import {UserState} from "../../store/state/user.state";
-import {loadListUsers} from "../../store/actions/list-user.actions";
-import {
-  selectorEntitiesUser,
-  selectorLoadingUser,
-  selectorTotalElementsUser, selectorTotalPagesUser
-} from "../../store/selectors/list-user.selectors";
-import {IUser} from "../../../../../shared/models/user.model";
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Table } from 'primeng/table';
+import { PrimeNGConfig } from 'primeng/api';
+import { Store } from '@ngrx/store';
+import { UserState } from '../../store/state/user.state';
+import { loadListUsers } from '../../store/actions/list-user.actions';
+import { selectorEntitiesUser, selectorLoadingUser, selectorTotalElementsUser, selectorTotalPagesUser } from '../../store/selectors/list-user.selectors';
+import { IUser } from '../../../../../shared/models/user.model';
 
 @Component({
-  selector: 'app-list-users',
-  templateUrl: './list-users.component.html',
-  styleUrls: ['./list-users.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-list-users',
+    templateUrl: './list-users.component.html',
+    styleUrls: ['./list-users.component.scss'],
+    encapsulation: ViewEncapsulation.None,
 })
-export class ListUsersComponent implements OnInit{
+export class ListUsersComponent implements OnInit {
+    selectedCustomers!: any[];
 
-  selectedCustomers!: any[];
+    representatives!: any[];
 
-  representatives!: any[];
+    statuses!: any[];
 
-  statuses!: any[];
+    listUsers: IUser[] = [];
+    loading: boolean = false;
+    totalElements: number = 0;
+    totalPages: number = 0;
 
+    @ViewChild('dt') table!: Table;
 
+    constructor(private primengConfig: PrimeNGConfig, private store: Store<UserState>) {}
 
-  listUsers: IUser[] = [];
-  loading: boolean = false;
-  totalElements: number = 0;
-  totalPages: number = 0;
+    ngOnInit(): void {
+        this.representatives = [
+            { name: 'Amy Elsner', image: 'amyelsner.png' },
+            { name: 'Anna Fali', image: 'annafali.png' },
+            { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
+            { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
+            { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
+            { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
+            { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
+            { name: 'Onyama Limba', image: 'onyamalimba.png' },
+            { name: 'Stephen Shaw', image: 'stephenshaw.png' },
+            { name: 'XuXue Feng', image: 'xuxuefeng.png' },
+        ];
 
-  @ViewChild('dt') table!: Table;
+        this.statuses = [
+            { label: 'Unqualified', value: 'unqualified' },
+            { label: 'Qualified', value: 'qualified' },
+            { label: 'New', value: 'new' },
+            { label: 'Negotiation', value: 'negotiation' },
+            { label: 'Renewal', value: 'renewal' },
+            { label: 'Proposal', value: 'proposal' },
+        ];
+        this.primengConfig.ripple = true;
 
-  constructor(private primengConfig: PrimeNGConfig,
-              private store: Store<UserState>) { }
+        this.store.select(selectorTotalPagesUser).subscribe({
+            next: (result: number) => {
+                this.totalPages = result;
+            },
+        });
+        this.store.select(selectorTotalElementsUser).subscribe({
+            next: (result: number) => {
+                this.totalElements = result;
+            },
+        });
+        this.store.select(selectorLoadingUser).subscribe({
+            next: (result: boolean) => {
+                this.loading = result;
+            },
+        });
+        this.store.select(selectorEntitiesUser).subscribe({
+            next: (result: IUser[]) => {
+                if (!result.length) {
+                    this.dispatchAllUsers();
+                } else {
+                    this.listUsers = result.slice();
+                }
+            },
+        });
+    }
 
-  ngOnInit(): void{
+    dispatchAllUsers() {
+        this.store.dispatch(loadListUsers());
+    }
 
-    this.representatives = [
-      {name: "Amy Elsner", image: 'amyelsner.png'},
-      {name: "Anna Fali", image: 'annafali.png'},
-      {name: "Asiya Javayant", image: 'asiyajavayant.png'},
-      {name: "Bernardo Dominic", image: 'bernardodominic.png'},
-      {name: "Elwin Sharvill", image: 'elwinsharvill.png'},
-      {name: "Ioni Bowcher", image: 'ionibowcher.png'},
-      {name: "Ivan Magalhaes",image: 'ivanmagalhaes.png'},
-      {name: "Onyama Limba", image: 'onyamalimba.png'},
-      {name: "Stephen Shaw", image: 'stephenshaw.png'},
-      {name: "XuXue Feng", image: 'xuxuefeng.png'}
-    ];
+    onActivityChange(event: any) {
+        const value = event.target.value;
+        if (value && value.trim().length) {
+            const activity = parseInt(value);
 
-    this.statuses = [
-      {label: 'Unqualified', value: 'unqualified'},
-      {label: 'Qualified', value: 'qualified'},
-      {label: 'New', value: 'new'},
-      {label: 'Negotiation', value: 'negotiation'},
-      {label: 'Renewal', value: 'renewal'},
-      {label: 'Proposal', value: 'proposal'}
-    ]
-    this.primengConfig.ripple = true;
-
-    this.store.select(selectorTotalPagesUser).subscribe({
-      next: (result: number) => {
-        this.totalPages = result;
-      }
-    })
-    this.store.select(selectorTotalElementsUser).subscribe({
-      next: (result: number) => {
-        this.totalElements = result;
-      }
-    })
-    this.store.select(selectorLoadingUser).subscribe({
-      next: (result: boolean) => {
-        this.loading = result;
-      }
-    })
-    this.store.select(selectorEntitiesUser).subscribe({
-      next: (result: IUser[]) => {
-        if( !result.length ){
-          this.dispatchAllUsers();
+            if (!isNaN(activity)) {
+                this.table.filter(activity, 'activity', 'gte');
+            }
         }
-        else{
-          this.listUsers = result.slice();
+    }
+
+    onDateSelect(value: any) {
+        this.table.filter(this.formatDate(value), 'date', 'equals');
+    }
+
+    formatDate(date: any) {
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+
+        if (month < 10) {
+            month = '0' + month;
         }
-      }
-    })
-  }
 
-  dispatchAllUsers(){
-    this.store.dispatch(loadListUsers());
-  }
+        if (day < 10) {
+            day = '0' + day;
+        }
 
-  onActivityChange(event: any) {
-    const value = event.target.value;
-    if (value && value.trim().length) {
-      const activity = parseInt(value);
-
-      if (!isNaN(activity)) {
-        this.table.filter(activity, 'activity', 'gte');
-      }
-    }
-  }
-
-  onDateSelect(value: any) {
-    this.table.filter(this.formatDate(value), 'date', 'equals')
-  }
-
-  formatDate(date: any) {
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-
-    if (month < 10) {
-      month = '0' + month;
+        return date.getFullYear() + '-' + month + '-' + day;
     }
 
-    if (day < 10) {
-      day = '0' + day;
+    onRepresentativeChange(event: any) {
+        this.table.filter(event.value, 'representative', 'in');
     }
 
-    return date.getFullYear() + '-' + month + '-' + day;
-  }
+    filter(event: any, filed: string, matchMode: string) {
+        this.table.filter(event.target?.value, filed, matchMode);
+    }
 
-  onRepresentativeChange(event: any) {
-    this.table.filter(event.value, 'representative', 'in')
-  }
-
-  filter(event: any, filed: string, matchMode: string){
-    this.table.filter(event.target?.value, filed, matchMode);
-  }
-
-  filterGlobal(event: any, matchMode: string){
-    this.table.filterGlobal(event.target.value, matchMode)
-  }
+    filterGlobal(event: any, matchMode: string) {
+        this.table.filterGlobal(event.target.value, matchMode);
+    }
 }

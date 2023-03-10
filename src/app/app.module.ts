@@ -12,7 +12,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {appEffects, appReducers, metaReducers} from './config/store';
+import { appEffects, appReducers, metaReducers } from './config/store';
 import { httpInterceptorProviders } from './config/interceptors';
 
 // AoT requires an exported function for factories

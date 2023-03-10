@@ -1,11 +1,6 @@
 import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
 import { initSessionState, SessionState } from '../state/session.state';
-import {
-  logoutAction,
-  sessionAction,
-  sessionActionFailure,
-  sessionActionSuccess
-} from '../actions/session.action';
+import { logoutAction, sessionAction, sessionActionFailure, sessionActionSuccess } from '../actions/session.action';
 
 export const sessionReducer: ActionReducer<SessionState, Action> = createReducer(
     initSessionState,
@@ -32,16 +27,16 @@ export const sessionReducer: ActionReducer<SessionState, Action> = createReducer
     }),
 
     on(logoutAction, () => {
-      return {
-        isAuthenticated: false,
-        token: '',
-        currentUser: {},
-        nbeNotificationsNotRead: 0,
-        nbeMessagesNotRead: 0,
-        nbeCarts: 0,
-        oneSignalId: '',
-        loading: false,
-        errorMessage: ''
-      };
+        return {
+            isAuthenticated: false,
+            token: '',
+            currentUser: {},
+            nbeNotificationsNotRead: 0,
+            nbeMessagesNotRead: 0,
+            nbeCarts: 0,
+            oneSignalId: '',
+            loading: false,
+            errorMessage: '',
+        };
     })
 );

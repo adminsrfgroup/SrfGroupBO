@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import {SessionFacadeService} from "../../../main-features/login/store/facade/session-facade.service";
-import {StorageService} from "../../services/storage.service";
-import {AllAppConfig} from "../../../config";
-import {Router} from "@angular/router";
-import {LoginFacadeService} from "../../../main-features/login/store/facade/login-facade.service";
+import { SessionFacadeService } from '../../../main-features/login/store/facade/session-facade.service';
+import { StorageService } from '../../services/storage.service';
+import { AllAppConfig } from '../../../config';
+import { Router } from '@angular/router';
+import { LoginFacadeService } from '../../../main-features/login/store/facade/login-facade.service';
 
 @Component({
     selector: 'app-header',
@@ -34,22 +34,14 @@ export class HeaderComponent {
 
     displayModal: boolean = false;
 
-    constructor(private sessionFacadeService: SessionFacadeService,
-                private loginFacadeService: LoginFacadeService,
-                private router: Router) {
-    }
+    constructor(private sessionFacadeService: SessionFacadeService, private loginFacadeService: LoginFacadeService, private router: Router) {}
 
     showModalDialog() {
-      this.displayModal = true;
+        this.displayModal = true;
     }
 
-    logout(): void{
-      StorageService.local.remove(AllAppConfig.NAME_TOKEN_CURRENT_USER);
-      StorageService.local.remove(AllAppConfig.NAME_REFRESH_TOKEN_CURRENT_USER);
-      StorageService.local.remove(AllAppConfig.VALUE_CURRENT_USER);
-      this.sessionFacadeService.logout();
-      this.loginFacadeService.resetLogin();
-      this.displayModal = false;
-      this.router.navigate(['/login']).then();
+    logout(): void {
+        this.sessionFacadeService.logout();
+        this.displayModal = false;
     }
 }

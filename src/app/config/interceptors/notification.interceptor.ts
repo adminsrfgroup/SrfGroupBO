@@ -12,7 +12,17 @@ export class NotificationInterceptor implements HttpInterceptor {
             tap({
                 next: (event: HttpEvent<any>) => {
                     if (event instanceof HttpResponse) {
-                        this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
+                        const headers = event.headers.keys();
+                        let alert: string | null = '';
+                        Object.entries<string>(headers).forEach(([k, v]) => {
+                            if (v.toLowerCase().endsWith('app-alert')) {
+                                alert = event.headers.get(v);
+                            }
+                        });
+
+                        if (alert) {
+                            this.messageService.add({ severity: 'success', summary: alert, detail: '' });
+                        }
                     }
                 },
                 error: (err: HttpErrorResponse) => {
