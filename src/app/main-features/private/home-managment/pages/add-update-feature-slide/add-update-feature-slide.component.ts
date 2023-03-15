@@ -7,6 +7,7 @@ import { addFeatureSlide, resetFeatureSlide } from '../../store/actions/feature-
 import { selectorFeatureHome } from '../../store/selectors/home.selectors';
 import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
+import {Editor, Toolbar} from 'ngx-editor';
 
 @Component({
     selector: 'app-add-update-feature-slide',
@@ -24,9 +25,31 @@ export class AddUpdateFeatureSlideComponent implements OnInit, OnDestroy {
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private store: Store<HomeState>, private router: Router) {}
+
+    editorAr!: Editor;
+    editorFr!: Editor;
+    editorEn!: Editor;
+    html = '';
+    toolbar: Toolbar = [
+      ['bold', 'italic'],
+      ['underline', 'strike'],
+      ['code', 'blockquote'],
+      ['ordered_list', 'bullet_list'],
+      [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+      ['link', 'image'],
+      ['text_color', 'background_color'],
+      ['align_left', 'align_center', 'align_right', 'align_justify'],
+    ];
+
+
+  constructor(private store: Store<HomeState>, private router: Router) {}
 
     ngOnInit() {
+
+      this.editorAr = new Editor();
+      this.editorFr = new Editor();
+      this.editorEn = new Editor();
+
         this.store
             .select(selectorFeatureHome)
             .pipe(takeUntil(this.destroy$))
@@ -65,6 +88,9 @@ export class AddUpdateFeatureSlideComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+      this.editorAr.destroy();
+      this.editorFr.destroy();
+      this.editorEn.destroy();
         this.destroy$.next(true);
         this.destroy$.unsubscribe();
     }

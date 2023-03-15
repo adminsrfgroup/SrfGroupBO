@@ -6,6 +6,7 @@ const routes: Routes = [
     {
         path: 'list',
         component: ListUsersComponent,
+        data: { breadcrumb: 'List Users' }
     },
     {
         path: '',

@@ -1,28 +1,59 @@
 <h5>Multiple</h5>
 <div class="container-side-bar">
-    <p-accordion [multiple]="true">
-        <p-accordionTab header="Dashboard Mangment">
-            <ul>
-                <li className="py-4" routerLink="/private/dashboard/home">Dashboard</li>
-                <li className="py-4" routerLink="/private/dashboard/logs">Logs</li>
+  <cdk-accordion class="example-accordion">
+    <cdk-accordion-item
+      *ngFor="let accordion of listAccordions; let index = index;"
+      #accordionItem="cdkAccordionItem"
+      class="example-accordion-item"
+      role="button"
+      tabindex="0"
+      [attr.id]="'accordion-header-' + index"
+      [attr.aria-expanded]="accordionItem.expanded"
+      [attr.aria-controls]="'accordion-body-' + index">
+      <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+        {{ accordion.name }}
+        <span class="example-accordion-item-description">
+        Click to {{ accordionItem.expanded ? 'close' : 'open' }}
+      </span>
+      </div>
+      <div
+        class="example-accordion-item-body"
+        role="region"
+        [style.display]="accordionItem.expanded ? '' : 'none'"
+        [attr.id]="'accordion-body-' + index"
+        [attr.aria-labelledby]="'accordion-header-' + index">
+        <ul>
+          <li className="py-4"
+          *ngFor="let item of accordion.children"
+          [routerLink]="item.link" >{{item.name}}</li>
+        </ul>
+      </div>
+    </cdk-accordion-item>
+  </cdk-accordion>
 
-                <li className="py-4" routerLink="/private/dashboard/organigramme">Organigramme</li>
-            </ul>
-        </p-accordionTab>
-        <p-accordionTab header="User Managment">
-            <ul>
-                <li className="py-4" routerLink="/private/user/list">List Users</li>
-                <li className="py-4" routerLink="/private/dashboard/logs">Logs</li>
+  <!--<p-accordion [multiple]="true">
+      <p-accordionTab header="Dashboard Mangment">
+          <ul>
+              <li className="py-4" routerLink="/private/dashboard/home">Dashboard</li>
+              <li className="py-4" routerLink="/private/dashboard/logs">Logs</li>
 
-                <li className="py-4" routerLink="/private/dashboard/organigramme">Organigramme</li>
-            </ul>
-        </p-accordionTab>
-        <p-accordionTab header="Home Management">
-            <ul>
-                <li className="py-4" routerLink="/private/home/top-slides">List Top Slides</li>
+              <li className="py-4" routerLink="/private/dashboard/organigramme">Organigramme</li>
+          </ul>
+      </p-accordionTab>
+      <p-accordionTab header="User Managment">
+          <ul>
+              <li className="py-4" routerLink="/private/user/list">List Users</li>
+              <li className="py-4" routerLink="/private/dashboard/logs">Logs</li>
 
-                <li className="py-4" routerLink="/private/home/list-feature-slide">List Feature Slide</li>
-            </ul>
-        </p-accordionTab>
-    </p-accordion>
+              <li className="py-4" routerLink="/private/dashboard/organigramme">Organigramme</li>
+          </ul>
+      </p-accordionTab>
+      <p-accordionTab header="Home Management">
+          <ul>
+              <li className="py-4" routerLink="/private/home/top-slides">List Top Slides</li>
+
+              <li className="py-4" routerLink="/private/home/list-feature-slide">List Feature Slide</li>
+          </ul>
+      </p-accordionTab>
+  </p-accordion>-->
 </div>

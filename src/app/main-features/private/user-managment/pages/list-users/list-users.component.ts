@@ -1,11 +1,18 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Table } from 'primeng/table';
-import { PrimeNGConfig } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../store/state/user.state';
 import { loadListUsers } from '../../store/actions/list-user.actions';
 import { selectorEntitiesUser, selectorLoadingUser, selectorTotalElementsUser, selectorTotalPagesUser } from '../../store/selectors/list-user.selectors';
 import { IUser } from '../../../../../shared/models/user.model';
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
 
 @Component({
     selector: 'app-list-users',
@@ -14,7 +21,6 @@ import { IUser } from '../../../../../shared/models/user.model';
     encapsulation: ViewEncapsulation.None,
 })
 export class ListUsersComponent implements OnInit {
-    selectedCustomers!: any[];
 
     representatives!: any[];
 
@@ -25,9 +31,13 @@ export class ListUsersComponent implements OnInit {
     totalElements: number = 0;
     totalPages: number = 0;
 
-    @ViewChild('dt') table!: Table;
+    // @ViewChild('dt') table!: Table;
+    displayedColumns: string[] = ['id', 'firstName', 'email', 'phone', 'registerDate', 'address'];
+    dataSource = new MatTableDataSource<IUser>([]);
 
-    constructor(private primengConfig: PrimeNGConfig, private store: Store<UserState>) {}
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+    constructor(private store: Store<UserState>) {}
 
     ngOnInit(): void {
         this.representatives = [
@@ -51,7 +61,6 @@ export class ListUsersComponent implements OnInit {
             { label: 'Renewal', value: 'renewal' },
             { label: 'Proposal', value: 'proposal' },
         ];
-        this.primengConfig.ripple = true;
 
         this.store.select(selectorTotalPagesUser).subscribe({
             next: (result: number) => {
@@ -89,13 +98,13 @@ export class ListUsersComponent implements OnInit {
             const activity = parseInt(value);
 
             if (!isNaN(activity)) {
-                this.table.filter(activity, 'activity', 'gte');
+                // this.table.filter(activity, 'activity', 'gte');
             }
         }
     }
 
     onDateSelect(value: any) {
-        this.table.filter(this.formatDate(value), 'date', 'equals');
+        // this.table.filter(this.formatDate(value), 'date', 'equals');
     }
 
     formatDate(date: any) {
@@ -114,14 +123,14 @@ export class ListUsersComponent implements OnInit {
     }
 
     onRepresentativeChange(event: any) {
-        this.table.filter(event.value, 'representative', 'in');
+        // this.table.filter(event.value, 'representative', 'in');
     }
 
     filter(event: any, filed: string, matchMode: string) {
-        this.table.filter(event.target?.value, filed, matchMode);
+        // this.table.filter(event.target?.value, filed, matchMode);
     }
 
     filterGlobal(event: any, matchMode: string) {
-        this.table.filterGlobal(event.target.value, matchMode);
+        // this.table.filterGlobal(event.target.value, matchMode);
     }
 }

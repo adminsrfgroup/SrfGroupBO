@@ -1,19 +1,19 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IPostHomeFeature } from '../../../../../shared/models/post-home-feature.model';
-import { Table } from 'primeng/table';
-import { ConfirmationService } from 'primeng/api';
 import { Store } from '@ngrx/store';
-import { HomeState, IFeatureHome, ITopSlides } from '../../store/state/init.state';
-import { selectorFeatureHome, selectorTopSlides } from '../../store/selectors/home.selectors';
+import { HomeState, IFeatureHome } from '../../store/state/init.state';
+import { selectorFeatureHome} from '../../store/selectors/home.selectors';
 import { Subject, takeUntil } from 'rxjs';
-import { fetchTopSlides, resetTopSlide } from '../../store/actions/home.actions';
 import { fetchFeatureSlides, resetFeatureSlide } from '../../store/actions/feature-home.actions';
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
+import {MatDialog} from "@angular/material/dialog";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
     selector: 'app-list-feature-slide',
     templateUrl: './list-feature-slide.component.html',
-    styleUrls: ['./list-feature-slide.component.scss'],
-    providers: [ConfirmationService],
+    styleUrls: ['./list-feature-slide.component.scss']
 })
 export class ListFeatureSlideComponent implements OnInit, OnDestroy {
     listFeatureSlides: IPostHomeFeature[] = [];
@@ -21,12 +21,25 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
     loading: boolean = false;
     totalItems: number = 0;
     totalPages: number = 0;
-    @ViewChild('dt') table!: Table;
+    // @ViewChild('dt') table!: Table;
     representatives!: any[];
     statuses!: any[];
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private store: Store<HomeState>, private confirmationService: ConfirmationService) {}
+
+
+
+    title = 'app1';
+    displayedColumns: string[] = ['id', 'descriptionAr', 'descriptionFr', 'descriptionEn', 'image', 'action'];
+    dataSource: any;
+    empdata: any;
+
+    @ViewChild(MatPaginator) paginator !: MatPaginator;
+    @ViewChild(MatSort) sort !: MatSort;
+
+
+
+  constructor(private store: Store<HomeState>, private dialog: MatDialog) {}
 
     ngOnInit() {
         this.store
@@ -42,6 +55,13 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
                         this.totalItems = result.totalItems;
                         this.totalPages = result.totalPages;
                         this.loading = result.loadingEntities;
+
+
+                        this.empdata = result.entities.slice();
+
+                        this.dataSource = new MatTableDataSource(this.empdata)
+                        this.dataSource.paginator = this.paginator;
+                        this.dataSource.sort = this.sort;
                     }
 
                     if (result.deleteSuccess) {
@@ -49,6 +69,30 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
                     }
                 },
             });
+    }
+
+    Filterchange(event: Event) {
+      const filvalue = (event.target as HTMLInputElement).value;
+      console.log('filvalue ', filvalue)
+      this.dataSource.filter = filvalue;
+    }
+
+    FunctionEdit(code: any) {
+      this.OpenDialog('1000ms','600ms',code)
+    }
+
+    FunctionDelete(code: any) {
+
+
+    }
+
+    getrow(row: any) {
+      //console.log(row);
+    }
+
+    OpenDialog(enteranimation: any, exitanimation: any,code:any) {
+
+
     }
 
     formatDate(date: any) {
@@ -67,19 +111,19 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
     }
 
     onDateSelect(value: any) {
-        this.table.filter(this.formatDate(value), 'date', 'equals');
+        // this.table.filter(this.formatDate(value), 'date', 'equals');
     }
 
     onRepresentativeChange(event: any) {
-        this.table.filter(event.value, 'representative', 'in');
+      // this.table.filter(event.value, 'representative', 'in');
     }
 
     filter(event: any, filed: string, matchMode: string) {
-        this.table.filter(event.target?.value, filed, matchMode);
+      // this.table.filter(event.target?.value, filed, matchMode);
     }
 
     filterGlobal(event: any, matchMode: string) {
-        this.table.filterGlobal(event.target.value, matchMode);
+      // this.table.filterGlobal(event.target.value, matchMode);
     }
 
     onActivityChange(event: any) {
@@ -88,7 +132,7 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
             const activity = parseInt(value);
 
             if (!isNaN(activity)) {
-                this.table.filter(activity, 'activity', 'gte');
+              // this.table.filter(activity, 'activity', 'gte');
             }
         }
     }

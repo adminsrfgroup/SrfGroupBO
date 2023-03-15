@@ -9,5 +9,8 @@
     .container-main {
         flex: 1;
         width: calc(100% - 240px);
+        main{
+          padding: 1rem;
+        }
     }
 }

@@ -5,13 +5,11 @@ import { selectorTopSlides } from '../../store/selectors/home.selectors';
 import { Subject, takeUntil } from 'rxjs';
 import { deleteTopSlides, fetchTopSlides, resetTopSlide } from '../../store/actions/home.actions';
 import { ITopHomeSlidesImages } from '../../../../../shared/models/top-home-slides-images.model';
-import { Table } from 'primeng/table';
-import { ConfirmationService } from 'primeng/api';
+
 @Component({
     selector: 'app-top-slide',
     templateUrl: './top-slide.component.html',
     styleUrls: ['./top-slide.component.scss'],
-    providers: [ConfirmationService],
 })
 export class TopSlideComponent implements OnInit, OnDestroy {
     listTopSlides: ITopHomeSlidesImages[] = [];
@@ -20,13 +18,13 @@ export class TopSlideComponent implements OnInit, OnDestroy {
     loading: boolean = false;
     totalItems: number = 0;
     totalPages: number = 0;
-    @ViewChild('dt') table!: Table;
+    // @ViewChild('dt') table!: Table;
     representatives!: any[];
     statuses!: any[];
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private store: Store<HomeState>, private confirmationService: ConfirmationService) {}
+    constructor(private store: Store<HomeState>) {}
 
     ngOnInit() {
         this.store
@@ -57,7 +55,7 @@ export class TopSlideComponent implements OnInit, OnDestroy {
             const activity = parseInt(value);
 
             if (!isNaN(activity)) {
-                this.table.filter(activity, 'activity', 'gte');
+                // this.table.filter(activity, 'activity', 'gte');
             }
         }
     }
@@ -78,31 +76,31 @@ export class TopSlideComponent implements OnInit, OnDestroy {
     }
 
     onDateSelect(value: any) {
-        this.table.filter(this.formatDate(value), 'date', 'equals');
+        // this.table.filter(this.formatDate(value), 'date', 'equals');
     }
 
     onRepresentativeChange(event: any) {
-        this.table.filter(event.value, 'representative', 'in');
+        // this.table.filter(event.value, 'representative', 'in');
     }
 
     filter(event: any, filed: string, matchMode: string) {
-        this.table.filter(event.target?.value, filed, matchMode);
+        // this.table.filter(event.target?.value, filed, matchMode);
     }
 
     filterGlobal(event: any, matchMode: string) {
-        this.table.filterGlobal(event.target.value, matchMode);
+        // this.table.filterGlobal(event.target.value, matchMode);
     }
 
     deleteSlide(id: number) {
-        this.confirmationService.confirm({
-            message: 'Do you want to delete this record?',
-            header: 'Delete Confirmation',
-            icon: 'pi pi-info-circle',
-            accept: () => {
-                this.store.dispatch(deleteTopSlides({ id: id }));
-            },
-            reject: () => {},
-        });
+        // this.confirmationService.confirm({
+        //     message: 'Do you want to delete this record?',
+        //     header: 'Delete Confirmation',
+        //     icon: 'pi pi-info-circle',
+        //     accept: () => {
+        //         this.store.dispatch(deleteTopSlides({ id: id }));
+        //     },
+        //     reject: () => {},
+        // });
     }
 
     ngOnDestroy(): void {

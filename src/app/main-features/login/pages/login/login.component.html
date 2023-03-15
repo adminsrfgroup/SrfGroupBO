@@ -1,30 +1,77 @@
 <div class="grid grid-login">
-    <div class="col-4 col-offset-4">
-        <form [formGroup]="fgLogin" (ngSubmit)="submitForm()">
-            <div class="card">
-                <h3 class="text-center" id="login-title">SrfGroup</h3>
-                <div class="field">
-                    <h5 class="mb-2" for="password">Email</h5>
-                    <input
-                        id="email"
-                        type="text"
-                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                        formControlName="email" />
-                    <small id="email-help" class="text-red-500" *ngIf="fgLogin.get('email')?.errors && submited">Enter your email</small>
-                </div>
-                <div class="field">
-                    <h5 class="mb-2" for="password">Password</h5>
-                    <p-password id="password" type="password" class="input-password" formControlName="password" [toggleMask]="true"></p-password>
-                    <small id="password-help" class="text-red-500" *ngIf="fgLogin.get('password')?.errors && submited">Enter your password.</small>
-                </div>
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="fgLogin" (ngSubmit)="submitForm()">
+        <h2>Log In</h2>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput
+                 id="email"
+                 name="email"
+                 formControlName="email"
+                 placeholder="Ex. pat@example.com">
+          <mat-hint>Errors appear instantly!</mat-hint>
+          <mat-error *ngIf="fgLogin.get('email')!.hasError('email') && !fgLogin.get('email')!.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="fgLogin.get('email')!.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your password</mat-label>
+          <input id="password"
+                 name="password"
+                 matInput
+                 [type]="hide ? 'password' : 'text'"
+                 formControlName="password">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
 
-                <button
-                    type="submit"
-                    class="text-white bg-purple-500 border-purple-500 px-3 py-2 text-base border-1 border-solid border-round cursor-pointer transition-all transition-duration-200 hover:bg-purple-600 hover:border-purple-600 active:bg-purple-700 active:border-purple-700"
-                    data-cy="submit-login">
-                    Submit
-                </button>
-            </div>
-        </form>
-    </div>
+          <mat-hint>Errors appear instantly!</mat-hint>
+          <mat-error *ngIf="fgLogin.get('password')!.hasError('password') && !fgLogin.get('password')!.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="fgLogin.get('password')!.hasError('required')">
+            Password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-raised-button color="primary">Login</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>
+
+<!--<div class="grid grid-login">-->
+<!--    <div class="col-4 col-offset-4">-->
+<!--        <form [formGroup]="fgLogin" (ngSubmit)="submitForm()">-->
+<!--            <div class="card">-->
+<!--                <h3 class="text-center" id="login-title">SrfGroup</h3>-->
+<!--                <div class="field">-->
+<!--                    <h5 class="mb-2" for="password">Email</h5>-->
+<!--                    <input-->
+<!--                        id="email"-->
+<!--                        type="text"-->
+<!--                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"-->
+<!--                        formControlName="email" />-->
+<!--                    <small id="email-help" class="text-red-500" *ngIf="fgLogin.get('email')?.errors && submited">Enter your email</small>-->
+<!--                </div>-->
+<!--                <div class="field">-->
+<!--                    <h5 class="mb-2" for="password">Password</h5>-->
+<!--                    <p-password id="password" type="password" class="input-password" formControlName="password" [toggleMask]="true"></p-password>-->
+<!--                    <small id="password-help" class="text-red-500" *ngIf="fgLogin.get('password')?.errors && submited">Enter your password.</small>-->
+<!--                </div>-->
+
+<!--                <button-->
+<!--                    type="submit"-->
+<!--                    class="text-white bg-purple-500 border-purple-500 px-3 py-2 text-base border-1 border-solid border-round cursor-pointer transition-all transition-duration-200 hover:bg-purple-600 hover:border-purple-600 active:bg-purple-700 active:border-purple-700"-->
+<!--                    data-cy="submit-login">-->
+<!--                    Submit-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->

@@ -1,23 +1,64 @@
-<p-toolbar>
-    <div class="p-toolbar-group-left">
-        <p-button label="New" icon="pi pi-plus" class="mr-2"></p-button>
-        <p-button label="Upload" icon="pi pi-upload" styleClass="p-button-success"></p-button>
+<div>
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>My App</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon"
+            aria-label="Example icon-button with share icon"
+            (click)="logout(myDialog)">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<ng-template #myDialog>
+  <h1 mat-dialog-title>Delete file</h1>
+  <div mat-dialog-content>
+    Would you like to delete cat.jpeg?
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>No</button>
+    <button mat-button (click)="onConfirmLogout()" cdkFocusInitial>Ok</button>
+  </div>
+</ng-template>
 
-        <em class="p-toolbar-separator pi pi-bars mr-2" style="vertical-align: middle"></em>
+<!--<app-confirm-dialog>-->
+<!--  <h1 mat-dialog-title>Delete file</h1>-->
+<!--  <div mat-dialog-content>-->
+<!--    Would you like to delete cat.jpeg?-->
+<!--  </div>-->
+<!--  <div mat-dialog-actions>-->
+<!--    <button mat-button mat-dialog-close>No</button>-->
+<!--    <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>-->
+<!--  </div>-->
+<!--</app-confirm-dialog>-->
+<!--<p-toolbar>-->
+<!--    <div class="p-toolbar-group-left">-->
+<!--        <p-button label="New" icon="pi pi-plus" class="mr-2"></p-button>-->
+<!--        <p-button label="Upload" icon="pi pi-upload" styleClass="p-button-success"></p-button>-->
 
-        <p-splitButton label="Save" icon="pi pi-check" [model]="items" styleClass="p-button-warning"></p-splitButton>
-    </div>
+<!--        <em class="p-toolbar-separator pi pi-bars mr-2" style="vertical-align: middle"></em>-->
 
-    <div class="p-toolbar-group-right">
-        <p-button icon="pi pi-search" class="mr-2"></p-button>
-        <p-button icon="pi pi-calendar" styleClass="p-button-success mr-2"></p-button>
-        <p-button icon="pi pi-times" styleClass="p-button-danger" (click)="showModalDialog()"></p-button>
-    </div>
-</p-toolbar>
-<p-dialog header="Logout" [(visible)]="displayModal" [modal]="true" [style]="{ width: '50vw' }" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
-    <p class="m-0">Are you loged out !</p>
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="displayModal = false" label="Cancel" class="p-button-text"></p-button>
-        <button pButton type="button" label="Logout" class="p-button-danger" (click)="logout()"></button>
-    </ng-template>
-</p-dialog>
+<!--        <p-splitButton label="Save" icon="pi pi-check" [model]="items" styleClass="p-button-warning"></p-splitButton>-->
+<!--    </div>-->
+
+<!--    <div class="p-toolbar-group-right">-->
+<!--        <p-button icon="pi pi-search" class="mr-2"></p-button>-->
+<!--        <p-button icon="pi pi-calendar" styleClass="p-button-success mr-2"></p-button>-->
+<!--        <p-button icon="pi pi-times" styleClass="p-button-danger" (click)="showModalDialog()"></p-button>-->
+<!--    </div>-->
+<!--</p-toolbar>-->
+<!--<p-dialog header="Logout" [(visible)]="displayModal" [modal]="true" [style]="{ width: '50vw' }" [baseZIndex]="10000" [draggable]="false" [resizable]="false">-->
+<!--    <p class="m-0">Are you loged out !</p>-->
+<!--    <ng-template pTemplate="footer">-->
+<!--        <p-button icon="pi pi-check" (click)="displayModal = false" label="Cancel" class="p-button-text"></p-button>-->
+<!--        <button pButton type="button" label="Logout" class="p-button-danger" (click)="logout()"></button>-->
+<!--    </ng-template>-->
+<!--</p-dialog>-->

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 
 import { HomeManagmentRoutingModule } from './home-managment-routing.module';
 import { TopSlideComponent } from './pages/top-slide/top-slide.component';

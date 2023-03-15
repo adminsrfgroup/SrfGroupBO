@@ -1,82 +1,173 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { SideBarComponent } from './layouts/side-bar/side-bar.component';
 import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
-import { ToolbarModule } from 'primeng/toolbar';
-import { SplitButtonModule } from 'primeng/splitbutton';
-import { AccordionModule } from 'primeng/accordion';
 import { BreadcrumbComponent } from './layouts/breadcrumb/breadcrumb.component';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessagesHelpComponent } from './components/messages-help/messages-help.component';
-import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
-import { PasswordModule } from 'primeng/password';
-import { DialogModule } from 'primeng/dialog';
-import { TableModule } from 'primeng/table';
-import { DropdownModule } from 'primeng/dropdown';
-import { CalendarModule } from 'primeng/calendar';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { SliderModule } from 'primeng/slider';
-import { ContextMenuModule } from 'primeng/contextmenu';
-import { InputTextModule } from 'primeng/inputtext';
-import { EditorModule } from 'primeng/editor';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { MessagesModule } from 'primeng/messages';
+import {CdkAccordionModule} from '@angular/cdk/accordion';
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {CdkListboxModule} from '@angular/cdk/listbox';
+import {PortalModule} from '@angular/cdk/portal';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {CdkStepperModule} from '@angular/cdk/stepper';
+import {CdkTableModule} from '@angular/cdk/table';
+import {CdkTreeModule} from '@angular/cdk/tree';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {MatButtonModule} from '@angular/material/button';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatCardModule} from '@angular/material/card';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatListModule} from '@angular/material/list';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSortModule} from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatTreeModule} from '@angular/material/tree';
+import {OverlayModule} from '@angular/cdk/overlay';
+import {CdkMenuModule} from '@angular/cdk/menu';
+import {DialogModule} from '@angular/cdk/dialog';
+import {RouterLink} from "@angular/router";
+import { NgxEditorModule } from 'ngx-editor';
 
 @NgModule({
     declarations: [SideBarComponent, HeaderComponent, FooterComponent, BreadcrumbComponent, MessagesHelpComponent],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        ToolbarModule,
-        CardModule,
-        ButtonModule,
-        SplitButtonModule,
-        AccordionModule,
-        BreadcrumbModule,
-        ToastModule,
-        PasswordModule,
-        FormsModule,
-        DialogModule,
-        TableModule,
-        DropdownModule,
-        CalendarModule,
-        MultiSelectModule,
-        ProgressBarModule,
-        SliderModule,
-        ContextMenuModule,
-        InputTextModule,
-        EditorModule,
-        ConfirmDialogModule,
-        MessagesModule,
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CdkAccordionModule,
+    ClipboardModule,
+    CdkListboxModule,
+    CdkMenuModule,
+    CdkStepperModule,
+    CdkTableModule,
+    CdkTreeModule,
+    DragDropModule,
+    MatAutocompleteModule,
+    MatBadgeModule,
+    MatBottomSheetModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    MatTreeModule,
+    OverlayModule,
+    PortalModule,
+    ScrollingModule,
+    DialogModule,
+    RouterLink,
+    NgOptimizedImage,
+    NgxEditorModule
+  ],
     exports: [
-        CardModule,
-        ButtonModule,
         SideBarComponent,
         HeaderComponent,
         FooterComponent,
         BreadcrumbComponent,
-        ToastModule,
-        PasswordModule,
         FormsModule,
-        TableModule,
-        DropdownModule,
-        CalendarModule,
-        MultiSelectModule,
-        ProgressBarModule,
-        SliderModule,
-        ContextMenuModule,
-        InputTextModule,
-        EditorModule,
-        ConfirmDialogModule,
-        MessagesModule,
+        CdkAccordionModule,
+        ClipboardModule,
+        CdkListboxModule,
+        CdkMenuModule,
+        CdkStepperModule,
+        CdkTableModule,
+        CdkTreeModule,
+        DragDropModule,
+        MatAutocompleteModule,
+        MatBadgeModule,
+        MatBottomSheetModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatChipsModule,
+        MatStepperModule,
+        MatDatepickerModule,
+        MatDialogModule,
+        MatDividerModule,
+        MatExpansionModule,
+        MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatMenuModule,
+        MatNativeDateModule,
+        MatPaginatorModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        MatRadioModule,
+        MatRippleModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatSliderModule,
+        MatSlideToggleModule,
+        MatSnackBarModule,
+        MatSortModule,
+        MatTableModule,
+        MatTabsModule,
+        MatToolbarModule,
+        MatTooltipModule,
+        MatTreeModule,
+        OverlayModule,
+        PortalModule,
+        ScrollingModule,
+        DialogModule,
+      NgOptimizedImage,
+      NgxEditorModule
     ],
-    providers: [MessageService],
+    providers: [],
 })
 export class SharedModule {}

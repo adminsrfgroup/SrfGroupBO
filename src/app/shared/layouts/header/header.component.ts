@@ -1,9 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, TemplateRef} from '@angular/core';
 import { SessionFacadeService } from '../../../main-features/login/store/facade/session-facade.service';
-import { StorageService } from '../../services/storage.service';
-import { AllAppConfig } from '../../../config';
-import { Router } from '@angular/router';
-import { LoginFacadeService } from '../../../main-features/login/store/facade/login-facade.service';
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
     selector: 'app-header',
@@ -11,6 +8,9 @@ import { LoginFacadeService } from '../../../main-features/login/store/facade/lo
     styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+
+    dialogRef!: MatDialogRef<any>;
+
     items = [
         {
             label: 'Update',
@@ -34,14 +34,22 @@ export class HeaderComponent {
 
     displayModal: boolean = false;
 
-    constructor(private sessionFacadeService: SessionFacadeService, private loginFacadeService: LoginFacadeService, private router: Router) {}
+    constructor(private sessionFacadeService: SessionFacadeService,
+                private dialog: MatDialog) {}
 
     showModalDialog() {
         this.displayModal = true;
     }
 
-    logout(): void {
-        this.sessionFacadeService.logout();
-        this.displayModal = false;
+    logout(templateRef: TemplateRef<any>): void {
+      this.dialogRef = this.dialog.open(templateRef, {
+          width: '250px',
+        });
+    }
+
+    onConfirmLogout(): void {
+      this.dialogRef.close();
+      this.sessionFacadeService.logout();
+      this.displayModal = false;
     }
 }

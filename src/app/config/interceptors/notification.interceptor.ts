@@ -1,11 +1,10 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { MessageService } from 'primeng/api';
 
 @Injectable()
 export class NotificationInterceptor implements HttpInterceptor {
-    constructor(private messageService: MessageService) {}
+    constructor() {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(
@@ -21,12 +20,12 @@ export class NotificationInterceptor implements HttpInterceptor {
                         });
 
                         if (alert) {
-                            this.messageService.add({ severity: 'success', summary: alert, detail: '' });
+                            // this.messageService.add({ severity: 'success', summary: alert, detail: '' });
                         }
                     }
                 },
                 error: (err: HttpErrorResponse) => {
-                    this.messageService.add({ severity: 'error', summary: 'Service Message', detail: 'Via MessageService' });
+                    // this.messageService.add({ severity: 'error', summary: 'Service Message', detail: 'Via MessageService' });
                 },
             })
         );

@@ -1,134 +1,204 @@
-<div class="list-feature-slides">
-    <div class="list-top-slides">
-        <div class="card">
-            <div class="flex justify-content-between flex-wrap card-container purple-container">
-                <div class="flex align-items-center justify-content-center border-round m-2">
-                    <h3>List of Feature Slides</h3>
-                </div>
-                <div class="flex align-items-center justify-content-center border-round m-2">
-                    <a pButton pRipple label="Add new Slide" class="p-button-outlined p-button-secondary" routerLink="/private/home/add-feature-slide"></a>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="content" role="main">
 
-    <p-table
-        #dt
-        [value]="listFeatureSlides"
-        [(selection)]="selectedFeatureSlides"
-        dataKey="id"
-        styleClass="p-datatable-customers"
-        [rowHover]="true"
-        [rows]="10"
-        [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[10, 25, 50]"
-        [loading]="loading"
-        [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [filterDelay]="0"
-        [globalFilterFields]="['id', 'descriptionAr', 'descriptionFr', 'descriptionEn']">
-        <ng-template pTemplate="caption">
-            <div class="table-header">
-                List of Customers
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="filterGlobal($event, 'contains')" placeholder="Global Search" />
-                </span>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr class="p-header-row">
-                <th style="width: 3rem"></th>
-                <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
-                <th pSortableColumn="descriptionAr">descriptionAr <p-sortIcon field="descriptionAr"></p-sortIcon></th>
-                <th pSortableColumn="descriptionFr">descriptionFr <p-sortIcon field="descriptionFr"></p-sortIcon></th>
-                <th pSortableColumn="descriptionEn">descriptionEn <p-sortIcon field="descriptionEn"></p-sortIcon></th>
-                <th pSortableColumn="image">image <p-sortIcon field="image"></p-sortIcon></th>
-                <th pSortableColumn="activity">Activity <p-sortIcon field="activity"></p-sortIcon></th>
-                <th style="width: 8rem"></th>
-            </tr>
-            <tr>
-                <th>
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <th>
-                    <input pInputText type="text" (input)="filter($event, 'name', 'startsWith')" placeholder="Search by Name" class="p-column-filter" />
-                </th>
-                <th>
-                    <input pInputText type="text" (input)="filter($event, 'country.name', 'contains')" placeholder="Search by Country" class="p-column-filter" />
-                </th>
-                <th>
-                    <p-multiSelect [options]="representatives" placeholder="All" (onChange)="onRepresentativeChange($event)" styleClass="p-column-filter" optionLabel="name">
-                        <ng-template let-option pTemplate="item">
-                            <div class="p-multiselect-representative-option">
-                                <span class="p-ml-1">{{ option.label }}</span>
-                            </div>
-                        </ng-template>
-                    </p-multiSelect>
-                </th>
-                <th>
-                    <p-calendar
-                        (onSelect)="onDateSelect($event)"
-                        (onClearClick)="dt.filter('', 'date', 'equals')"
-                        [showButtonBar]="true"
-                        styleClass="p-column-filter"
-                        placeholder="Registration Date"
-                        [readonlyInput]="true"
-                        dateFormat="yy-mm-dd"></p-calendar>
-                </th>
-                <th>
-                    <p-dropdown [options]="statuses" (onChange)="dt.filter($event.value, 'status', 'equals')" styleClass="p-column-filter" placeholder="Select a Status" [showClear]="true">
-                        <ng-template let-option pTemplate="item">
-                            <span [class]="'customer-badge status-' + option.value">&#123;&#123;option.label&#125;&#125;</span>
-                        </ng-template>
-                    </p-dropdown>
-                </th>
-                <th>
-                    <input pInputText type="text" (input)="onActivityChange($event)" placeholder="Minimum" class="p-column-filter" />
-                </th>
-                <th></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-customer>
-            <tr class="p-selectable-row">
-                <td>
-                    <p-tableCheckbox [value]="customer"></p-tableCheckbox>
-                </td>
-                <td>
-                    <span class="p-column-title">id</span>
-                    {{ customer.id }}
-                </td>
-                <td>
-                    <span class="p-column-title">descriptionAr</span>
-                    <div [innerHTML]="customer.descriptionAr"></div>
-                </td>
-                <td>
-                    <span class="p-column-title">descriptionFr</span>
-                    <div [innerHTML]="customer.descriptionFr"></div>
-                </td>
-                <td>
-                    <span class="p-column-title">descriptionEn</span>
-                    <div [innerHTML]="customer.descriptionEn"></div>
-                </td>
-                <td>
-                    <span class="p-column-title">image</span>
-                    <img [src]="customer.image" width="150" height="150" />
-                </td>
-                <td style="text-align: center">
-                    <div class="container-action">
-                        <span class="p-buttonset">
-                            <a pButton pRipple class="p-button-success" label="Edit" icon="pi pi-check" routerLink="/private/home/edit-add-top-slides/{{ customer.id }}"></a>
-                            <button pButton pRipple class="p-button-danger" label="Delete" icon="pi pi-trash" (click)="deleteSlide(customer.id)"></button>
-                        </span>
-                    </div>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="8">No customers found.</td>
-            </tr>
-        </ng-template>
-    </p-table>
+  <div class="mat-elevation-z8">
+
+    <mat-toolbar style="min-height: 100px; padding: 40px">
+      <h2>List Features</h2>
+      <span class="mr-a"></span>
+      <mat-form-field style="margin-bottom: -1.25em; margin-right: 5px">
+        <mat-label>Filter</mat-label>
+        <input matInput placeholder="Filter" (keyup)="Filterchange($event)">
+      </mat-form-field>
+      <a  routerLink="/private/home/add-feature-slide" mat-fab color="primary" aria-label="Example icon button with a delete icon">
+        <mat-icon>add</mat-icon>
+      </a>
+    </mat-toolbar>
+
+    <table mat-table matSort [dataSource]="dataSource" >
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let slide"> {{slide.id}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="descriptionAr">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef> DescriptionAr </th>
+        <td mat-cell *matCellDef="let slide"> {{slide.descriptionAr}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="descriptionFr">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef> DescriptionFr </th>
+        <td mat-cell *matCellDef="let slide"> {{slide.descriptionFr}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="descriptionEn">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef> DescriptionEn </th>
+        <td mat-cell *matCellDef="let slide"> {{slide.descriptionEn}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="image">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef> image </th>
+        <td mat-cell *matCellDef="let slide">
+          <img [src]="slide.image" width="80" height="80" />
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let slide">
+          <a  routerLink="/private/home/edit-add-top-slides/{{ slide.id }}" mat-raised-button color="primary" >Edit</a> |
+          <button mat-raised-button color="warn" (click)="FunctionDelete(slide.id)">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr (click)="getrow(row)" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+
+  </div>
 </div>
-<p-confirmDialog [style]="{ width: '50vw' }" [baseZIndex]="10000"></p-confirmDialog>
+
+<!--<div class="list-feature-slides">-->
+<!--    <div class="list-top-slides">-->
+<!--        <div class="card">-->
+<!--            <div class="flex justify-content-between flex-wrap card-container purple-container">-->
+<!--                <div class="flex align-items-center justify-content-center border-round m-2">-->
+<!--                    <h3>List of Feature Slides</h3>-->
+<!--                </div>-->
+<!--                <div class="flex align-items-center justify-content-center border-round m-2">-->
+<!--                    <a pButton pRipple label="Add new Slide" class="p-button-outlined p-button-secondary" routerLink="/private/home/add-feature-slide"></a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <p-table-->
+<!--        #dt-->
+<!--        [value]="listFeatureSlides"-->
+<!--        [(selection)]="selectedFeatureSlides"-->
+<!--        dataKey="id"-->
+<!--        styleClass="p-datatable-customers"-->
+<!--        [rowHover]="true"-->
+<!--        [rows]="10"-->
+<!--        [showCurrentPageReport]="true"-->
+<!--        [rowsPerPageOptions]="[10, 25, 50]"-->
+<!--        [loading]="loading"-->
+<!--        [paginator]="true"-->
+<!--        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"-->
+<!--        [filterDelay]="0"-->
+<!--        [globalFilterFields]="['id', 'descriptionAr', 'descriptionFr', 'descriptionEn']">-->
+<!--        <ng-template pTemplate="caption">-->
+<!--            <div class="table-header">-->
+<!--                List of Customers-->
+<!--                <span class="p-input-icon-left">-->
+<!--                    <i class="pi pi-search"></i>-->
+<!--                    <input pInputText type="text" (input)="filterGlobal($event, 'contains')" placeholder="Global Search" />-->
+<!--                </span>-->
+<!--            </div>-->
+<!--        </ng-template>-->
+<!--        <ng-template pTemplate="header">-->
+<!--            <tr class="p-header-row">-->
+<!--                <th style="width: 3rem"></th>-->
+<!--                <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>-->
+<!--                <th pSortableColumn="descriptionAr">descriptionAr <p-sortIcon field="descriptionAr"></p-sortIcon></th>-->
+<!--                <th pSortableColumn="descriptionFr">descriptionFr <p-sortIcon field="descriptionFr"></p-sortIcon></th>-->
+<!--                <th pSortableColumn="descriptionEn">descriptionEn <p-sortIcon field="descriptionEn"></p-sortIcon></th>-->
+<!--                <th pSortableColumn="image">image <p-sortIcon field="image"></p-sortIcon></th>-->
+<!--                <th pSortableColumn="activity">Activity <p-sortIcon field="activity"></p-sortIcon></th>-->
+<!--                <th style="width: 8rem"></th>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th>-->
+<!--                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    <input pInputText type="text" (input)="filter($event, 'name', 'startsWith')" placeholder="Search by Name" class="p-column-filter" />-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    <input pInputText type="text" (input)="filter($event, 'country.name', 'contains')" placeholder="Search by Country" class="p-column-filter" />-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    <p-multiSelect [options]="representatives" placeholder="All" (onChange)="onRepresentativeChange($event)" styleClass="p-column-filter" optionLabel="name">-->
+<!--                        <ng-template let-option pTemplate="item">-->
+<!--                            <div class="p-multiselect-representative-option">-->
+<!--                                <span class="p-ml-1">{{ option.label }}</span>-->
+<!--                            </div>-->
+<!--                        </ng-template>-->
+<!--                    </p-multiSelect>-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    <p-calendar-->
+<!--                        (onSelect)="onDateSelect($event)"-->
+<!--                        (onClearClick)="dt.filter('', 'date', 'equals')"-->
+<!--                        [showButtonBar]="true"-->
+<!--                        styleClass="p-column-filter"-->
+<!--                        placeholder="Registration Date"-->
+<!--                        [readonlyInput]="true"-->
+<!--                        dateFormat="yy-mm-dd"></p-calendar>-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    <p-dropdown [options]="statuses" (onChange)="dt.filter($event.value, 'status', 'equals')" styleClass="p-column-filter" placeholder="Select a Status" [showClear]="true">-->
+<!--                        <ng-template let-option pTemplate="item">-->
+<!--                            <span [class]="'customer-badge status-' + option.value">&#123;&#123;option.label&#125;&#125;</span>-->
+<!--                        </ng-template>-->
+<!--                    </p-dropdown>-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    <input pInputText type="text" (input)="onActivityChange($event)" placeholder="Minimum" class="p-column-filter" />-->
+<!--                </th>-->
+<!--                <th></th>-->
+<!--            </tr>-->
+<!--        </ng-template>-->
+<!--        <ng-template pTemplate="body" let-customer>-->
+<!--            <tr class="p-selectable-row">-->
+<!--                <td>-->
+<!--                    <p-tableCheckbox [value]="customer"></p-tableCheckbox>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <span class="p-column-title">id</span>-->
+<!--                    {{ customer.id }}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <span class="p-column-title">descriptionAr</span>-->
+<!--                    <div [innerHTML]="customer.descriptionAr"></div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <span class="p-column-title">descriptionFr</span>-->
+<!--                    <div [innerHTML]="customer.descriptionFr"></div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <span class="p-column-title">descriptionEn</span>-->
+<!--                    <div [innerHTML]="customer.descriptionEn"></div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <span class="p-column-title">image</span>-->
+<!--                    <img [src]="customer.image" width="150" height="150" />-->
+<!--                </td>-->
+<!--                <td style="text-align: center">-->
+<!--                    <div class="container-action">-->
+<!--                        <span class="p-buttonset">-->
+<!--                            <a pButton pRipple class="p-button-success" label="Edit" icon="pi pi-check" routerLink="/private/home/edit-add-top-slides/{{ customer.id }}"></a>-->
+<!--                            <button pButton pRipple class="p-button-danger" label="Delete" icon="pi pi-trash" (click)="deleteSlide(customer.id)"></button>-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </ng-template>-->
+<!--        <ng-template pTemplate="emptymessage">-->
+<!--            <tr>-->
+<!--                <td colspan="8">No customers found.</td>-->
+<!--            </tr>-->
+<!--        </ng-template>-->
+<!--    </p-table>-->
+<!--</div>-->
+<!--<p-confirmDialog [style]="{ width: '50vw' }" [baseZIndex]="10000"></p-confirmDialog>-->

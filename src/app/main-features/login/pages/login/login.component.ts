@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { LoginFacadeService } from '../../store/facade/login-facade.service';
 import { ILogin, IResponseLogin, IResponseSession } from '../../models/login.model';
 import { SessionFacadeService } from '../../store/facade/session-facade.service';
@@ -7,6 +7,14 @@ import { Subject, takeUntil } from 'rxjs';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { AllAppConfig } from '../../../../config';
 import { Router } from '@angular/router';
+import {ErrorStateMatcher} from '@angular/material/core';
+
+// export class MyErrorStateMatcher implements ErrorStateMatcher {
+//   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+//     const isSubmitted = form && form.submitted;
+//     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+//   }
+// }
 
 @Component({
     selector: 'app-login',
@@ -15,7 +23,14 @@ import { Router } from '@angular/router';
     encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent implements OnInit, OnDestroy {
-    fgLogin!: FormGroup;
+
+  // emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+
+  // matcher = new MyErrorStateMatcher();
+
+  hide = true;
+
+  fgLogin!: FormGroup;
     submited = false;
 
     value1!: string;
