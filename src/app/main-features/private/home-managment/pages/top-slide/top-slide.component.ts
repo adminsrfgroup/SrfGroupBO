@@ -24,6 +24,8 @@ export class TopSlideComponent implements OnInit, OnDestroy {
     representatives!: any[];
     statuses!: any[];
 
+    idDeleteSlide!: number;
+
     destroy$: Subject<boolean> = new Subject<boolean>();
 
     constructor(private store: Store<HomeState>, private confirmationService: ConfirmationService) {}
@@ -45,6 +47,7 @@ export class TopSlideComponent implements OnInit, OnDestroy {
                     }
 
                     if (result.deleteSuccess) {
+                        this.confirmationService.close();
                         this.store.dispatch(resetTopSlide());
                     }
                 },
@@ -94,15 +97,20 @@ export class TopSlideComponent implements OnInit, OnDestroy {
     }
 
     deleteSlide(id: number) {
+      this.idDeleteSlide = id;
         this.confirmationService.confirm({
             message: 'Do you want to delete this record?',
             header: 'Delete Confirmation',
             icon: 'pi pi-info-circle',
-            accept: () => {
-                this.store.dispatch(deleteTopSlides({ id: id }));
-            },
-            reject: () => {},
         });
+    }
+
+    acceptDelete(){
+      this.store.dispatch(deleteTopSlides({ id: this.idDeleteSlide }));
+    }
+
+    rejectDelete(){
+      this.confirmationService.close();
     }
 
     ngOnDestroy(): void {

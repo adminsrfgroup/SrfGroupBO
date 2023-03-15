@@ -3,11 +3,10 @@ import { IPostHomeFeature } from '../../../../../shared/models/post-home-feature
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
 import { Store } from '@ngrx/store';
-import { HomeState, IFeatureHome, ITopSlides } from '../../store/state/init.state';
-import { selectorFeatureHome, selectorTopSlides } from '../../store/selectors/home.selectors';
+import { HomeState, IFeatureHome } from '../../store/state/init.state';
+import { selectorFeatureHome } from '../../store/selectors/home.selectors';
 import { Subject, takeUntil } from 'rxjs';
-import { fetchTopSlides, resetTopSlide } from '../../store/actions/home.actions';
-import { fetchFeatureSlides, resetFeatureSlide } from '../../store/actions/feature-home.actions';
+import {deleteFeatureSlide, fetchFeatureSlides, resetFeatureSlide} from '../../store/actions/feature-home.actions';
 
 @Component({
     selector: 'app-list-feature-slide',
@@ -24,6 +23,8 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
     @ViewChild('dt') table!: Table;
     representatives!: any[];
     statuses!: any[];
+
+    idDeleteFeature!: number;
     destroy$: Subject<boolean> = new Subject<boolean>();
 
     constructor(private store: Store<HomeState>, private confirmationService: ConfirmationService) {}
@@ -45,6 +46,7 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
                     }
 
                     if (result.deleteSuccess) {
+                      this.confirmationService.close();
                         this.store.dispatch(resetFeatureSlide());
                     }
                 },
@@ -93,7 +95,22 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
         }
     }
 
-    deleteSlide(id: number) {}
+    deleteSlide(id: number) {
+      this.idDeleteFeature = id;
+      this.confirmationService.confirm({
+        message: 'Do you want to delete this feature?',
+        header: 'Delete Confirmation',
+        icon: 'pi pi-info-circle',
+      });
+    }
+
+    acceptDelete(){
+      this.store.dispatch(deleteFeatureSlide({ id: this.idDeleteFeature }));
+    }
+
+    rejectDelete(){
+        this.confirmationService.close();
+    }
 
     ngOnDestroy() {
         this.destroy$.next(true);

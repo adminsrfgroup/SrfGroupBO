@@ -29,7 +29,6 @@
         [globalFilterFields]="['id', 'descriptionAr', 'descriptionFr', 'descriptionEn']">
         <ng-template pTemplate="caption">
             <div class="table-header">
-                List of Customers
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="filterGlobal($event, 'contains')" placeholder="Global Search" />
@@ -117,7 +116,7 @@
                 <td style="text-align: center">
                     <div class="container-action">
                         <span class="p-buttonset">
-                            <a pButton pRipple class="p-button-success" label="Edit" icon="pi pi-check" routerLink="/private/home/edit-add-top-slides/{{ customer.id }}"></a>
+                            <a pButton pRipple class="p-button-success" label="Edit" icon="pi pi-check" routerLink="/private/home/update-feature-slide/{{ customer.id }}"></a>
                             <button pButton pRipple class="p-button-danger" label="Delete" icon="pi pi-trash" (click)="deleteSlide(customer.id)"></button>
                         </span>
                     </div>
@@ -131,4 +130,21 @@
         </ng-template>
     </p-table>
 </div>
-<p-confirmDialog [style]="{ width: '50vw' }" [baseZIndex]="10000"></p-confirmDialog>
+<p-confirmDialog [style]="{ width: '50vw' }" [baseZIndex]="10000">
+  <p-footer>
+    <button
+      type="button"
+      pButton
+      label="Cancel"
+      class="p-button-secondary"
+      (click)="rejectDelete()"
+    ></button>
+    <button
+      type="button"
+      pButton
+      label="Delete item"
+      class="p-button-danger"
+      (click)="acceptDelete()"
+    ></button>
+  </p-footer>
+</p-confirmDialog>

@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { IPostHomeFeature } from '../../../../../shared/models/post-home-feature.model';
 import { PageCommon } from '../../../../../shared/models/page.common';
 import { ITopHomeSlidesImages } from '../../../../../shared/models/top-home-slides-images.model';
+import {IFetchOneTopSlide} from "../../models/home.model";
 
 export const addFeatureSlide = createAction('[FeatureSlide] Add FeatureSlide', props<IPostHomeFeature>());
 
@@ -17,5 +18,26 @@ export const fetchFeatureSlides = createAction(
 export const fetchFeatureSlidesSuccess = createAction('[FeatureSlide] Fetch FeatureSlide Success', props<{ payload: PageCommon<IPostHomeFeature> }>());
 
 export const fetchFeatureSlidesFailure = createAction('[FeatureSlide] fetch FeatureSlide Failure', props<{ error: any }>());
+
+export const fetchOneFeatureSlide = createAction(
+  '[FeatureSlide] Fetch One FeatureSlide',
+  props<IFetchOneTopSlide>()
+);
+
+export const fetchOneFeatureSlideSuccess = createAction('[FeatureSlide] Fetch One FeatureSlide Success', props<{ payload: IPostHomeFeature }>());
+
+export const fetchOneFeatureSlideFailure = createAction('[FeatureSlide] fetch One FeatureSlide Failure', props<{ error: any }>());
+
+export const updateFeatureSlide = createAction('[FeatureSlide] Update FeatureSlide', props<IPostHomeFeature>());
+
+export const updateFeatureSlideSuccess = createAction('[FeatureSlide] Update FeatureSlide Success', props<{ payload: IPostHomeFeature }>());
+
+export const updateFeatureSlideFailure = createAction('[FeatureSlide] Update FeatureSlide Failure', props<{ error: any }>());
+
+export const deleteFeatureSlide = createAction('[FeatureSlide] Delete FeatureSlide', props<IPostHomeFeature>());
+
+export const deleteFeatureSlideSuccess = createAction('[FeatureSlide] Delete FeatureSlide Success', props<{ payload: boolean }>());
+
+export const deleteFeatureSlideFailure = createAction('[FeatureSlide] Delete FeatureSlide Failure', props<{ error: any }>());
 
 export const resetFeatureSlide = createAction('[FeatureSlide] Reset Feature Slide');

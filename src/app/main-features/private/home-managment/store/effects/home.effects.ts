@@ -22,7 +22,19 @@ import {
 import { ITopHomeSlidesImages } from '../../../../../shared/models/top-home-slides-images.model';
 import { PageCommon } from '../../../../../shared/models/page.common';
 import { IFetchOneTopSlide } from '../../models/home.model';
-import { addFeatureSlide, addFeatureSlideFailure, addFeatureSlideSuccess, fetchFeatureSlides, fetchFeatureSlidesFailure, fetchFeatureSlidesSuccess } from '../actions/feature-home.actions';
+import {
+  addFeatureSlide,
+  addFeatureSlideFailure,
+  addFeatureSlideSuccess, deleteFeatureSlide, deleteFeatureSlideFailure, deleteFeatureSlideSuccess,
+  fetchFeatureSlides,
+  fetchFeatureSlidesFailure,
+  fetchFeatureSlidesSuccess,
+  fetchOneFeatureSlide,
+  fetchOneFeatureSlideFailure,
+  fetchOneFeatureSlideSuccess,
+  updateFeatureSlide, updateFeatureSlideFailure,
+  updateFeatureSlideSuccess
+} from '../actions/feature-home.actions';
 import { IPostHomeFeature } from '../../../../../shared/models/post-home-feature.model';
 import { FeatureHomeService } from '../../services/feature-home.service';
 
@@ -141,4 +153,55 @@ export class HomeEffects {
             })
         )
     );
+
+
+  fetchOneFeatureSlide = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fetchOneFeatureSlide.type),
+      switchMap((payload: IFetchOneTopSlide) => {
+        return this.featureHomeService.fetchOneFeatureSlide(payload.id).pipe(
+          map((data: IPostHomeFeature) => {
+            return fetchOneFeatureSlideSuccess({ payload: data });
+          }),
+          catchError((exception: any) => {
+            return of(fetchOneFeatureSlideFailure({ error: exception.error }));
+          })
+        );
+      })
+    )
+  );
+
+
+
+  updateFeatureSlide = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateFeatureSlide.type),
+      switchMap((payload: IPostHomeFeature) => {
+        return this.featureHomeService.updateFeatureSlide(payload).pipe(
+          map((data: IPostHomeFeature) => {
+            return updateFeatureSlideSuccess({ payload: data });
+          }),
+          catchError((exception: any) => {
+            return of(updateFeatureSlideFailure({ error: exception.error }));
+          })
+        );
+      })
+    )
+  );
+
+  deleteFeatureSlide = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteFeatureSlide.type),
+      switchMap((payload: IPostHomeFeature) => {
+        return this.featureHomeService.deleteFeatureSlide(payload).pipe(
+          map((data: boolean) => {
+            return deleteFeatureSlideSuccess({ payload: data });
+          }),
+          catchError((exception: any) => {
+            return of(deleteFeatureSlideFailure({ error: exception.error }));
+          })
+        );
+      })
+    )
+  );
 }

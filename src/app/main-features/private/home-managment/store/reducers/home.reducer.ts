@@ -19,13 +19,13 @@ import {
     updateTopSlidesSuccess,
 } from '../actions/home.actions';
 import {
-    addFeatureSlide,
-    addFeatureSlideFailure,
-    addFeatureSlideSuccess,
-    fetchFeatureSlides,
-    fetchFeatureSlidesFailure,
-    fetchFeatureSlidesSuccess,
-    resetFeatureSlide,
+  addFeatureSlide,
+  addFeatureSlideFailure,
+  addFeatureSlideSuccess, deleteFeatureSlide, deleteFeatureSlideFailure, deleteFeatureSlideSuccess,
+  fetchFeatureSlides,
+  fetchFeatureSlidesFailure,
+  fetchFeatureSlidesSuccess, fetchOneFeatureSlide, fetchOneFeatureSlideFailure, fetchOneFeatureSlideSuccess,
+  resetFeatureSlide, updateFeatureSlide, updateFeatureSlideFailure, updateFeatureSlideSuccess,
 } from '../actions/feature-home.actions';
 
 export const homeReducer: ActionReducer<HomeState, Action> = createReducer(
@@ -261,6 +261,102 @@ export const homeReducer: ActionReducer<HomeState, Action> = createReducer(
             },
         };
     }),
+
+  on(fetchOneFeatureSlide, (state: HomeState) => {
+    return {
+      ...state,
+      featureHome: {
+        ...state.featureHome,
+        loading: true,
+      },
+    };
+  }),
+  on(fetchOneFeatureSlideSuccess, (state: HomeState, action: ReturnType<typeof fetchOneFeatureSlideSuccess>) => {
+    return {
+      ...state,
+      featureHome: {
+        ...state.featureHome,
+        entity: action.payload,
+        loading: false,
+      },
+    };
+  }),
+  on(fetchOneFeatureSlideFailure, (state: HomeState, action: ReturnType<typeof fetchOneFeatureSlideFailure>) => {
+    return {
+      ...state,
+      featureHome: {
+        ...state.featureHome,
+        loading: false,
+        errorMessage: action.error,
+      },
+    };
+  }),
+
+
+  on(updateFeatureSlide, (state: HomeState) => {
+    return {
+      ...state,
+      featureHome: {
+        ...state.featureHome,
+        updateSuccess: false,
+        loading: true,
+      },
+    };
+  }),
+  on(updateFeatureSlideSuccess, (state: HomeState, action: ReturnType<typeof updateFeatureSlideSuccess>) => {
+    return {
+      ...state,
+      featureHome: {
+        ...state.featureHome,
+        entity: action.payload,
+        loading: false,
+        updateSuccess: true,
+      },
+    };
+  }),
+  on(updateFeatureSlideFailure, (state: HomeState, action: ReturnType<typeof updateFeatureSlideFailure>) => {
+    return {
+      ...state,
+      featureHome: {
+        ...state.featureHome,
+        loading: false,
+        errorMessage: action.error,
+      },
+    };
+  }),
+
+
+  on(deleteFeatureSlide, (state: HomeState) => {
+    return {
+      ...state,
+      featureHome: {
+        ...state.featureHome,
+        deleteSuccess: false,
+        loading: true,
+      },
+    };
+  }),
+  on(deleteFeatureSlideSuccess, (state: HomeState, action: ReturnType<typeof deleteFeatureSlideSuccess>) => {
+    return {
+      ...state,
+      featureHome: {
+        ...state.featureHome,
+        entity: action.payload,
+        loading: false,
+        deleteSuccess: true,
+      },
+    };
+  }),
+  on(deleteFeatureSlideFailure, (state: HomeState, action: ReturnType<typeof deleteFeatureSlideFailure>) => {
+    return {
+      ...state,
+      featureHome: {
+        ...state.featureHome,
+        loading: false,
+        errorMessage: action.error,
+      },
+    };
+  }),
 
     on(resetFeatureSlide, (state: HomeState) => {
         return {

@@ -49,7 +49,7 @@ export class AddTopSlideComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (result: ITopSlides) => {
                     console.log('result ', result);
-                    if (result.addSuccess) {
+                    if (result.addSuccess || result.updateSuccess) {
                         this.store.dispatch(resetTopSlide());
                         this.router.navigate(['/private/home/top-slides']).then();
                     }
@@ -61,11 +61,6 @@ export class AddTopSlideComponent implements OnInit, OnDestroy {
                         this.descriptionEn = result.entity.descriptionEn;
                         this.fileStateDesktop = result.entity.imageDesktop;
                         this.fileStateMobile = result.entity.imageMobile;
-                    }
-
-                    if (result.updateSuccess) {
-                        this.store.dispatch(resetTopSlide());
-                        this.router.navigate(['/private/home/top-slides']);
                     }
                 },
             });

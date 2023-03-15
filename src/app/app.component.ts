@@ -14,8 +14,6 @@ import { resetLoginAction } from './main-features/login/store/actions/login.acti
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-    title = 'SrfgroupBO';
-
     constructor(private router: Router, private sotreSession: Store<SessionState>, private storeLogin: Store<LoginState>) {}
 
     ngOnInit() {

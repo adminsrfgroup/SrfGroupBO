@@ -27,7 +27,6 @@
         [globalFilterFields]="['id', 'descriptionAr', 'descriptionFr', 'descriptionEn']">
         <ng-template pTemplate="caption">
             <div class="table-header">
-                List of Customers
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="filterGlobal($event, 'contains')" placeholder="Global Search" />
@@ -134,4 +133,21 @@
         </ng-template>
     </p-table>
 </div>
-<p-confirmDialog [style]="{ width: '50vw' }" [baseZIndex]="10000"></p-confirmDialog>
+<p-confirmDialog [style]="{ width: '50vw' }" [baseZIndex]="10000">
+  <p-footer>
+    <button
+      type="button"
+      pButton
+      label="Cancel"
+      class="p-button-secondary"
+      (click)="rejectDelete()"
+    ></button>
+    <button
+      type="button"
+      pButton
+      label="Delete item"
+      class="p-button-danger"
+      (click)="acceptDelete()"
+    ></button>
+  </p-footer>
+</p-confirmDialog>

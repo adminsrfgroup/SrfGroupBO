@@ -19,4 +19,16 @@ export class FeatureHomeService {
     fetchFeatureSlide(): Observable<PageCommon<IPostHomeFeature>> {
         return this.httpClient.get<PageCommon<IPostHomeFeature>>(`${environment.baseUrl}api/post-home-feature/admin/list`);
     }
+
+    fetchOneFeatureSlide(id: number): Observable<IPostHomeFeature> {
+      return this.httpClient.get(`${environment.baseUrl}api/post-home-feature/admin/${id}`);
+    }
+
+  updateFeatureSlide(data: IPostHomeFeature): Observable<IPostHomeFeature> {
+    return this.httpClient.put(`${environment.baseUrl}api/post-home-feature/admin/${data.id}`, data);
+  }
+
+  deleteFeatureSlide(data: IPostHomeFeature): Observable<boolean> {
+    return this.httpClient.delete<boolean>(`${environment.baseUrl}api/post-home-feature/admin/${data.id}`);
+  }
 }
