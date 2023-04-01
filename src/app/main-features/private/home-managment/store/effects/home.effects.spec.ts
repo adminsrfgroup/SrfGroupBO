@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs';
-import { ListUserEffects } from '../../../user-managment/store/effects/list-user-effect.effects';
 import { TestScheduler } from 'rxjs/internal/testing/TestScheduler';
 import { HomeEffects } from './home.effects';
 import { TestBed } from '@angular/core/testing';
@@ -7,11 +6,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { HomeService } from '../../services/home.service';
 import { PageCommon } from '../../../../../shared/models/page.common';
-import { IUser } from '../../../../../shared/models/user.model';
-import { loadListUsers, loadListUsersSuccess } from '../../../user-managment/store/actions/list-user.actions';
 import { addTopSlides, addTopSlidesSuccess, fetchOneTopSlides, fetchOneTopSlidesSuccess, fetchTopSlides, fetchTopSlidesSuccess } from '../actions/home.actions';
 import { ITopHomeSlidesImages } from '../../../../../shared/models/top-home-slides-images.model';
-import { IFetchOneTopSlide } from '../../models/home.model';
+import {IIdEntity} from "../../../../../shared/models/id-entity.model";
 
 describe('HomeEffects', () => {
     let actions$: Observable<any>;
@@ -95,7 +92,7 @@ describe('HomeEffects', () => {
     });
 
     it('fetchOneTopSlide$ dispatches a success action', () => {
-        const requestData: IFetchOneTopSlide = {
+        const requestData: IIdEntity = {
             id: 1,
         };
         const responseMock: ITopHomeSlidesImages = {

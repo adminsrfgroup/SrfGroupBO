@@ -19,6 +19,8 @@ export interface IUser {
     address?: IAddress;
     phone?: string;
     linkProfileFacebook?: string;
+
+    registerDate?: string;
 }
 
 export const defaultValue: Readonly<IUser> = {
@@ -36,6 +38,7 @@ export const defaultValue: Readonly<IUser> = {
     lastModifiedDate: null,
     password: '',
     phone: '',
+    registerDate: ''
 };
 
 export interface IGooglePlus {

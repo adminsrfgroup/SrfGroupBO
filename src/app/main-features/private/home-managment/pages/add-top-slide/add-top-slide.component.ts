@@ -7,8 +7,7 @@ import { ITopHomeSlidesImages } from '../../../../../shared/models/top-home-slid
 import { selectorTopSlides } from '../../store/selectors/home.selectors';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { ILogin } from '../../../../login/models/login.model';
-import { IFetchOneTopSlide } from '../../models/home.model';
+import {IIdEntity} from "../../../../../shared/models/id-entity.model";
 
 @Component({
     selector: 'app-add-top-slide',
@@ -33,7 +32,7 @@ export class AddTopSlideComponent implements OnInit, OnDestroy {
             next: params => {
                 this.idEntity = params['id'];
                 if (this.idEntity) {
-                    const requestData: IFetchOneTopSlide = {
+                    const requestData: IIdEntity = {
                         id: this.idEntity,
                     };
                     this.store.dispatch(fetchOneTopSlides(requestData));

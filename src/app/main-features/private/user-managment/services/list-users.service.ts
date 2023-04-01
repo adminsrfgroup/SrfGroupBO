@@ -15,4 +15,8 @@ export class ListUsersService {
     fetchAllUsers(): Observable<PageCommon<IUser>> {
         return this.httpClient.get<PageCommon<IUser>>(`${environment.baseUrl}api/user/admin/list-users`);
     }
+
+    fetchDetailsUser(id: number): Observable<IUser> {
+      return this.httpClient.get(`${environment.baseUrl}api/user/admin/profile/${id}`);
+    }
 }

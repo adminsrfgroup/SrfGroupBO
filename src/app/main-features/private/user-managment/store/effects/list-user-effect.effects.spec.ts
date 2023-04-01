@@ -32,7 +32,7 @@ describe('ListUserEffects', () => {
         expect(effects).toBeTruthy();
     });
 
-    it('fetchUser$ dispatches a success action', () => {
+    it('fetchListUsers$ dispatches a success action', () => {
         // create an actions stream to represent a user that is typing
         const responseMock: PageCommon<IUser> = {
             content: [{}],
@@ -49,7 +49,7 @@ describe('ListUserEffects', () => {
             const response = cold('-b|', { b: responseMock });
             MockUserService.fetchAllUsers.and.returnValue(response);
 
-            expectObservable(effects.fetchUser$).toBe('--b', { b: outcome });
+            expectObservable(effects.fetchListUsers$).toBe('--b', { b: outcome });
         });
     });
 });

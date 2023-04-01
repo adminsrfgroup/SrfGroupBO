@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddUpdateFeatureSlideComponent } from './add-update-feature-slide.component';
 import { provideMockStore } from '@ngrx/store/testing';
 import { SharedModule } from '../../../../../shared/shared.module';
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('AddUpdateFeatureSlideComponent', () => {
     let component: AddUpdateFeatureSlideComponent;
@@ -11,7 +12,7 @@ describe('AddUpdateFeatureSlideComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [SharedModule],
+            imports: [RouterTestingModule, SharedModule],
             declarations: [AddUpdateFeatureSlideComponent],
             providers: [provideMockStore({ initialState })],
         }).compileComponents();

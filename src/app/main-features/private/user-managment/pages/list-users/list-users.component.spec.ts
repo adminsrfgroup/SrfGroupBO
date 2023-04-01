@@ -10,6 +10,7 @@ import { SliderModule } from 'primeng/slider';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { InputTextModule } from 'primeng/inputtext';
 import { provideMockStore } from '@ngrx/store/testing';
+import {SharedModule} from "../../../../../shared/shared.module";
 
 describe('ListUsersComponent', () => {
     let component: ListUsersComponent;
@@ -18,7 +19,7 @@ describe('ListUsersComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TableModule, DropdownModule, CalendarModule, MultiSelectModule, ProgressBarModule, SliderModule, ContextMenuModule, InputTextModule],
+            imports: [SharedModule],
             declarations: [ListUsersComponent],
             providers: [provideMockStore({ initialState })],
         }).compileComponents();

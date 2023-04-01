@@ -1,6 +1,8 @@
 import { IUser } from '../../../../../shared/models/user.model';
 
 export interface UserState {
+    loading: boolean;
+    entity: IUser;
     loadingEntities: boolean;
     entities: IUser[];
     totalElements: number;
@@ -9,6 +11,8 @@ export interface UserState {
 }
 
 export const initUserState: UserState = {
+    loading: false,
+    entity: {},
     loadingEntities: false,
     entities: [],
     totalElements: -1,

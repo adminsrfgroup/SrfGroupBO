@@ -1,0 +1,91 @@
+<div class="container-details-user">
+
+  <div class="grid">
+    <div class="col-3">
+      <div class="p-2 text-center">
+        <p-image src="https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg"
+                 alt="Image"
+                 width="250"
+                 height="250"
+                 class="avatar-user"></p-image>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="p-buttonset">
+          <button pButton pRipple
+                  type="button"
+                  label="Update Authority"
+                  class="p-button-outlined p-button-success"
+                  (click)="updateAuthority()"></button>
+          <button pButton
+                  pRipple
+                  type="button"
+                  label="UnBlock"
+                  class="p-button-outlined p-button-danger"></button>
+      </div>
+
+      <div class="card">
+        <h5>Advanced</h5>
+        <div class="formgrid grid">
+          <div class="field col-12 md:col-4">
+            <label for="firstname6">Firstname</label>
+            <input id="firstname6"
+                   type="text"
+                   class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
+                    readonly="true"
+                    [(ngModel)]="detailsUser.firstName">
+          </div>
+          <div class="field col-12 md:col-4">
+            <label for="lastname6">Lastname</label>
+            <input id="lastname6"
+                   type="text"
+                   class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
+                   [(ngModel)]="detailsUser.lastName">
+          </div>
+          <div class="field col-12 md:col-4">
+            <label for="email">Email</label>
+            <input id="email"
+                   type="text"
+                   class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
+                   [(ngModel)]="detailsUser.email">
+          </div>
+          <div class="field col-12 md:col-4">
+            <label for="registerDate">RegisterDate</label>
+            <input id="registerDate"
+                   type="text"
+                   class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
+                   [(ngModel)]="detailsUser.registerDate">
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <label for="phone">Phone</label>
+            <input id="phone"
+                   type="text"
+                   class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
+                   [(ngModel)]="detailsUser.phone">
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <label for="sourceConnectedDevice">SourceConnectedDevice</label>
+            <input id="sourceConnectedDevice"
+                   type="text"
+                   class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
+                   [(ngModel)]="detailsUser.sourceConnectedDevice">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+  <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="displayModal=false" label="Yes" class="p-button-text"></p-button>
+    <p-button icon="pi pi-times" (click)="displayModal=false" label="No"></p-button>
+  </ng-template>
+</p-dialog>

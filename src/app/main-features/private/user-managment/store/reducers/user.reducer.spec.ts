@@ -16,6 +16,8 @@ describe('User Reducers', () => {
 
     it('should update the loading state in an immutable way', () => {
         const newState: UserState = {
+            loading: false,
+            entity: {},
             loadingEntities: false,
             errorMessage: null,
             entities: [],

@@ -21,7 +21,6 @@ import {
 } from '../actions/home.actions';
 import { ITopHomeSlidesImages } from '../../../../../shared/models/top-home-slides-images.model';
 import { PageCommon } from '../../../../../shared/models/page.common';
-import { IFetchOneTopSlide } from '../../models/home.model';
 import {
   addFeatureSlide,
   addFeatureSlideFailure,
@@ -37,6 +36,7 @@ import {
 } from '../actions/feature-home.actions';
 import { IPostHomeFeature } from '../../../../../shared/models/post-home-feature.model';
 import { FeatureHomeService } from '../../services/feature-home.service';
+import {IIdEntity} from "../../../../../shared/models/id-entity.model";
 
 @Injectable()
 export class HomeEffects {
@@ -77,7 +77,7 @@ export class HomeEffects {
     fetchOneTopSlide$ = createEffect(() =>
         this.actions$.pipe(
             ofType(fetchOneTopSlides.type),
-            switchMap((payload: IFetchOneTopSlide) => {
+            switchMap((payload: IIdEntity) => {
                 return this.homeService.fetchOneTopSlide(payload.id).pipe(
                     map((data: ITopHomeSlidesImages) => {
                         return fetchOneTopSlidesSuccess({ payload: data });
@@ -109,7 +109,7 @@ export class HomeEffects {
     deleteTopSlide$ = createEffect(() =>
         this.actions$.pipe(
             ofType(deleteTopSlides.type),
-            switchMap((payload: IFetchOneTopSlide) => {
+            switchMap((payload: IIdEntity) => {
                 return this.homeService.deleteTopSlide(payload.id).pipe(
                     map((data: boolean) => {
                         return deleteTopSlidesSuccess({ payload: data });
@@ -158,7 +158,7 @@ export class HomeEffects {
   fetchOneFeatureSlide = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchOneFeatureSlide.type),
-      switchMap((payload: IFetchOneTopSlide) => {
+      switchMap((payload: IIdEntity) => {
         return this.featureHomeService.fetchOneFeatureSlide(payload.id).pipe(
           map((data: IPostHomeFeature) => {
             return fetchOneFeatureSlideSuccess({ payload: data });

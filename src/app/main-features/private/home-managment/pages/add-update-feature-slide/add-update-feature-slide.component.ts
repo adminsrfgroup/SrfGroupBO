@@ -12,8 +12,7 @@ import {
 import { selectorFeatureHome } from '../../store/selectors/home.selectors';
 import { Subject, takeUntil } from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IFetchOneTopSlide} from "../../models/home.model";
-import {fetchOneTopSlides, resetTopSlide} from "../../store/actions/home.actions";
+import {IIdEntity} from "../../../../../shared/models/id-entity.model";
 
 @Component({
     selector: 'app-add-update-feature-slide',
@@ -36,7 +35,7 @@ export class AddUpdateFeatureSlideComponent implements OnInit, OnDestroy {
         next: params => {
           this.idEntity = params['id'];
           if (this.idEntity) {
-            const requestData: IFetchOneTopSlide = {
+            const requestData: IIdEntity = {
               id: this.idEntity,
             };
             console.log('requestData ', requestData)

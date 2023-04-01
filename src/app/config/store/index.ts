@@ -15,12 +15,14 @@ import { HomeState } from '../../main-features/private/home-managment/store/stat
 import { homeReducer } from '../../main-features/private/home-managment/store/reducers/home.reducer';
 import { HomeEffects } from '../../main-features/private/home-managment/store/effects/home.effects';
 import { isDevMode } from '@angular/core';
+import {userSelectKey} from "../../main-features/private/user-managment/store/selectors/user.selectors";
 
 export interface AppStates {
     [loginSelectKey]: LoginState;
     [sessionSelectKey]: SessionState;
     [listUsersSelectKey]: UserState;
     [homeSelectKey]: HomeState;
+    [userSelectKey]: UserState;
 }
 
 export const appReducers: ActionReducerMap<AppStates> = {
@@ -28,6 +30,7 @@ export const appReducers: ActionReducerMap<AppStates> = {
     [sessionSelectKey]: sessionReducer,
     [listUsersSelectKey]: userReducer,
     [homeSelectKey]: homeReducer,
+    [userSelectKey]: userReducer
 };
 
 export const appEffects = [LoginEffects, ListUserEffects, HomeEffects];
