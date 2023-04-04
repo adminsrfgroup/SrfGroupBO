@@ -36,7 +36,6 @@ export class TopSlideComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: ITopSlides) => {
-                    console.log('result ', result);
                     if (!result.entities.length && result.totalPages === -1) {
                         this.store.dispatch(fetchTopSlides());
                     } else {

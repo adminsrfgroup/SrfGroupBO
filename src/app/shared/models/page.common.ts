@@ -4,3 +4,8 @@ export interface PageCommon<T> {
     totalElements: number;
     totalPages: number;
 }
+
+export interface Pagination{
+  page: number;
+  size: number;
+}

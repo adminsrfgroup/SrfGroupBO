@@ -5,7 +5,7 @@ import {loadDetailsUser, loadDetailsUserFailure, loadDetailsUserSuccess} from ".
 
 export const userReducer: ActionReducer<UserState, Action> = createReducer(
     initUserState,
-    on(loadListUsers, (state: UserState, action: ReturnType<typeof loadListUsers>) => {
+    on(loadListUsers, (state: UserState) => {
         return {
             ...state,
             loadingEntities: true,
