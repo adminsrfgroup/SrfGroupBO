@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {PrimeNGConfig} from "primeng/api";
+import {LazyLoadEvent, PrimeNGConfig} from "primeng/api";
 import {Store} from "@ngrx/store";
 import {OfferState} from "../../store/state/offer.state";
 import {Table} from "primeng/table";
@@ -79,6 +79,10 @@ export class ListOfferComponent implements OnInit, OnDestroy{
             */
         },
       });
+  }
+
+  nextPage(event: LazyLoadEvent){
+    console.log('event ', event)
   }
 
   onActivityChange(event: any) {

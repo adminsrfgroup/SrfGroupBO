@@ -2,7 +2,6 @@
   <p-table
     #dt
     [value]="listOffers"
-    [(selection)]="selectedOffers"
     dataKey="id"
     styleClass="p-datatable-customers"
     [rowHover]="true"
@@ -13,10 +12,13 @@
     [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [filterDelay]="0"
-    [globalFilterFields]="['title', 'amount', 'typeOffer', 'dateCreated']">
+    [globalFilterFields]="['title', 'amount', 'typeOffer', 'dateCreated']"
+    [totalRecords]="totalElements"
+    [lazy]="true"
+    (onLazyLoad)="nextPage($event)">
     <ng-template pTemplate="caption">
       <div class="table-header">
-        List of Customers
+        List of Customers {{totalElements}}
         <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input pInputText type="text" (input)="filterGlobal($event, 'contains')" placeholder="Global Search" />

@@ -8,6 +8,7 @@ export interface OfferState {
   totalElements: number;
   totalPages: number;
   errorMessage: any;
+  activePage: number;
 }
 
 export const initOfferState: OfferState = {
@@ -18,4 +19,5 @@ export const initOfferState: OfferState = {
   totalElements: -1,
   totalPages: -1,
   errorMessage: null,
+  activePage: -1
 };
