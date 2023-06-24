@@ -10,4 +10,9 @@ export const loadListOffersSuccess = createAction('[ListOffer] Load ListOffers S
 
 export const loadListOffersFailure = createAction('[ListOffer] Load ListOffers Failure', props<{ error: any }>());
 
+export const setActivePageOffers = createAction(
+  '[ListOffer] Set Active Page ListOffers',
+  props<Pagination>()
+);
+
 export const resetListOffers = createAction('[ListOffer] Reset ListOffers');

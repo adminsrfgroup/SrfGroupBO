@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {LazyLoadEvent, PrimeNGConfig} from "primeng/api";
 import {Store} from "@ngrx/store";
 import {OfferState} from "../../store/state/offer.state";
@@ -26,7 +26,8 @@ export class ListOfferComponent implements OnInit, OnDestroy{
 
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private primengConfig: PrimeNGConfig, private store: Store<OfferState>) {}
+  store = inject(Store<OfferState>);
+  primengConfig = inject(PrimeNGConfig);
 
   ngOnInit() : void{
     this.representatives = [
@@ -82,7 +83,12 @@ export class ListOfferComponent implements OnInit, OnDestroy{
   }
 
   nextPage(event: LazyLoadEvent){
-    console.log('event ', event)
+    console.log('event ', event);
+
+    // this.store.dispatch(setActivePageOffers({
+    //   page: 1,
+    //   size: 5
+    // }));
   }
 
   onActivityChange(event: any) {

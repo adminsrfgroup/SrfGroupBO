@@ -1,6 +1,12 @@
 import {Action, ActionReducer, createReducer, on} from "@ngrx/store";
 import {OfferState, initOfferState} from "../state/offer.state";
-import {loadListOffers, loadListOffersFailure, loadListOffersSuccess, resetListOffers} from "../actions/offer.actions";
+import {
+  loadListOffers,
+  loadListOffersFailure,
+  loadListOffersSuccess,
+  resetListOffers,
+  setActivePageOffers
+} from "../actions/offer.actions";
 
 export const offerReducer: ActionReducer<OfferState, Action> = createReducer(
   initOfferState,
@@ -26,6 +32,14 @@ export const offerReducer: ActionReducer<OfferState, Action> = createReducer(
       ...state,
       loadingEntities: false,
       errorMessage: action.error,
+    };
+  }),
+
+  on(setActivePageOffers, (state: OfferState, action: ReturnType<typeof setActivePageOffers>) => {
+    return {
+      ...state,
+      loadingEntities: true,
+      activePage: action.page
     };
   }),
 

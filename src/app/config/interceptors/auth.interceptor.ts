@@ -32,7 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
         return request.clone({
             setHeaders: {
                 Authorization: `Bearer ${StorageService.local.get(AllAppConfig.NAME_TOKEN_CURRENT_USER)}`,
-                sourceConnectedDevice: `WebBrowser`,
+                sourceConnectedDevice: `WEB_BROWSER`,
                 langKey: `fr`,
             },
         });

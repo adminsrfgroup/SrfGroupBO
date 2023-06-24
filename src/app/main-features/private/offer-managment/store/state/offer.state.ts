@@ -19,5 +19,5 @@ export const initOfferState: OfferState = {
   totalElements: -1,
   totalPages: -1,
   errorMessage: null,
-  activePage: -1
+  activePage: 5
 };
