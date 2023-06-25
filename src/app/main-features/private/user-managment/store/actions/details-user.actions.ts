@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { IUser } from '../../../../../shared/models/user.model';
-import {IIdEntity} from "../../../../../shared/models/id-entity.model";
+import { IIdEntity } from '../../../../../shared/models/id-entity.model';
 
 export const loadDetailsUser = createAction('[DetailsUser] Load Details User', props<IIdEntity>());
 

@@ -21,9 +21,9 @@ export class ListUsersComponent implements OnInit {
     statuses!: any[];
 
     listUsers: IUser[] = [];
-    loading: boolean = false;
-    totalElements: number = 0;
-    totalPages: number = 0;
+    loading = false;
+    totalElements = 0;
+    totalPages = 0;
 
     @ViewChild('dt') table!: Table;
 

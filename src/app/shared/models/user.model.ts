@@ -38,7 +38,7 @@ export const defaultValue: Readonly<IUser> = {
     lastModifiedDate: null,
     password: '',
     phone: '',
-    registerDate: ''
+    registerDate: '',
 };
 
 export interface IGooglePlus {

@@ -1,5 +1,5 @@
-import {createFeatureSelector, createSelector} from "@ngrx/store";
-import {SupportState} from "../state/support.state";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { SupportState } from '../state/support.state';
 
 export const supportSelectKey = 'support';
 

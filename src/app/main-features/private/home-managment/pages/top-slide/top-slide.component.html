@@ -134,20 +134,8 @@
     </p-table>
 </div>
 <p-confirmDialog [style]="{ width: '50vw' }" [baseZIndex]="10000">
-  <p-footer>
-    <button
-      type="button"
-      pButton
-      label="Cancel"
-      class="p-button-secondary"
-      (click)="rejectDelete()"
-    ></button>
-    <button
-      type="button"
-      pButton
-      label="Delete item"
-      class="p-button-danger"
-      (click)="acceptDelete()"
-    ></button>
-  </p-footer>
+    <p-footer>
+        <button type="button" pButton label="Cancel" class="p-button-secondary" (click)="rejectDelete()"></button>
+        <button type="button" pButton label="Delete item" class="p-button-danger" (click)="acceptDelete()"></button>
+    </p-footer>
 </p-confirmDialog>

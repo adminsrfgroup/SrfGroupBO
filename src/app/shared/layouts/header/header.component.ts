@@ -32,7 +32,7 @@ export class HeaderComponent {
         },
     ];
 
-    displayModal: boolean = false;
+    displayModal = false;
 
     constructor(private sessionFacadeService: SessionFacadeService, private loginFacadeService: LoginFacadeService, private router: Router) {}
 

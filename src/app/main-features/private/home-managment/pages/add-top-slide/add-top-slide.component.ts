@@ -7,7 +7,7 @@ import { ITopHomeSlidesImages } from '../../../../../shared/models/top-home-slid
 import { selectorTopSlides } from '../../store/selectors/home.selectors';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import {IIdEntity} from "../../../../../shared/models/id-entity.model";
+import { IIdEntity } from '../../../../../shared/models/id-entity.model';
 
 @Component({
     selector: 'app-add-top-slide',

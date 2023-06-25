@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { IPostHomeFeature } from '../../../../../shared/models/post-home-feature.model';
 import { PageCommon } from '../../../../../shared/models/page.common';
-import {IIdEntity} from "../../../../../shared/models/id-entity.model";
+import { IIdEntity } from '../../../../../shared/models/id-entity.model';
 
 export const addFeatureSlide = createAction('[FeatureSlide] Add FeatureSlide', props<IPostHomeFeature>());
 
@@ -18,10 +18,7 @@ export const fetchFeatureSlidesSuccess = createAction('[FeatureSlide] Fetch Feat
 
 export const fetchFeatureSlidesFailure = createAction('[FeatureSlide] fetch FeatureSlide Failure', props<{ error: any }>());
 
-export const fetchOneFeatureSlide = createAction(
-  '[FeatureSlide] Fetch One FeatureSlide',
-  props<IIdEntity>()
-);
+export const fetchOneFeatureSlide = createAction('[FeatureSlide] Fetch One FeatureSlide', props<IIdEntity>());
 
 export const fetchOneFeatureSlideSuccess = createAction('[FeatureSlide] Fetch One FeatureSlide Success', props<{ payload: IPostHomeFeature }>());
 

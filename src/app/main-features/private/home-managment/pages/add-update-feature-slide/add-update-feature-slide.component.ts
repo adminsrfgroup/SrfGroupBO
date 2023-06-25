@@ -3,16 +3,11 @@ import { getBase64 } from '../../../../../shared/utils/utils-functions';
 import { IPostHomeFeature } from '../../../../../shared/models/post-home-feature.model';
 import { HomeState, IFeatureHome } from '../../store/state/init.state';
 import { Store } from '@ngrx/store';
-import {
-  addFeatureSlide,
-  fetchOneFeatureSlide,
-  resetFeatureSlide,
-  updateFeatureSlide
-} from '../../store/actions/feature-home.actions';
+import { addFeatureSlide, fetchOneFeatureSlide, resetFeatureSlide, updateFeatureSlide } from '../../store/actions/feature-home.actions';
 import { selectorFeatureHome } from '../../store/selectors/home.selectors';
 import { Subject, takeUntil } from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
-import {IIdEntity} from "../../../../../shared/models/id-entity.model";
+import { ActivatedRoute, Router } from '@angular/router';
+import { IIdEntity } from '../../../../../shared/models/id-entity.model';
 
 @Component({
     selector: 'app-add-update-feature-slide',
@@ -31,18 +26,18 @@ export class AddUpdateFeatureSlideComponent implements OnInit, OnDestroy {
     destroy$: Subject<boolean> = new Subject<boolean>();
 
     constructor(private store: Store<HomeState>, private router: Router, private activatedRoute: ActivatedRoute) {
-      this.activatedRoute.params.subscribe({
-        next: params => {
-          this.idEntity = params['id'];
-          if (this.idEntity) {
-            const requestData: IIdEntity = {
-              id: this.idEntity,
-            };
-            console.log('requestData ', requestData)
-            this.store.dispatch(fetchOneFeatureSlide(requestData));
-          }
-        },
-      });
+        this.activatedRoute.params.subscribe({
+            next: params => {
+                this.idEntity = params['id'];
+                if (this.idEntity) {
+                    const requestData: IIdEntity = {
+                        id: this.idEntity,
+                    };
+                    console.log('requestData ', requestData);
+                    this.store.dispatch(fetchOneFeatureSlide(requestData));
+                }
+            },
+        });
     }
 
     ngOnInit() {
@@ -59,10 +54,10 @@ export class AddUpdateFeatureSlideComponent implements OnInit, OnDestroy {
 
                     // For update
                     if (this.idEntity && result.entity) {
-                      this.descriptionAr = result.entity.descriptionAr;
-                      this.descriptionFr = result.entity.descriptionFr;
-                      this.descriptionEn = result.entity.descriptionEn;
-                      this.fileState = result.entity.image;
+                        this.descriptionAr = result.entity.descriptionAr;
+                        this.descriptionFr = result.entity.descriptionFr;
+                        this.descriptionEn = result.entity.descriptionEn;
+                        this.fileState = result.entity.image;
                     }
                 },
             });
@@ -88,13 +83,14 @@ export class AddUpdateFeatureSlideComponent implements OnInit, OnDestroy {
             image: this.fileState,
         };
         if (this.idEntity) {
-          this.store.dispatch(updateFeatureSlide({
-            id: this.idEntity,
-            ...requestData
-          }))
-        }
-        else {
-          this.store.dispatch(addFeatureSlide(requestData));
+            this.store.dispatch(
+                updateFeatureSlide({
+                    id: this.idEntity,
+                    ...requestData,
+                })
+            );
+        } else {
+            this.store.dispatch(addFeatureSlide(requestData));
         }
     }
 

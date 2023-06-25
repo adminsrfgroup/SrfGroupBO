@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { HomeState, IFeatureHome } from '../../store/state/init.state';
 import { selectorFeatureHome } from '../../store/selectors/home.selectors';
 import { Subject, takeUntil } from 'rxjs';
-import {deleteFeatureSlide, fetchFeatureSlides, resetFeatureSlide} from '../../store/actions/feature-home.actions';
+import { deleteFeatureSlide, fetchFeatureSlides, resetFeatureSlide } from '../../store/actions/feature-home.actions';
 
 @Component({
     selector: 'app-list-feature-slide',
@@ -17,9 +17,9 @@ import {deleteFeatureSlide, fetchFeatureSlides, resetFeatureSlide} from '../../s
 export class ListFeatureSlideComponent implements OnInit, OnDestroy {
     listFeatureSlides: IPostHomeFeature[] = [];
     selectedFeatureSlides!: IPostHomeFeature[];
-    loading: boolean = false;
-    totalItems: number = 0;
-    totalPages: number = 0;
+    loading = false;
+    totalItems = 0;
+    totalPages = 0;
     @ViewChild('dt') table!: Table;
     representatives!: any[];
     statuses!: any[];
@@ -46,7 +46,7 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
                     }
 
                     if (result.deleteSuccess) {
-                      this.confirmationService.close();
+                        this.confirmationService.close();
                         this.store.dispatch(resetFeatureSlide());
                     }
                 },
@@ -96,19 +96,19 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
     }
 
     deleteSlide(id: number) {
-      this.idDeleteFeature = id;
-      this.confirmationService.confirm({
-        message: 'Do you want to delete this feature?',
-        header: 'Delete Confirmation',
-        icon: 'pi pi-info-circle',
-      });
+        this.idDeleteFeature = id;
+        this.confirmationService.confirm({
+            message: 'Do you want to delete this feature?',
+            header: 'Delete Confirmation',
+            icon: 'pi pi-info-circle',
+        });
     }
 
-    acceptDelete(){
-      this.store.dispatch(deleteFeatureSlide({ id: this.idDeleteFeature }));
+    acceptDelete() {
+        this.store.dispatch(deleteFeatureSlide({ id: this.idDeleteFeature }));
     }
 
-    rejectDelete(){
+    rejectDelete() {
         this.confirmationService.close();
     }
 

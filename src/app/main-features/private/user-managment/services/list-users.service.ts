@@ -16,6 +16,6 @@ export class ListUsersService {
     }
 
     fetchDetailsUser(id: number): Observable<IUser> {
-      return this.httpClient.get(`${environment.baseUrl}api/user/admin/profile/${id}`);
+        return this.httpClient.get(`${environment.baseUrl}api/user/admin/profile/${id}`);
     }
 }

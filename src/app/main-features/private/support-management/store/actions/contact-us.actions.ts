@@ -1,10 +1,8 @@
-import {createAction, props} from "@ngrx/store";
-import {PageCommon, Pagination} from "../../../../../shared/models/page.common";
-import {IContactUs} from "../../../../../shared/models/contact-us.model";
+import { createAction, props } from '@ngrx/store';
+import { PageCommon, Pagination } from '../../../../../shared/models/page.common';
+import { IContactUs } from '../../../../../shared/models/contact-us.model';
 
-export const loadListContactUs = createAction(
-  '[ListContactUs] Load ListContactUs',
-  props<Pagination>());
+export const loadListContactUs = createAction('[ListContactUs] Load ListContactUs', props<Pagination>());
 
 export const loadListContactUsSuccess = createAction('[ListContactUs] Load ListContactUs Success', props<{ payload: PageCommon<IContactUs> }>());
 

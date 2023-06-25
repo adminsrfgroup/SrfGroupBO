@@ -1,5 +1,5 @@
-import {createFeatureSelector, createSelector} from "@ngrx/store";
-import {UserState} from "../state/user.state";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { UserState } from '../state/user.state';
 
 export const userSelectKey = 'user';
 

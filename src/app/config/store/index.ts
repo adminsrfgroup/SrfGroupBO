@@ -15,15 +15,23 @@ import { HomeState } from '../../main-features/private/home-managment/store/stat
 import { homeReducer } from '../../main-features/private/home-managment/store/reducers/home.reducer';
 import { HomeEffects } from '../../main-features/private/home-managment/store/effects/home.effects';
 import { isDevMode } from '@angular/core';
-import {userSelectKey} from "../../main-features/private/user-managment/store/selectors/user.selectors";
-import {offerSelectKey} from "../../main-features/private/offer-managment/store/selectors/offer.selectors";
-import {OfferState} from "../../main-features/private/offer-managment/store/state/offer.state";
-import {offerReducer} from "../../main-features/private/offer-managment/store/reducers/offer.reducer";
-import {OfferEffects} from "../../main-features/private/offer-managment/store/effects/offer.effects";
-import {supportSelectKey} from "../../main-features/private/support-management/store/selectors/support.selectors";
-import {SupportState} from "../../main-features/private/support-management/store/state/support.state";
-import {supportReducer} from "../../main-features/private/support-management/store/reducers/support.reducer";
-import {SupportEffects} from "../../main-features/private/support-management/store/effects/support.effects";
+import { userSelectKey } from '../../main-features/private/user-managment/store/selectors/user.selectors';
+import { offerSelectKey } from '../../main-features/private/offer-managment/store/selectors/offer.selectors';
+import { OfferState } from '../../main-features/private/offer-managment/store/state/offer.state';
+import { offerReducer } from '../../main-features/private/offer-managment/store/reducers/offer.reducer';
+import { OfferEffects } from '../../main-features/private/offer-managment/store/effects/offer.effects';
+import { supportSelectKey } from '../../main-features/private/support-management/store/selectors/support.selectors';
+import { SupportState } from '../../main-features/private/support-management/store/state/support.state';
+import { supportReducer } from '../../main-features/private/support-management/store/reducers/support.reducer';
+import { SupportEffects } from '../../main-features/private/support-management/store/effects/support.effects';
+import { addressSelectKey } from '../../main-features/private/address-managment/store/serlectors/address.selector';
+import { AddressState } from '../../main-features/private/address-managment/store/state/init.state';
+import { addressReducer } from '../../main-features/private/address-managment/store/reducers/address.reducer';
+import { AddressEffects } from '../../main-features/private/address-managment/store/effects/address.effect';
+import { categoryReducer } from '../../main-features/private/category-managment/store/reducers/category.reducer';
+import { CategoryState } from '../../main-features/private/category-managment/store/state/init.state';
+import { categorySelectKey } from '../../main-features/private/category-managment/store/selectors/category.selector';
+import { CategoryEffects } from '../../main-features/private/category-managment/store/effects/category.effect';
 
 export interface AppStates {
     [loginSelectKey]: LoginState;
@@ -34,6 +42,9 @@ export interface AppStates {
     [offerSelectKey]: OfferState;
 
     [supportSelectKey]: SupportState;
+
+    [addressSelectKey]: AddressState;
+    [categorySelectKey]: CategoryState;
 }
 
 export const appReducers: ActionReducerMap<AppStates> = {
@@ -43,10 +54,12 @@ export const appReducers: ActionReducerMap<AppStates> = {
     [homeSelectKey]: homeReducer,
     [userSelectKey]: userReducer,
     [offerSelectKey]: offerReducer,
-    [supportSelectKey]: supportReducer
+    [supportSelectKey]: supportReducer,
+    [addressSelectKey]: addressReducer,
+    [categorySelectKey]: categoryReducer,
 };
 
-export const appEffects = [LoginEffects, ListUserEffects, HomeEffects, OfferEffects, SupportEffects];
+export const appEffects = [LoginEffects, ListUserEffects, HomeEffects, OfferEffects, SupportEffects, AddressEffects, CategoryEffects];
 
 // console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {

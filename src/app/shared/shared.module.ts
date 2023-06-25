@@ -27,7 +27,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { EditorModule } from 'primeng/editor';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MessagesModule } from 'primeng/messages';
-import {ImageModule} from "primeng/image";
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
     declarations: [SideBarComponent, HeaderComponent, FooterComponent, BreadcrumbComponent, MessagesHelpComponent],
@@ -55,7 +55,7 @@ import {ImageModule} from "primeng/image";
         EditorModule,
         ConfirmDialogModule,
         MessagesModule,
-        ImageModule
+        ImageModule,
     ],
     exports: [
         CardModule,
@@ -79,7 +79,7 @@ import {ImageModule} from "primeng/image";
         DialogModule,
         ConfirmDialogModule,
         MessagesModule,
-        ImageModule
+        ImageModule,
     ],
     providers: [MessageService],
 })

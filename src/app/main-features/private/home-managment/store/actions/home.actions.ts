@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { ITopHomeSlidesImages } from '../../../../../shared/models/top-home-slides-images.model';
 import { PageCommon } from '../../../../../shared/models/page.common';
-import {IIdEntity} from "../../../../../shared/models/id-entity.model";
+import { IIdEntity } from '../../../../../shared/models/id-entity.model';
 
 export const addTopSlides = createAction('[TopSlide] Add TopSlide', props<ITopHomeSlidesImages>());
 

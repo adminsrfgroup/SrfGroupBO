@@ -10,7 +10,7 @@ import { SliderModule } from 'primeng/slider';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { InputTextModule } from 'primeng/inputtext';
 import { provideMockStore } from '@ngrx/store/testing';
-import {SharedModule} from "../../../../../shared/shared.module";
+import { SharedModule } from '../../../../../shared/shared.module';
 
 describe('ListUsersComponent', () => {
     let component: ListUsersComponent;

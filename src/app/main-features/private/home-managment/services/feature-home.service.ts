@@ -21,14 +21,14 @@ export class FeatureHomeService {
     }
 
     fetchOneFeatureSlide(id: number): Observable<IPostHomeFeature> {
-      return this.httpClient.get(`${environment.baseUrl}api/post-home-feature/admin/${id}`);
+        return this.httpClient.get(`${environment.baseUrl}api/post-home-feature/admin/${id}`);
     }
 
-  updateFeatureSlide(data: IPostHomeFeature): Observable<IPostHomeFeature> {
-    return this.httpClient.put(`${environment.baseUrl}api/post-home-feature/admin/${data.id}`, data);
-  }
+    updateFeatureSlide(data: IPostHomeFeature): Observable<IPostHomeFeature> {
+        return this.httpClient.put(`${environment.baseUrl}api/post-home-feature/admin/${data.id}`, data);
+    }
 
-  deleteFeatureSlide(data: IPostHomeFeature): Observable<boolean> {
-    return this.httpClient.delete<boolean>(`${environment.baseUrl}api/post-home-feature/admin/${data.id}`);
-  }
+    deleteFeatureSlide(data: IPostHomeFeature): Observable<boolean> {
+        return this.httpClient.delete<boolean>(`${environment.baseUrl}api/post-home-feature/admin/${data.id}`);
+    }
 }

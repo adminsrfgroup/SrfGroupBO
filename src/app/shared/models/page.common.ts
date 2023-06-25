@@ -5,7 +5,7 @@ export interface PageCommon<T> {
     totalPages: number;
 }
 
-export interface Pagination{
-  page: number;
-  size: number;
+export interface Pagination {
+    page: number;
+    size: number;
 }

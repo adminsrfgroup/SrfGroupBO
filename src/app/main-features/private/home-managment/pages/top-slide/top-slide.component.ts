@@ -17,9 +17,9 @@ export class TopSlideComponent implements OnInit, OnDestroy {
     listTopSlides: ITopHomeSlidesImages[] = [];
     selectedTopSlides!: ITopHomeSlidesImages[];
 
-    loading: boolean = false;
-    totalItems: number = 0;
-    totalPages: number = 0;
+    loading = false;
+    totalItems = 0;
+    totalPages = 0;
     @ViewChild('dt') table!: Table;
     representatives!: any[];
     statuses!: any[];
@@ -96,7 +96,7 @@ export class TopSlideComponent implements OnInit, OnDestroy {
     }
 
     deleteSlide(id: number) {
-      this.idDeleteSlide = id;
+        this.idDeleteSlide = id;
         this.confirmationService.confirm({
             message: 'Do you want to delete this record?',
             header: 'Delete Confirmation',
@@ -104,12 +104,12 @@ export class TopSlideComponent implements OnInit, OnDestroy {
         });
     }
 
-    acceptDelete(){
-      this.store.dispatch(deleteTopSlides({ id: this.idDeleteSlide }));
+    acceptDelete() {
+        this.store.dispatch(deleteTopSlides({ id: this.idDeleteSlide }));
     }
 
-    rejectDelete(){
-      this.confirmationService.close();
+    rejectDelete() {
+        this.confirmationService.close();
     }
 
     ngOnDestroy(): void {

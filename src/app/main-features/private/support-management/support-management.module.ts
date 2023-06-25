@@ -4,14 +4,8 @@ import { CommonModule } from '@angular/common';
 import { SupportManagementRoutingModule } from './support-management-routing.module';
 import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 
-
 @NgModule({
-  declarations: [
-    ContactUsComponent
-  ],
-  imports: [
-    CommonModule,
-    SupportManagementRoutingModule
-  ]
+    declarations: [ContactUsComponent],
+    imports: [CommonModule, SupportManagementRoutingModule],
 })
-export class SupportManagementModule { }
+export class SupportManagementModule {}
