@@ -1,0 +1,77 @@
+<div class="card">
+    <div class="card-container blue-container flex align-items-center justify-content-end">
+        <div class="p-4">
+            <p-button label="Importer" styleClass="p-button-success" (click)="importAddress()"></p-button>
+        </div>
+    </div>
+</div>
+<div class="list-address">
+    <p-table
+        #dt
+        [value]="listAddress"
+        dataKey="id"
+        styleClass="p-datatable-customers"
+        [rowHover]="true"
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[2, 5]"
+        [loading]="loading"
+        [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [filterDelay]="0"
+        [globalFilterFields]="['city', 'country', 'admin_name']"
+        [totalRecords]="totalElements"
+        [lazy]="true"
+        (onLazyLoad)="nextPage($event)">
+        <ng-template pTemplate="caption">
+            <div class="table-header">
+                List of Customers {{ totalElements }}
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="filterGlobal($event, 'contains')" placeholder="Global Search" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem"></th>
+                <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="city">city <p-sortIcon field="city"></p-sortIcon></th>
+                <th pSortableColumn="country">country <p-sortIcon field="country"></p-sortIcon></th>
+                <th pSortableColumn="admin_name">admin_name <p-sortIcon field="admin_name"></p-sortIcon></th>
+                <th style="width: 8rem"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customer>
+            <tr class="p-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+                </td>
+                <td>
+                    <span class="p-column-title">id</span>
+                    {{ customer.id }}
+                </td>
+                <td>
+                    <span class="p-column-title">city</span>
+                    <span class="image-text">{{ customer.city }}</span>
+                </td>
+                <td>
+                    <span class="p-column-title">country</span>
+                    <span class="image-text">{{ customer.country }}</span>
+                </td>
+                <td>
+                    <span class="p-column-title">admin_name</span>
+                    {{ customer.admin_name }}
+                </td>
+                <td style="text-align: center">
+                    <a pButton class="p-button-secondary" icon="pi pi-cog" routerLink="/private/user/details-users/{{ customer.id }}"></a>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No customers found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
