@@ -1,0 +1,79 @@
+<div class="card">
+  <div class="card-container blue-container flex align-items-center justify-content-end">
+    <div class="p-4">
+      <p-button label="Add New Description Offer"
+                styleClass="p-button-success"
+              routerLink="/private/offer/add-update-description-add-new-offer"></p-button>
+    </div>
+  </div>
+</div>
+<div class="list-categories">
+  <p-table
+    #dt
+    [value]="listDescriptionAddNewOffer()"
+    dataKey="id"
+    styleClass="p-datatable-customers"
+    [rowHover]="true"
+    [rows]="5"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[2, 5]"
+    [loading]="loading()"
+    [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [filterDelay]="0"
+    [globalFilterFields]="['descriptionAr', 'descriptionFr', 'descriptionEn']"
+    [totalRecords]="totalElements()"
+    [lazy]="true"
+    (onLazyLoad)="nextPage($event)">
+    <ng-template pTemplate="caption">
+      <div class="table-header">
+        List of Customers {{ totalElements() }}
+        <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="filterGlobal($event, 'contains')" placeholder="Global Search" />
+                </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem"></th>
+        <th style="min-width: 5rem" pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
+        <th pSortableColumn="descriptionAr">descriptionAr <p-sortIcon field="titleAr"></p-sortIcon></th>
+        <th pSortableColumn="descriptionFr">descriptionFr <p-sortIcon field="titleFr"></p-sortIcon></th>
+        <th pSortableColumn="descriptionEn">descriptionEn <p-sortIcon field="titleEn"></p-sortIcon></th>
+        <th style="width: 8rem"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr class="p-selectable-row">
+        <td>
+          <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+        </td>
+        <td>
+          <span class="p-column-title">id</span>
+          {{ customer.id }}
+        </td>
+        <td>
+          <span class="p-column-title">descriptionAr</span>
+          <div class="image-text" [innerHTML]="customer.descriptionAr"></div>
+        </td>
+        <td>
+          <span class="p-column-title">descriptionFr</span>
+          <div class="image-text" [innerHTML]="customer.descriptionFr"></div>
+        </td>
+        <td>
+          <span class="p-column-title">descriptionEn</span>
+          <div class="image-text" [innerHTML]="customer.descriptionEn"></div>
+        </td>
+        <td style="text-align: center">
+          <a pButton class="p-button-secondary" icon="pi pi-cog" routerLink="/private/user/details-users/{{ customer.id }}"></a>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8">No customers found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

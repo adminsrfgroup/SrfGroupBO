@@ -1,0 +1,43 @@
+<div class="grid">
+  <div class="col"></div>
+  <div class="col">
+
+    <form [formGroup]="formGroup">
+      <div class="card">
+        <h5>Vertical</h5>
+        <div class="flex flex-column mb-3">
+          <label for="name">Name</label>
+          <p-dropdown formControlName="name"
+                      [options]="listPermissions()"
+                      optionLabel="name"
+                      id="name"
+                      dataKey="value"
+                      [style]="{'minWidth':'100%'}"
+                      [autoDisplayFirst]="false"/>
+        </div>
+        <div class="field">
+          <label for="pathApi">PathApi</label>
+          <input id="pathApi"
+                 type="text"
+                 formControlName="pathApi"
+                 class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field">
+          <label for="description">Description</label>
+          <textarea id="description"
+                    rows="5"
+                    cols="30"
+                    pInputTextarea
+                    formControlName="description"
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+        </div>
+        <div class="flex justify-content-center">
+          <p-button styleClass="p-button-secondary" label="Cancel" class="m-1"></p-button>
+          <p-button styleClass="p-button-success" label="Save" class="m-1" (click)="submitForm()"></p-button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="col"></div>
+</div>

@@ -1,0 +1,22 @@
+<div class="flex">
+  <div class="flex-1 bg-yellow-500 font-bold text-gray-900 m-2 px-5 py-3 border-round">
+    <h5>Default Ar</h5>
+    <p-editor [(ngModel)]="descriptionAddNewOffer().descriptionAr" [style]="{ height: '320px' }"></p-editor>
+  </div>
+  <div class="flex-1 bg-yellow-500 font-bold text-gray-900 m-2 px-5 py-3 border-round">
+    <h5>Default Fr</h5>
+    <p-editor [(ngModel)]="descriptionAddNewOffer().descriptionFr" [style]="{ height: '320px' }"></p-editor>
+  </div>
+  <div class="flex-1 bg-yellow-500 font-bold text-gray-900 m-2 px-5 py-3 border-round">
+    <h5>Default En</h5>
+    <p-editor [(ngModel)]="descriptionAddNewOffer().descriptionEn" [style]="{ height: '320px' }"></p-editor>
+  </div>
+</div>
+
+<div class="card">
+  <div class="flex flex-row-reverse flex-wrap card-container">
+    <div class="flex m-2">
+      <button pButton pRipple type="button" [label]="idEntity() ? 'Update new Desc' : 'Add new Desc'" class="p-button-help" (click)="addUpdateDescNewOffer()"></button>
+    </div>
+  </div>
+</div>
