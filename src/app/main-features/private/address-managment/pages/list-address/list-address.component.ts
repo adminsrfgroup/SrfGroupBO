@@ -4,7 +4,6 @@ import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
 import { AddressState } from '../../store/state/init.state';
 import { Table } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
-import { OfferState } from '../../../offer-managment/store/state/offer.state';
 import { selectorAddress } from '../../store/serlectors/address.selector';
 import { loadListAddress } from '../../store/actions/address.action';
 import { IAddress } from '../../../../../shared/models/address.model';
@@ -56,7 +55,7 @@ export class ListAddressComponent implements OnInit, OnDestroy {
             .select(selectorAddress)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
-                next: (result: OfferState) => {
+                next: (result: AddressState) => {
                     console.log('result ', result);
                     if (result.entities.length === 0 && result.totalPages === -1) {
                         this.store.dispatch(
@@ -65,7 +64,7 @@ export class ListAddressComponent implements OnInit, OnDestroy {
                                 size: 5,
                             })
                         );
-                    } else {
+                    } else if(result.entities.length){
                         this.listAddress = result.entities.slice();
                         this.totalElements = result.totalElements;
                         this.totalPages = result.totalPages;

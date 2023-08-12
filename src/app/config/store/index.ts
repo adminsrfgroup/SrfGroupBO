@@ -17,7 +17,7 @@ import { HomeEffects } from '../../main-features/private/home-managment/store/ef
 import { isDevMode } from '@angular/core';
 import { userSelectKey } from '../../main-features/private/user-managment/store/selectors/user.selectors';
 import { offerSelectKey } from '../../main-features/private/offer-managment/store/selectors/offer.selectors';
-import { OfferState } from '../../main-features/private/offer-managment/store/state/offer.state';
+import {IMainOfferState} from '../../main-features/private/offer-managment/store/state/offer.state';
 import { offerReducer } from '../../main-features/private/offer-managment/store/reducers/offer.reducer';
 import { OfferEffects } from '../../main-features/private/offer-managment/store/effects/offer.effects';
 import { supportSelectKey } from '../../main-features/private/support-management/store/selectors/support.selectors';
@@ -32,6 +32,10 @@ import { categoryReducer } from '../../main-features/private/category-managment/
 import { CategoryState } from '../../main-features/private/category-managment/store/state/init.state';
 import { categorySelectKey } from '../../main-features/private/category-managment/store/selectors/category.selector';
 import { CategoryEffects } from '../../main-features/private/category-managment/store/effects/category.effect';
+import {roleSelectKey} from "../../main-features/private/role-managment/store/selectors/role.selectors";
+import {RoleState} from "../../main-features/private/role-managment/store/state/init.state";
+import {roleReducer} from "../../main-features/private/role-managment/store/reducers/role.reducer";
+import {RoleEffects} from "../../main-features/private/role-managment/store/effects/role.effect";
 
 export interface AppStates {
     [loginSelectKey]: LoginState;
@@ -39,12 +43,14 @@ export interface AppStates {
     [listUsersSelectKey]: UserState;
     [homeSelectKey]: HomeState;
     [userSelectKey]: UserState;
-    [offerSelectKey]: OfferState;
+    [offerSelectKey]: IMainOfferState;
 
     [supportSelectKey]: SupportState;
 
     [addressSelectKey]: AddressState;
     [categorySelectKey]: CategoryState;
+
+    [roleSelectKey]: RoleState;
 }
 
 export const appReducers: ActionReducerMap<AppStates> = {
@@ -57,9 +63,12 @@ export const appReducers: ActionReducerMap<AppStates> = {
     [supportSelectKey]: supportReducer,
     [addressSelectKey]: addressReducer,
     [categorySelectKey]: categoryReducer,
+    [roleSelectKey]:roleReducer
 };
 
-export const appEffects = [LoginEffects, ListUserEffects, HomeEffects, OfferEffects, SupportEffects, AddressEffects, CategoryEffects];
+export const appEffects = [LoginEffects, ListUserEffects, HomeEffects,
+  OfferEffects, SupportEffects, AddressEffects, CategoryEffects,
+  RoleEffects];
 
 // console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {

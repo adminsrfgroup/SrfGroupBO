@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import {Component,inject, OnDestroy, OnInit, signal, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
@@ -26,8 +26,9 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
     loading = signal<boolean>(false);
     totalElements = signal<number>(0);
     totalPages = signal<number>(0);
-
+    
     ngOnInit() {
+
         this.representatives = [
             { name: 'Amy Elsner', image: 'amyelsner.png' },
             { name: 'Anna Fali', image: 'annafali.png' },
@@ -64,7 +65,8 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
                                 size: 5,
                             })
                         );
-                    } else {
+                    } else if(result.entities.length){
+                      console.log('set items')
                         this.listCategories.set(result.entities.slice());
                         this.totalElements.set(result.totalElements);
                         this.totalPages.set(result.totalPages);

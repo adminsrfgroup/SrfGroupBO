@@ -1,8 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { OfferState } from '../state/offer.state';
+import {IMainOfferState} from '../state/offer.state';
 
 export const offerSelectKey = 'offer';
 
-export const selectOfferState = createFeatureSelector<OfferState>(offerSelectKey);
+export const selectOfferState = createFeatureSelector<IMainOfferState>(offerSelectKey);
 
-export const selectorOffers = createSelector(selectOfferState, (state: OfferState) => state);
+export const selectorOffers = createSelector(selectOfferState, (state: IMainOfferState) => state.offers);
+export const selectorDescriptionAddNewOffer = createSelector(selectOfferState, (state: IMainOfferState) => state.descriptionNewOffer);

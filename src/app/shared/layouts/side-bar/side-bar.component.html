@@ -1,4 +1,4 @@
-<h5>Multiple</h5>
+<h4>SrfGroup</h4>
 <div class="container-side-bar">
     <p-accordion [multiple]="true">
         <p-accordionTab header="Dashboard Mangment">
@@ -17,9 +17,16 @@
                 <li className="py-4" routerLink="/private/dashboard/organigramme">Organigramme</li>
             </ul>
         </p-accordionTab>
+        <p-accordionTab header="Role Management">
+          <ul>
+            <li className="py-4" routerLink="/private/role/list-role">List Roles</li>
+            <li className="py-4" routerLink="/private/role/list-permissions">List Permissions</li>
+          </ul>
+        </p-accordionTab>
         <p-accordionTab header="Offer Management">
             <ul>
                 <li className="py-4" routerLink="/private/offer/list">List Offers</li>
+                <li className="py-4" routerLink="/private/offer/description-add-new-offer">DescriptionAddNewOffer</li>
                 <li className="py-4" routerLink="/private/dashboard/logs">Logs</li>
             </ul>
         </p-accordionTab>

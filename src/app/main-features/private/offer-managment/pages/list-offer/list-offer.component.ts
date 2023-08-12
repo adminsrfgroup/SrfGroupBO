@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
 import { Store } from '@ngrx/store';
-import { OfferState } from '../../store/state/offer.state';
+import {IMainOfferState, IOfferState} from '../../store/state/offer.state';
 import { Table } from 'primeng/table';
 import { IOffer } from '../../../../../shared/models/offer.model';
 import { loadListOffers } from '../../store/actions/offer.actions';
@@ -25,7 +25,7 @@ export class ListOfferComponent implements OnInit, OnDestroy {
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    store = inject(Store<OfferState>);
+    store = inject(Store<IMainOfferState>);
     primengConfig = inject(PrimeNGConfig);
 
     ngOnInit(): void {
@@ -56,7 +56,7 @@ export class ListOfferComponent implements OnInit, OnDestroy {
             .select(selectorOffers)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
-                next: (result: OfferState) => {
+                next: (result: IOfferState) => {
                     console.log('result ', result);
                     if (result.entities.length === 0 && result.totalPages === -1) {
                         this.store.dispatch(
@@ -65,18 +65,13 @@ export class ListOfferComponent implements OnInit, OnDestroy {
                                 size: 5,
                             })
                         );
-                    } else {
+                    } else if(result.entities.length){
+                      console.log('set items')
                         this.listOffers = result.entities.slice();
                         this.totalElements = result.totalElements;
                         this.totalPages = result.totalPages;
                         this.loading = result.loadingEntities;
                     }
-                    /*
-            if (result.deleteSuccess) {
-              this.confirmationService.close();
-              this.store.dispatch(resetTopSlide());
-            }
-            */
                 },
             });
     }
