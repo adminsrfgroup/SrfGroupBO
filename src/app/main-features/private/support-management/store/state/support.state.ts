@@ -1,6 +1,7 @@
 import { IContactUs } from '../../../../../shared/models/contact-us.model';
+import {IAboutUs} from "../../../../../shared/models/about-us.model";
 
-export interface ContactUsState {
+export interface IContactUsState {
     loading: boolean;
     entity: IContactUs;
     loadingEntities: boolean;
@@ -10,11 +11,26 @@ export interface ContactUsState {
     errorMessage: any;
 }
 
-export interface SupportState {
-    contactUs: ContactUsState;
+
+export interface IAboutUsState {
+  loading: boolean;
+  entity: IAboutUs;
+  loadingEntities: boolean;
+  entities: IAboutUs[];
+  totalElements: number;
+  totalPages: number;
+  errorMessage: any;
+
+  addSuccess: boolean;
+  updateSuccess: boolean;
 }
 
-export const initSupportState: SupportState = {
+export interface ISupportState {
+    contactUs: IContactUsState;
+    aboutUs: IAboutUsState;
+}
+
+export const initSupportState: ISupportState = {
     contactUs: {
         loading: false,
         entity: {},
@@ -24,4 +40,15 @@ export const initSupportState: SupportState = {
         totalPages: -1,
         errorMessage: null,
     },
+    aboutUs: {
+        loading: false,
+        entity: {},
+        loadingEntities: false,
+        entities: [],
+        totalElements: -1,
+        totalPages: -1,
+        errorMessage: null,
+        addSuccess: false,
+        updateSuccess: false
+    }
 };

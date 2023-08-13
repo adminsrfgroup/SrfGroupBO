@@ -1,11 +1,15 @@
 import { ActionReducer, createReducer, on } from '@ngrx/store';
-import { resetListOffers } from '../../../offer-managment/store/actions/offer.actions';
-import { ContactUsState, initSupportState } from '../state/support.state';
-import { loadListContactUs, loadListContactUsFailure, loadListContactUsSuccess } from '../actions/contact-us.actions';
+import { IContactUsState, initSupportState } from '../state/support.state';
+import {
+  loadListContactUs,
+  loadListContactUsFailure,
+  loadListContactUsSuccess,
+  resetListContactUs
+} from '../actions/contact-us.actions';
 
-export const contactUsReducer: ActionReducer<ContactUsState> = createReducer(
+export const contactUsReducer: ActionReducer<IContactUsState> = createReducer(
     initSupportState.contactUs,
-    on(loadListContactUs, (state: ContactUsState) => {
+    on(loadListContactUs, (state: IContactUsState) => {
         return {
             ...state,
             loadingEntities: true,
@@ -13,7 +17,7 @@ export const contactUsReducer: ActionReducer<ContactUsState> = createReducer(
             totalItems: 0,
         };
     }),
-    on(loadListContactUsSuccess, (state: ContactUsState, action: ReturnType<typeof loadListContactUsSuccess>) => {
+    on(loadListContactUsSuccess, (state: IContactUsState, action: ReturnType<typeof loadListContactUsSuccess>) => {
         return {
             ...state,
             loadingEntities: false,
@@ -22,7 +26,7 @@ export const contactUsReducer: ActionReducer<ContactUsState> = createReducer(
             totalPages: action.payload.totalPages,
         };
     }),
-    on(loadListContactUsFailure, (state: ContactUsState, action: ReturnType<typeof loadListContactUsFailure>) => {
+    on(loadListContactUsFailure, (state: IContactUsState, action: ReturnType<typeof loadListContactUsFailure>) => {
         return {
             ...state,
             loadingEntities: false,
@@ -30,7 +34,7 @@ export const contactUsReducer: ActionReducer<ContactUsState> = createReducer(
         };
     }),
 
-    on(resetListOffers, () => {
+    on(resetListContactUs, () => {
         return {
             ...initSupportState.contactUs,
         };

@@ -21,7 +21,7 @@ import {IMainOfferState} from '../../main-features/private/offer-managment/store
 import { offerReducer } from '../../main-features/private/offer-managment/store/reducers/offer.reducer';
 import { OfferEffects } from '../../main-features/private/offer-managment/store/effects/offer.effects';
 import { supportSelectKey } from '../../main-features/private/support-management/store/selectors/support.selectors';
-import { SupportState } from '../../main-features/private/support-management/store/state/support.state';
+import { ISupportState } from '../../main-features/private/support-management/store/state/support.state';
 import { supportReducer } from '../../main-features/private/support-management/store/reducers/support.reducer';
 import { SupportEffects } from '../../main-features/private/support-management/store/effects/support.effects';
 import { addressSelectKey } from '../../main-features/private/address-managment/store/serlectors/address.selector';
@@ -45,7 +45,7 @@ export interface AppStates {
     [userSelectKey]: UserState;
     [offerSelectKey]: IMainOfferState;
 
-    [supportSelectKey]: SupportState;
+    [supportSelectKey]: ISupportState;
 
     [addressSelectKey]: AddressState;
     [categorySelectKey]: CategoryState;
