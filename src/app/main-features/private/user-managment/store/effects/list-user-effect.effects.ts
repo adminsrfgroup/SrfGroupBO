@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, filter, map, of, switchMap } from 'rxjs';
 import { ListUsersService } from '../../services/list-users.service';
 import { loadListUsers, loadListUsersFailure, loadListUsersSuccess } from '../actions/list-user.actions';
-import { IIdEntity } from '../../../../../shared/models/id-entity.model';
+import { IdEntity } from '../../../../../shared/models/id-entity.model';
 import { loadDetailsUser, loadDetailsUserFailure, loadDetailsUserSuccess } from '../actions/details-user.actions';
 import { IUser } from '../../../../../shared/models/user.model';
 import { deleteFeatureSlideFailure, deleteFeatureSlideSuccess } from '../../../home-managment/store/actions/feature-home.actions';
@@ -32,7 +32,7 @@ export class ListUserEffects {
     fetchDetailsUser$ = createEffect(() =>
         this.actions$.pipe(
             ofType(loadDetailsUser.type),
-            switchMap((payload: IIdEntity) => {
+            switchMap((payload: IdEntity) => {
                 return this.listUsersService.fetchDetailsUser(payload.id).pipe(
                     map((data: IUser) => {
                         return loadDetailsUserSuccess({ payload: data });

@@ -21,6 +21,10 @@ const routes: Routes = [
       component: AddUpdateAboutUsComponent,
     },
     {
+      path: 'add-update-about-us/:id',
+      component: AddUpdateAboutUsComponent,
+    },
+    {
       path: 'list-newsletter',
       component: ListNewsletterComponent,
     },

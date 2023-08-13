@@ -8,3 +8,4 @@ export const selectSupportState = createFeatureSelector<ISupportState>(supportSe
 export const selectorContactUs = createSelector(selectSupportState, (state: ISupportState) => state.contactUs);
 
 export const selectorAbouttUs = createSelector(selectSupportState, (state: ISupportState) => state.aboutUs);
+export const selectorNewsLetter = createSelector(selectSupportState, (state: ISupportState) => state.newsLetter);

@@ -10,4 +10,10 @@ export const loadListAddressFailure = createAction('[Address] Load ListAddress F
 
 export const setActivePageAddress = createAction('[ListAddress] Set Active Page ListAddress', props<Pagination>());
 
+export const importAddress = createAction('[ImportAddress] Load ImportAddress');
+
+export const importAddressSuccess = createAction('[ImportAddress] Load ListAddress Success', props<{ payload: string }>());
+
+export const importAddressFailure = createAction('[ImportAddress] Load ImportAddress Failure', props<{ error: any }>());
+
 export const resetAddress = createAction('[Address] Reset Address');

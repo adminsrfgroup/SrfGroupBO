@@ -1,7 +1,7 @@
 import { ActionReducer, createReducer, on } from '@ngrx/store';
 import {IAboutUsState, initSupportState} from '../state/support.state';
 import {
-  addAboutUs, addAboutUsFailure, addAboutUsSuccess,
+  addAboutUs, addAboutUsFailure, addAboutUsSuccess, fetchOneAboutUs, fetchOneAboutUsFailure, fetchOneAboutUsSuccess,
   loadListAboutUs,
   loadListAboutUsFailure,
   loadListAboutUsSuccess, resetAboutUs,
@@ -51,6 +51,28 @@ export const aboutUsReducer: ActionReducer<IAboutUsState> = createReducer(
       };
     }),
     on(addAboutUsFailure, (state: IAboutUsState, action: ReturnType<typeof addAboutUsFailure>) => {
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.error,
+      };
+    }),
+
+
+    on(fetchOneAboutUs, (state: IAboutUsState) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    }),
+    on(fetchOneAboutUsSuccess, (state: IAboutUsState, action: ReturnType<typeof fetchOneAboutUsSuccess>) => {
+      return {
+        ...state,
+        loading: false,
+        entity: action.payload,
+      };
+    }),
+    on(fetchOneAboutUsFailure, (state: IAboutUsState, action: ReturnType<typeof fetchOneAboutUsFailure>) => {
       return {
         ...state,
         loading: false,

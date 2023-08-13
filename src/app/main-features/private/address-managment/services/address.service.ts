@@ -11,4 +11,8 @@ export class AddressService {
     fetchAllAddress(page: number, size: number): Observable<any> {
         return this.httpClient.get<any>(`${environment.baseUrl}api/address/public?page=${page}&size=${size}`);
     }
+
+    importAddress(): Observable<string> {
+      return this.httpClient.get<string>(`${environment.baseUrl}api/address/admin/import`);
+    }
 }

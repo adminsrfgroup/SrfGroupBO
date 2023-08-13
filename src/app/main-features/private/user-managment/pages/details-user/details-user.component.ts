@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../store/state/user.state';
 import { ActivatedRoute } from '@angular/router';
-import { IIdEntity } from '../../../../../shared/models/id-entity.model';
+import { IdEntity } from '../../../../../shared/models/id-entity.model';
 import { loadDetailsUser } from '../../store/actions/details-user.actions';
 import { Subject, takeUntil } from 'rxjs';
 import { selectorUser } from '../../store/selectors/user.selectors';
@@ -29,7 +29,7 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
                 this.idEntity = params['id'];
                 console.log('this.idEntity ', this.idEntity);
                 if (this.idEntity) {
-                    const requestData: IIdEntity = {
+                    const requestData: IdEntity = {
                         id: this.idEntity,
                     };
                     this.store.dispatch(loadDetailsUser(requestData));

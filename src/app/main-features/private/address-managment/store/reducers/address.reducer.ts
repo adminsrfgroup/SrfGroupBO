@@ -1,6 +1,12 @@
 import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
 import { AddressState, initAddressState } from '../state/init.state';
-import { loadListAddress, loadListAddressFailure, loadListAddressSuccess, resetAddress } from '../actions/address.action';
+import {
+  importAddress, importAddressFailure, importAddressSuccess,
+  loadListAddress,
+  loadListAddressFailure,
+  loadListAddressSuccess,
+  resetAddress
+} from '../actions/address.action';
 
 export const addressReducer: ActionReducer<AddressState, Action> = createReducer(
     initAddressState,
@@ -27,6 +33,27 @@ export const addressReducer: ActionReducer<AddressState, Action> = createReducer
             loadingEntities: false,
             errorMessage: action.error,
         };
+    }),
+
+
+    on(importAddress, (state: AddressState) => {
+      return {
+        ...state,
+        loading: false
+      };
+    }),
+    on(importAddressSuccess, (state: AddressState, action: ReturnType<typeof importAddressSuccess>) => {
+      return {
+        ...state,
+        loading: false
+      };
+    }),
+    on(importAddressFailure, (state: AddressState, action: ReturnType<typeof importAddressFailure>) => {
+      return {
+        ...state,
+        loadingEntities: false,
+        errorMessage: action.error,
+      };
     }),
 
     on(resetAddress, () => {

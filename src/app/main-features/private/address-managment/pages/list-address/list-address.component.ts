@@ -5,7 +5,7 @@ import { AddressState } from '../../store/state/init.state';
 import { Table } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { selectorAddress } from '../../store/serlectors/address.selector';
-import { loadListAddress } from '../../store/actions/address.action';
+import {importAddress, loadListAddress} from '../../store/actions/address.action';
 import { IAddress } from '../../../../../shared/models/address.model';
 
 @Component({
@@ -74,7 +74,9 @@ export class ListAddressComponent implements OnInit, OnDestroy {
             });
     }
 
-    importAddress(): void {}
+    importAddress(): void {
+      this.store.dispatch(importAddress());
+    }
 
     onActivityChange(event: any) {
         const value = event.target.value;

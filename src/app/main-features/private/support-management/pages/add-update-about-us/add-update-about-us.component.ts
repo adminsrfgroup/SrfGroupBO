@@ -3,10 +3,12 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {IAboutUsState} from "../../store/state/support.state";
 import {IAboutUs} from "../../../../../shared/models/about-us.model";
-import {addAboutUs, resetAboutUs} from "../../store/actions/about-us.actions";
+import {addAboutUs, fetchOneAboutUs, resetAboutUs} from "../../store/actions/about-us.actions";
 import {Subject, takeUntil} from "rxjs";
 import {selectorAbouttUs} from "../../store/selectors/support.selectors";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {IdEntity} from "../../../../../shared/models/id-entity.model";
+import {fetchOneFeatureSlide} from "../../../home-managment/store/actions/feature-home.actions";
 
 @Component({
   selector: 'app-add-update-about-us',
@@ -17,7 +19,7 @@ export class AddUpdateAboutUsComponent implements OnInit, OnDestroy{
 
   formGroup!: FormGroup;
 
-  idEntity = signal<string | null>('');
+  idEntity = signal<number>(-1);
 
   store = inject(Store<IAboutUsState>);
 
@@ -25,7 +27,19 @@ export class AddUpdateAboutUsComponent implements OnInit, OnDestroy{
 
   router = inject(Router);
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.params.subscribe({
+      next: params => {
+        this.idEntity.set(params['id']);
+        if (this.idEntity) {
+          const requestData: IdEntity = {
+            id: Number(this.idEntity())
+          };
+          console.log('requestData ', requestData);
+          this.store.dispatch(fetchOneAboutUs(requestData));
+        }
+      },
+    });
   }
   ngOnInit(): void {
     this.initForm();
@@ -44,6 +58,11 @@ export class AddUpdateAboutUsComponent implements OnInit, OnDestroy{
 
           if (this.idEntity() && result.entity) {
             // Update form
+            this.formGroup.patchValue({
+              contentAr: result.entity.contentAr,
+              contentFr: result.entity.contentFr,
+              contentEn: result.entity.contentEn
+            })
           }
         },
       });

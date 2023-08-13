@@ -1,5 +1,6 @@
 import { IContactUs } from '../../../../../shared/models/contact-us.model';
 import {IAboutUs} from "../../../../../shared/models/about-us.model";
+import {INewsLetter} from "../../../../../shared/models/newsletter.model";
 
 export interface IContactUsState {
     loading: boolean;
@@ -25,9 +26,20 @@ export interface IAboutUsState {
   updateSuccess: boolean;
 }
 
+export interface INewsLetterState {
+  loading: boolean;
+  entity: INewsLetter;
+  loadingEntities: boolean;
+  entities: INewsLetter[];
+  totalElements: number;
+  totalPages: number;
+  errorMessage: any;
+}
+
 export interface ISupportState {
     contactUs: IContactUsState;
     aboutUs: IAboutUsState;
+    newsLetter: INewsLetterState
 }
 
 export const initSupportState: ISupportState = {
@@ -50,5 +62,14 @@ export const initSupportState: ISupportState = {
         errorMessage: null,
         addSuccess: false,
         updateSuccess: false
+    },
+    newsLetter: {
+      loading: false,
+      entity: {},
+      loadingEntities: false,
+      entities: [],
+      totalElements: -1,
+      totalPages: -1,
+      errorMessage: null,
     }
 };

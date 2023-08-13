@@ -8,7 +8,7 @@ import { HomeService } from '../../services/home.service';
 import { PageCommon } from '../../../../../shared/models/page.common';
 import { addTopSlides, addTopSlidesSuccess, fetchOneTopSlides, fetchOneTopSlidesSuccess, fetchTopSlides, fetchTopSlidesSuccess } from '../actions/home.actions';
 import { ITopHomeSlidesImages } from '../../../../../shared/models/top-home-slides-images.model';
-import { IIdEntity } from '../../../../../shared/models/id-entity.model';
+import { IdEntity } from '../../../../../shared/models/id-entity.model';
 
 describe('HomeEffects', () => {
     let actions$: Observable<any>;
@@ -92,7 +92,7 @@ describe('HomeEffects', () => {
     });
 
     it('fetchOneTopSlide$ dispatches a success action', () => {
-        const requestData: IIdEntity = {
+        const requestData: IdEntity = {
             id: 1,
         };
         const responseMock: ITopHomeSlidesImages = {

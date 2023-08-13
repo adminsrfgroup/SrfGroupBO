@@ -1,10 +1,69 @@
-import { Component } from '@angular/core';
+import {Component, inject, OnDestroy, OnInit, signal, ViewChild} from '@angular/core';
+import {Store} from "@ngrx/store";
+import {IContactUsState} from "../../store/state/support.state";
+import {LazyLoadEvent, PrimeNGConfig} from "primeng/api";
+import {Table} from "primeng/table";
+import {IContactUs} from "../../../../../shared/models/contact-us.model";
+import {Subject, takeUntil} from "rxjs";
+import {selectorContactUs} from "../../store/selectors/support.selectors";
+import {loadListContactUs} from "../../store/actions/contact-us.actions";
 
 @Component({
   selector: 'app-list-contact-us',
   templateUrl: './list-contact-us.component.html',
   styleUrls: ['./list-contact-us.component.scss']
 })
-export class ListContactUsComponent {
+export class ListContactUsComponent implements OnInit, OnDestroy{
 
+  store = inject(Store<IContactUsState>);
+  primengConfig = inject(PrimeNGConfig);
+  @ViewChild('dt') table!: Table;
+  statuses!: any[];
+  representatives!: any[];
+
+  listContactUs = signal<IContactUs[]>([]);
+
+  loading = signal<boolean>(false);
+  totalElements = signal<number>(0);
+  totalPages = signal<number>(0);
+
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
+  ngOnInit() {
+
+    this.store
+      .select(selectorContactUs)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (result: IContactUsState) => {
+          console.log('result ', result);
+          if (result.entities.length === 0 && result.totalPages === -1) {
+            this.store.dispatch(
+              loadListContactUs({
+                page: 0,
+                size: 5,
+              })
+            );
+          } else if(result.entities.length){
+            this.listContactUs.set(result.entities.slice());
+            this.totalElements.set(result.totalElements);
+            this.totalPages.set(result.totalPages);
+            this.loading.set(result.loadingEntities);
+          }
+        },
+      });
+  }
+
+  nextPage(event: LazyLoadEvent) {
+    console.log('event ', event);
+  }
+
+  filterGlobal(event: any, matchMode: string) {
+    this.table.filterGlobal(event.target.value, matchMode);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
 }

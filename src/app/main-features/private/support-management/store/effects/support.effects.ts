@@ -9,15 +9,19 @@ import {IAboutUs} from "../../../../../shared/models/about-us.model";
 import {
   addAboutUs,
   addAboutUsFailure,
-  addAboutUsSuccess,
+  addAboutUsSuccess, fetchOneAboutUs, fetchOneAboutUsFailure, fetchOneAboutUsSuccess,
   loadListAboutUs, loadListAboutUsFailure,
   loadListAboutUsSuccess
 } from "../actions/about-us.actions";
+import {IdEntity} from "../../../../../shared/models/id-entity.model";
+import {NewsletterService} from "../../services/newsletter.service";
+import {loadListNewsLetter, loadListNewsLetterFailure, loadListNewsLetterSuccess} from "../actions/newsletter.actions";
 
 @Injectable()
 export class SupportEffects {
     constructor(private actions$: Actions, private supportService: SupportService,
-                private aboutUsService: AboutUsService) {}
+                private aboutUsService: AboutUsService,
+                 private newsletterService: NewsletterService) {}
 
     fetchListContactUs$ = createEffect(() =>
         this.actions$.pipe(
@@ -63,6 +67,39 @@ export class SupportEffects {
           }),
           catchError((exception: any) => {
             return of(loadListAboutUsFailure({ error: exception.error }));
+          })
+        );
+      })
+    )
+  );
+
+  fetchOneAboutUs = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fetchOneAboutUs.type),
+      switchMap((payload: IdEntity) => {
+        return this.aboutUsService.fetchOneAboutUs(payload.id).pipe(
+          map((data: IAboutUs) => {
+            return fetchOneAboutUsSuccess({ payload: data });
+          }),
+          catchError((exception: any) => {
+            return of(fetchOneAboutUsFailure({ error: exception.error }));
+          })
+        );
+      })
+    )
+  );
+
+
+  fetchListNewsLetter$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadListNewsLetter.type),
+      switchMap((payload: Pagination) => {
+        return this.newsletterService.fetchAllNewsLetter(payload.page, payload.size).pipe(
+          map((data: any) => {
+            return loadListNewsLetterSuccess({ payload: data });
+          }),
+          catchError((exception: any) => {
+            return of(loadListNewsLetterFailure({ error: exception.error }));
           })
         );
       })

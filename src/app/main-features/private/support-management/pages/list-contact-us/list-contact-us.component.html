@@ -1,1 +1,74 @@
-<p>list-contact-us works!</p>
+<div class="list-categories">
+  <p-table
+    #dt
+    [value]="listContactUs()"
+    dataKey="id"
+    styleClass="p-datatable-customers"
+    [rowHover]="true"
+    [rows]="5"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[2, 5]"
+    [loading]="loading()"
+    [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [filterDelay]="0"
+    [globalFilterFields]="['id', 'name', 'email', 'subject', 'message']"
+    [totalRecords]="totalElements()"
+    [lazy]="true"
+    (onLazyLoad)="nextPage($event)">
+    <ng-template pTemplate="caption">
+      <div class="table-header">
+        List of Customers {{ totalElements() }}
+        <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="filterGlobal($event, 'contains')" placeholder="Global Search" />
+                </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem"></th>
+        <th style="min-width: 5rem" pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
+        <th pSortableColumn="name">name <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="email">email <p-sortIcon field="email"></p-sortIcon></th>
+        <th pSortableColumn="subject">subject <p-sortIcon field="subject"></p-sortIcon></th>
+        <th pSortableColumn="message">message <p-sortIcon field="message"></p-sortIcon></th>
+        <th style="width: 8rem"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr class="p-selectable-row">
+        <td>
+          <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+        </td>
+        <td>
+          <span class="p-column-title">id</span>
+          {{ customer.id }}
+        </td>
+        <td>
+          <span class="p-column-title">name</span>
+          <div class="image-text" [innerHTML]="customer.name"></div>
+        </td>
+        <td>
+          <span class="p-column-title">email</span>
+          <div class="image-text" [innerHTML]="customer.email"></div>
+        </td>
+        <td>
+          <span class="p-column-title">subject</span>
+          <div class="image-text" [innerHTML]="customer.subject"></div>
+        </td>
+        <td>
+          <span class="p-column-title">message</span>
+          <div class="image-text" [innerHTML]="customer.message"></div>
+        </td>
+        <td style="text-align: center">
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8">No customers found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
