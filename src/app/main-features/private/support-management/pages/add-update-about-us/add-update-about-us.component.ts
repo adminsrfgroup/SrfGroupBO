@@ -8,7 +8,6 @@ import {Subject, takeUntil} from "rxjs";
 import {selectorAbouttUs} from "../../store/selectors/support.selectors";
 import {ActivatedRoute, Router} from "@angular/router";
 import {IdEntity} from "../../../../../shared/models/id-entity.model";
-import {fetchOneFeatureSlide} from "../../../home-managment/store/actions/feature-home.actions";
 
 @Component({
   selector: 'app-add-update-about-us',
@@ -31,7 +30,7 @@ export class AddUpdateAboutUsComponent implements OnInit, OnDestroy{
     this.activatedRoute.params.subscribe({
       next: params => {
         this.idEntity.set(params['id']);
-        if (this.idEntity) {
+        if (Number(this.idEntity()) > 0) {
           const requestData: IdEntity = {
             id: Number(this.idEntity())
           };

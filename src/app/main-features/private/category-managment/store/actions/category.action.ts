@@ -10,4 +10,10 @@ export const loadListCategoriesFailure = createAction('[ListCategories] Load Lis
 
 export const setActivePageCategories = createAction('[ListCategories] Set Active Page ListCategories', props<Pagination>());
 
-export const resetCategories = createAction('[ListCategories] Reset ListCategories');
+export const importCategories = createAction('[ImportCategories] Load ImportCategories');
+
+export const importCategoriesSuccess = createAction('[ImportCategories] Load ImportCategories Success', props<{ payload: string }>());
+
+export const importCategoriesFailure = createAction('[ImportCategories] Load ImportCategories Failure', props<{ error: any }>());
+
+export const resetCategories = createAction('[ResetCategories] Reset ResetCategories');

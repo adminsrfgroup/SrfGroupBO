@@ -5,7 +5,7 @@ import { Table } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { CategoryState } from '../../store/state/init.state';
 import { selectorCategory } from '../../store/selectors/category.selector';
-import { loadListCategories } from '../../store/actions/category.action';
+import {importCategories, loadListCategories} from '../../store/actions/category.action';
 import { ICategory } from '../../../../../shared/models/category.model';
 
 @Component({
@@ -26,7 +26,7 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
     loading = signal<boolean>(false);
     totalElements = signal<number>(0);
     totalPages = signal<number>(0);
-    
+
     ngOnInit() {
 
         this.representatives = [
@@ -76,7 +76,9 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
             });
     }
 
-    importAddress(): void {}
+    importCategories(): void {
+      this.store.dispatch(importCategories());
+    }
 
     onActivityChange(event: any) {
         const value = event.target.value;

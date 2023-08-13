@@ -51,7 +51,7 @@ export const addressReducer: ActionReducer<AddressState, Action> = createReducer
     on(importAddressFailure, (state: AddressState, action: ReturnType<typeof importAddressFailure>) => {
       return {
         ...state,
-        loadingEntities: false,
+        loading: false,
         errorMessage: action.error,
       };
     }),

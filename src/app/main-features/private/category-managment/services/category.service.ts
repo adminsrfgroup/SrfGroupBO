@@ -13,4 +13,8 @@ export class CategoryService {
     fetchAllCategories(page: number, size: number): Observable<PageCommon<ICategory>> {
         return this.httpClient.get<PageCommon<ICategory>>(`${environment.baseUrl}api/category/public?page=${page}&size=${size}`);
     }
+
+    importCategories(): Observable<string> {
+      return this.httpClient.get<string>(`${environment.baseUrl}api/category/admin/import`);
+    }
 }

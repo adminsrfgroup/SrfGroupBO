@@ -18,7 +18,7 @@
 <div class="card">
   <div class="flex flex-row-reverse flex-wrap card-container">
     <div class="flex m-2">
-      <button pButton pRipple type="button" [label]="idEntity() ? 'Update new Content' : 'Add new Content'" class="p-button-help" (click)="addUpdateContent()"></button>
+      <button pButton pRipple type="button" [label]="idEntity()>0 ? 'Update new Content' : 'Add new Content'" class="p-button-help" (click)="addUpdateContent()"></button>
     </div>
   </div>
 </div>

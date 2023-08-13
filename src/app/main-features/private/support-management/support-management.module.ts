@@ -10,9 +10,11 @@ import { ListNewsletterComponent } from './pages/list-newsletter/list-newsletter
 import { ListContactUsComponent } from './pages/list-contact-us/list-contact-us.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../../../shared/shared.module";
+import { ListFaqComponent } from './pages/list-faq/list-faq.component';
+import { AddUpdateFaqComponent } from './pages/add-update-faq/add-update-faq.component';
 
 @NgModule({
-    declarations: [AddUpdateAboutUsComponent, ListAboutUsComponent, ListDeclarationComponent, ListCguComponent, ListNewsletterComponent, ListContactUsComponent],
+    declarations: [AddUpdateAboutUsComponent, ListAboutUsComponent, ListDeclarationComponent, ListCguComponent, ListNewsletterComponent, ListContactUsComponent, ListFaqComponent, AddUpdateFaqComponent],
     imports: [CommonModule, SupportManagementRoutingModule, ReactiveFormsModule, SharedModule],
 })
 export class SupportManagementModule {}

@@ -16,12 +16,23 @@ import {
 import {IdEntity} from "../../../../../shared/models/id-entity.model";
 import {NewsletterService} from "../../services/newsletter.service";
 import {loadListNewsLetter, loadListNewsLetterFailure, loadListNewsLetterSuccess} from "../actions/newsletter.actions";
+import {FaqService} from "../../services/faq.service";
+import {
+  addFaq,
+  addFaqFailure,
+  addFaqSuccess,
+  loadListFaq,
+  loadListFaqFailure,
+  loadListFaqSuccess
+} from "../actions/faq.actions";
+import {IFaq} from "../../../../../shared/models/faq.model";
 
 @Injectable()
 export class SupportEffects {
     constructor(private actions$: Actions, private supportService: SupportService,
                 private aboutUsService: AboutUsService,
-                 private newsletterService: NewsletterService) {}
+                 private newsletterService: NewsletterService,
+                private faqService: FaqService) {}
 
     fetchListContactUs$ = createEffect(() =>
         this.actions$.pipe(
@@ -100,6 +111,38 @@ export class SupportEffects {
           }),
           catchError((exception: any) => {
             return of(loadListNewsLetterFailure({ error: exception.error }));
+          })
+        );
+      })
+    )
+  );
+
+  fetchListFaq$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadListFaq.type),
+      switchMap((payload: Pagination) => {
+        return this.faqService.fetchAllFaq(payload.page, payload.size).pipe(
+          map((data: any) => {
+            return loadListFaqSuccess({ payload: data });
+          }),
+          catchError((exception: any) => {
+            return of(loadListFaqFailure({ error: exception.error }));
+          })
+        );
+      })
+    )
+  );
+
+  addFaq$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addFaq.type),
+      switchMap((payload: IFaq) => {
+        return this.faqService.addFaq(payload).pipe(
+          map((data: any) => {
+            return addFaqSuccess({ payload: data });
+          }),
+          catchError((exception: any) => {
+            return of(addFaqFailure({ error: exception.error }));
           })
         );
       })

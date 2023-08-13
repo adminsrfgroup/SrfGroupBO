@@ -1,0 +1,69 @@
+<form [formGroup]="formGroup">
+  <div class="card">
+    <h5>Vertical and Grid</h5>
+    <div class="formgrid grid">
+      <div class="field col text-center border-1 p-2">
+        Question
+      </div>
+      <div class="field col text-center border-1 p-2">
+        Response
+      </div>
+    </div>
+
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="questionAr">Question Ar</label>
+        <input id="questionAr"
+               type="text"
+               class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+               formControlName="questionAr">
+      </div>
+      <div class="field col">
+        <label for="responseAr">Response Ar</label>
+        <input id="responseAr"
+               type="text"
+               class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+              formControlName="responseAr">
+      </div>
+    </div>
+
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="questionFr">Question Fr</label>
+        <input id="questionFr" type="text"
+               class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+              formControlName="questionFr">
+      </div>
+      <div class="field col">
+        <label for="responseFr">Response Fr</label>
+        <input id="responseFr" type="text"
+               class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+              formControlName="responseFr">
+      </div>
+    </div>
+
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="questionEn">Question En</label>
+        <input id="questionEn" type="text"
+               class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+              formControlName="questionEn">
+      </div>
+      <div class="field col">
+        <label for="responseEn">Response En</label>
+        <input id="responseEn" type="text"
+               class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+              formControlName="responseEn">
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="card">
+  <div class="flex flex-row-reverse flex-wrap card-container">
+    <div class="flex m-2">
+      <button pButton pRipple type="button" [label]="idEntity()>0 ? 'Update new Faq' : 'Add new Faq'" class="p-button-help" (click)="addUpdateFaq()"></button>
+    </div>
+  </div>
+</div>
+

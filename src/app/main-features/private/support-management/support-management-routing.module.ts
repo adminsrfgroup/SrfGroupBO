@@ -6,6 +6,8 @@ import {ListNewsletterComponent} from "./pages/list-newsletter/list-newsletter.c
 import {ListDeclarationComponent} from "./pages/list-declaration/list-declaration.component";
 import {ListCguComponent} from "./pages/list-cgu/list-cgu.component";
 import {AddUpdateAboutUsComponent} from "./pages/add-update-about-us/add-update-about-us.component";
+import {ListFaqComponent} from "./pages/list-faq/list-faq.component";
+import {AddUpdateFaqComponent} from "./pages/add-update-faq/add-update-faq.component";
 
 const routes: Routes = [
     {
@@ -35,6 +37,18 @@ const routes: Routes = [
     {
       path: 'list-cgu',
       component: ListCguComponent,
+    },
+    {
+      path: 'list-faq',
+      component: ListFaqComponent,
+    },
+    {
+      path: 'add-update-faq',
+      component: AddUpdateFaqComponent,
+    },
+    {
+      path: 'add-update-faq/:id',
+      component: AddUpdateFaqComponent,
     },
     {
         path: '',
