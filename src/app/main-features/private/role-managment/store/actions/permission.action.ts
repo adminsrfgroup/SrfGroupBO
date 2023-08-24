@@ -1,7 +1,7 @@
-import {createAction, props} from "@ngrx/store";
-import {PageCommon, Pagination} from "../../../../../shared/models/page.common";
-import {IPermission} from "../../../../../shared/models/permission.model";
-import {IOffer} from "../../../../../shared/models/offer.model";
+import { createAction, props } from '@ngrx/store';
+import { PageCommon, Pagination } from '../../../../../shared/models/page.common';
+import { IPermission } from '../../../../../shared/models/permission.model';
+import { IOffer } from '../../../../../shared/models/offer.model';
 
 export const addPermission = createAction('[AddPermission] Load AddPermission', props<IPermission>());
 export const addPermissionSuccess = createAction('[AddPermission] Load AddPermission Success', props<{ payload: IPermission }>());

@@ -1,7 +1,8 @@
 import { IContactUs } from '../../../../../shared/models/contact-us.model';
-import {IAboutUs} from "../../../../../shared/models/about-us.model";
-import {INewsLetter} from "../../../../../shared/models/newsletter.model";
-import {IFaq} from "../../../../../shared/models/faq.model";
+import { IAboutUs } from '../../../../../shared/models/about-us.model';
+import { INewsLetter } from '../../../../../shared/models/newsletter.model';
+import { IFaq } from '../../../../../shared/models/faq.model';
+import {ICgu} from "../../../../../shared/models/cgu.model";
 
 export interface IContactUsState {
     loading: boolean;
@@ -13,49 +14,58 @@ export interface IContactUsState {
     errorMessage: any;
 }
 
-
 export interface IAboutUsState {
-  loading: boolean;
-  entity: IAboutUs;
-  loadingEntities: boolean;
-  entities: IAboutUs[];
-  totalElements: number;
-  totalPages: number;
-  errorMessage: any;
+    loading: boolean;
+    entity: IAboutUs;
+    loadingEntities: boolean;
+    entities: IAboutUs[];
+    totalElements: number;
+    totalPages: number;
+    errorMessage: any;
 
-  addSuccess: boolean;
-  updateSuccess: boolean;
+    addSuccess: boolean;
+    updateSuccess: boolean;
 }
 
 export interface INewsLetterState {
-  loading: boolean;
-  entity: INewsLetter;
-  loadingEntities: boolean;
-  entities: INewsLetter[];
-  totalElements: number;
-  totalPages: number;
-  errorMessage: any;
-
+    loading: boolean;
+    entity: INewsLetter;
+    loadingEntities: boolean;
+    entities: INewsLetter[];
+    totalElements: number;
+    totalPages: number;
+    errorMessage: any;
 }
 
-export interface IFaqState {
+export interface ICguState {
   loading: boolean;
-  entity: IFaq;
-  loadingEntities: boolean;
-  entities: IFaq[];
-  totalElements: number;
-  totalPages: number;
+  entity: ICgu;
   errorMessage: any;
 
   addSuccess: boolean;
   updateSuccess: boolean;
+}
+
+export interface IFaqState {
+    loading: boolean;
+    entity: IFaq;
+    loadingEntities: boolean;
+    entities: IFaq[];
+    totalElements: number;
+    totalPages: number;
+    errorMessage: any;
+
+    addSuccess: boolean;
+    updateSuccess: boolean;
 }
 
 export interface ISupportState {
     contactUs: IContactUsState;
     aboutUs: IAboutUsState;
     newsLetter: INewsLetterState;
-    faq: IFaqState
+    faq: IFaqState;
+
+    cgu: ICguState;
 }
 
 export const initSupportState: ISupportState = {
@@ -77,26 +87,33 @@ export const initSupportState: ISupportState = {
         totalPages: -1,
         errorMessage: null,
         addSuccess: false,
-        updateSuccess: false
+        updateSuccess: false,
     },
     newsLetter: {
-      loading: false,
-      entity: {},
-      loadingEntities: false,
-      entities: [],
-      totalElements: -1,
-      totalPages: -1,
-      errorMessage: null,
+        loading: false,
+        entity: {},
+        loadingEntities: false,
+        entities: [],
+        totalElements: -1,
+        totalPages: -1,
+        errorMessage: null,
     },
     faq: {
+        loading: false,
+        entity: {},
+        loadingEntities: false,
+        entities: [],
+        totalElements: -1,
+        totalPages: -1,
+        errorMessage: null,
+        addSuccess: false,
+        updateSuccess: false,
+    },
+    cgu: {
       loading: false,
       entity: {},
-      loadingEntities: false,
-      entities: [],
-      totalElements: -1,
-      totalPages: -1,
       errorMessage: null,
       addSuccess: false,
-      updateSuccess: false
-    },
+      updateSuccess: false,
+    }
 };

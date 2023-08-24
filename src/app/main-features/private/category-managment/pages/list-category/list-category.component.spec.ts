@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListCategoryComponent } from './list-category.component';
-import {provideMockStore} from "@ngrx/store/testing";
-import {initCategoryState} from "../../store/state/init.state";
-import {SharedModule} from "../../../../../shared/shared.module";
+import { provideMockStore } from '@ngrx/store/testing';
+import { initCategoryState } from '../../store/state/init.state';
+import { SharedModule } from '../../../../../shared/shared.module';
 
 describe('ListCategoryComponent', () => {
     let component: ListCategoryComponent;

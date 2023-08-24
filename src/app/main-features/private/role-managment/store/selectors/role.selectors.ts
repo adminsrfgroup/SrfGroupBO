@@ -1,5 +1,5 @@
-import {createFeatureSelector, createSelector} from "@ngrx/store";
-import {RoleState} from "../state/init.state";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { RoleState } from '../state/init.state';
 
 export const roleSelectKey = 'role';
 

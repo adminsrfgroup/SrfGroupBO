@@ -16,7 +16,7 @@
     "analyze": "webpack-bundle-analyzer dist/srfgroup-bo/stats.json",
     "lint": "ng lint",
     "format-line-prettier": "prettier src/**/*.{js,jsx,ts,tsx,html,css,scss} --write",
-    "lint-project": "npx eslint src/**/*.{js,jsx,ts,tsx} --quiet --fix",
+    "eslint-project": "npx eslint src/**/*.{js,jsx,ts,tsx} --quiet --fix",
     "precommit": "run-s format-line-prettier lint-project",
     "sonar": "sonar-scanner"
   },

@@ -1,11 +1,6 @@
 import { ActionReducer, createReducer, on } from '@ngrx/store';
-import {INewsLetterState, initSupportState} from '../state/support.state';
-import {
-  loadListNewsLetter,
-  loadListNewsLetterFailure,
-  loadListNewsLetterSuccess,
-  resetNewsLetter
-} from "../actions/newsletter.actions";
+import { INewsLetterState, initSupportState } from '../state/support.state';
+import { loadListNewsLetter, loadListNewsLetterFailure, loadListNewsLetterSuccess, resetNewsLetter } from '../actions/newsletter.actions';
 
 export const newsLetterReducer: ActionReducer<INewsLetterState> = createReducer(
     initSupportState.newsLetter,

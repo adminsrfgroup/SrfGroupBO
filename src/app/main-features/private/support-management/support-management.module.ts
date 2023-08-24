@@ -8,13 +8,24 @@ import { ListDeclarationComponent } from './pages/list-declaration/list-declarat
 import { ListCguComponent } from './pages/list-cgu/list-cgu.component';
 import { ListNewsletterComponent } from './pages/list-newsletter/list-newsletter.component';
 import { ListContactUsComponent } from './pages/list-contact-us/list-contact-us.component';
-import {ReactiveFormsModule} from "@angular/forms";
-import {SharedModule} from "../../../shared/shared.module";
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../../../shared/shared.module';
 import { ListFaqComponent } from './pages/list-faq/list-faq.component';
 import { AddUpdateFaqComponent } from './pages/add-update-faq/add-update-faq.component';
+import { AddUpdateCguComponent } from './pages/add-update-cgu/add-update-cgu.component';
 
 @NgModule({
-    declarations: [AddUpdateAboutUsComponent, ListAboutUsComponent, ListDeclarationComponent, ListCguComponent, ListNewsletterComponent, ListContactUsComponent, ListFaqComponent, AddUpdateFaqComponent],
+    declarations: [
+        AddUpdateAboutUsComponent,
+        ListAboutUsComponent,
+        ListDeclarationComponent,
+        ListCguComponent,
+        ListNewsletterComponent,
+        ListContactUsComponent,
+        ListFaqComponent,
+        AddUpdateFaqComponent,
+        AddUpdateCguComponent,
+    ],
     imports: [CommonModule, SupportManagementRoutingModule, ReactiveFormsModule, SharedModule],
 })
 export class SupportManagementModule {}

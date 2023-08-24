@@ -16,7 +16,7 @@ import { resetLoginAction } from './main-features/login/store/actions/login.acti
 export class AppComponent implements OnInit {
     constructor(private router: Router, private sotreSession: Store<SessionState>, private storeLogin: Store<LoginState>) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.sotreSession.select(selectorSession).subscribe({
             next: (result: SessionState) => {
                 if (!result.isAuthenticated && !result.loading) {

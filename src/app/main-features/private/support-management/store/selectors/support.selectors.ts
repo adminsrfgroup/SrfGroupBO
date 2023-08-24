@@ -10,3 +10,4 @@ export const selectorContactUs = createSelector(selectSupportState, (state: ISup
 export const selectorAbouttUs = createSelector(selectSupportState, (state: ISupportState) => state.aboutUs);
 export const selectorNewsLetter = createSelector(selectSupportState, (state: ISupportState) => state.newsLetter);
 export const selectorFaq = createSelector(selectSupportState, (state: ISupportState) => state.faq);
+export const selectorCgu = createSelector(selectSupportState, (state: ISupportState) => state.cgu);

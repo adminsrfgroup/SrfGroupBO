@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PrivateMainComponent } from './private-main/private-main.component';
-import {RoleManagmentModule} from "./role-managment/role-managment.module";
+import { RoleManagmentModule } from './role-managment/role-managment.module';
 
 const routes: Routes = [
     {
@@ -37,9 +37,9 @@ const routes: Routes = [
                 loadChildren: () => import('./category-managment/category-managment.module').then(m => m.CategoryManagmentModule),
             },
             {
-              path: 'role',
-              loadChildren: () => import('./role-managment/role-managment.module').then(m => m.RoleManagmentModule),
-            }
+                path: 'role',
+                loadChildren: () => import('./role-managment/role-managment.module').then(m => m.RoleManagmentModule),
+            },
         ],
     },
     {

@@ -44,7 +44,8 @@
           {
             "allowExpressions": true
           }
-        ]
+        ],
+        "@typescript-eslint/adjacent-overload-signatures": "error"
       }
     },
     {

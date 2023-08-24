@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListAddressComponent } from './list-address.component';
-import {initAddressState} from "../../store/state/init.state";
-import {provideMockStore} from "@ngrx/store/testing";
-import {SharedModule} from "../../../../../shared/shared.module";
+import { initAddressState } from '../../store/state/init.state';
+import { provideMockStore } from '@ngrx/store/testing';
+import { SharedModule } from '../../../../../shared/shared.module';
 
 describe('ListAddressComponent', () => {
     let component: ListAddressComponent;

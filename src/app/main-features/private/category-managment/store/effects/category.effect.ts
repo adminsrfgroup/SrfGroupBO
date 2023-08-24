@@ -4,12 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { loadListAddress, loadListAddressFailure, loadListAddressSuccess } from '../../../address-managment/store/actions/address.action';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { Pagination } from '../../../../../shared/models/page.common';
-import {
-  importCategories, importCategoriesFailure, importCategoriesSuccess,
-  loadListCategories,
-  loadListCategoriesFailure,
-  loadListCategoriesSuccess
-} from '../actions/category.action';
+import { importCategories, importCategoriesFailure, importCategoriesSuccess, loadListCategories, loadListCategoriesFailure, loadListCategoriesSuccess } from '../actions/category.action';
 import { CategoryService } from '../../services/category.service';
 
 @Injectable()
@@ -34,19 +29,19 @@ export class CategoryEffects {
         )
     );
 
-  importCategories$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(importCategories.type),
-      switchMap(() => {
-        return this.categoryService.importCategories().pipe(
-          map((data: string) => {
-            return importCategoriesSuccess({ payload: data });
-          }),
-          catchError((exception: any) => {
-            return of(importCategoriesFailure({ error: exception.error }));
-          })
-        );
-      })
-    )
-  );
+    importCategories$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(importCategories.type),
+            switchMap(() => {
+                return this.categoryService.importCategories().pipe(
+                    map((data: string) => {
+                        return importCategoriesSuccess({ payload: data });
+                    }),
+                    catchError((exception: any) => {
+                        return of(importCategoriesFailure({ error: exception.error }));
+                    })
+                );
+            })
+        )
+    );
 }

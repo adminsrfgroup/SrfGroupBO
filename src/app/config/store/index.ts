@@ -17,7 +17,7 @@ import { HomeEffects } from '../../main-features/private/home-managment/store/ef
 import { isDevMode } from '@angular/core';
 import { userSelectKey } from '../../main-features/private/user-managment/store/selectors/user.selectors';
 import { offerSelectKey } from '../../main-features/private/offer-managment/store/selectors/offer.selectors';
-import {IMainOfferState} from '../../main-features/private/offer-managment/store/state/offer.state';
+import { IMainOfferState } from '../../main-features/private/offer-managment/store/state/offer.state';
 import { offerReducer } from '../../main-features/private/offer-managment/store/reducers/offer.reducer';
 import { OfferEffects } from '../../main-features/private/offer-managment/store/effects/offer.effects';
 import { supportSelectKey } from '../../main-features/private/support-management/store/selectors/support.selectors';
@@ -32,10 +32,14 @@ import { categoryReducer } from '../../main-features/private/category-managment/
 import { CategoryState } from '../../main-features/private/category-managment/store/state/init.state';
 import { categorySelectKey } from '../../main-features/private/category-managment/store/selectors/category.selector';
 import { CategoryEffects } from '../../main-features/private/category-managment/store/effects/category.effect';
-import {roleSelectKey} from "../../main-features/private/role-managment/store/selectors/role.selectors";
-import {RoleState} from "../../main-features/private/role-managment/store/state/init.state";
-import {roleReducer} from "../../main-features/private/role-managment/store/reducers/role.reducer";
-import {RoleEffects} from "../../main-features/private/role-managment/store/effects/role.effect";
+import { roleSelectKey } from '../../main-features/private/role-managment/store/selectors/role.selectors';
+import { RoleState } from '../../main-features/private/role-managment/store/state/init.state';
+import { roleReducer } from '../../main-features/private/role-managment/store/reducers/role.reducer';
+import { RoleEffects } from '../../main-features/private/role-managment/store/effects/role.effect';
+import { dashboardSelectKey } from '../../main-features/private/dashboard/store/selectors/dashboard.selectors';
+import { IDashboardState } from '../../main-features/private/dashboard/store/state/dashboard.state';
+import { dashboardReducer } from '../../main-features/private/dashboard/store/reducers/dashboard.reducer';
+import { DashboardEffects } from '../../main-features/private/dashboard/store/effects/dashboard.effects';
 
 export interface AppStates {
     [loginSelectKey]: LoginState;
@@ -51,6 +55,7 @@ export interface AppStates {
     [categorySelectKey]: CategoryState;
 
     [roleSelectKey]: RoleState;
+    [dashboardSelectKey]: IDashboardState;
 }
 
 export const appReducers: ActionReducerMap<AppStates> = {
@@ -63,12 +68,11 @@ export const appReducers: ActionReducerMap<AppStates> = {
     [supportSelectKey]: supportReducer,
     [addressSelectKey]: addressReducer,
     [categorySelectKey]: categoryReducer,
-    [roleSelectKey]:roleReducer
+    [roleSelectKey]: roleReducer,
+    [dashboardSelectKey]: dashboardReducer,
 };
 
-export const appEffects = [LoginEffects, ListUserEffects, HomeEffects,
-  OfferEffects, SupportEffects, AddressEffects, CategoryEffects,
-  RoleEffects];
+export const appEffects = [LoginEffects, ListUserEffects, HomeEffects, OfferEffects, SupportEffects, AddressEffects, CategoryEffects, RoleEffects, DashboardEffects];
 
 // console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {

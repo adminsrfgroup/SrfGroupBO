@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import {IMainOfferState} from '../state/offer.state';
+import { IMainOfferState } from '../state/offer.state';
 
 export const offerSelectKey = 'offer';
 

@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
 import { Store } from '@ngrx/store';
-import {IMainOfferState, IOfferState} from '../../store/state/offer.state';
+import { IMainOfferState, IOfferState } from '../../store/state/offer.state';
 import { Table } from 'primeng/table';
 import { IOffer } from '../../../../../shared/models/offer.model';
 import { loadListOffers } from '../../store/actions/offer.actions';
@@ -65,8 +65,8 @@ export class ListOfferComponent implements OnInit, OnDestroy {
                                 size: 5,
                             })
                         );
-                    } else if(result.entities.length){
-                      console.log('set items')
+                    } else if (result.entities.length) {
+                        console.log('set items');
                         this.listOffers = result.entities.slice();
                         this.totalElements = result.totalElements;
                         this.totalPages = result.totalPages;

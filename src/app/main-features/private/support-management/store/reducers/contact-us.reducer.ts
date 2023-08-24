@@ -1,11 +1,6 @@
 import { ActionReducer, createReducer, on } from '@ngrx/store';
 import { IContactUsState, initSupportState } from '../state/support.state';
-import {
-  loadListContactUs,
-  loadListContactUsFailure,
-  loadListContactUsSuccess,
-  resetListContactUs
-} from '../actions/contact-us.actions';
+import { loadListContactUs, loadListContactUsFailure, loadListContactUsSuccess, resetListContactUs } from '../actions/contact-us.actions';
 
 export const contactUsReducer: ActionReducer<IContactUsState> = createReducer(
     initSupportState.contactUs,

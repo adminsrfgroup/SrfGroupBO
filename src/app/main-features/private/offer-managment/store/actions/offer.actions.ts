@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { PageCommon, Pagination } from '../../../../../shared/models/page.common';
 import { IOffer } from '../../../../../shared/models/offer.model';
-import {IDescriptionAddOffer} from "../../../../../shared/models/description-add-offer.model";
+import { IDescriptionAddOffer } from '../../../../../shared/models/description-add-offer.model';
 
 export const loadListOffers = createAction('[ListOffer] Load ListOffers', props<Pagination>());
 
@@ -26,6 +26,5 @@ export const addDescriptionNewOffer = createAction('[AddDescriptionNewOffer] Loa
 export const addDescriptionNewOfferSuccess = createAction('[AddDescriptionNewOffer] Load AddDescriptionNewOffer Success', props<{ payload: IDescriptionAddOffer }>());
 
 export const addDescriptionNewOfferFailure = createAction('[AddDescriptionNewOffer] Load AddDescriptionNewOffer Failure', props<{ error: any }>());
-
 
 export const resetListDescriptionNewOffer = createAction('[ListDescriptionNewOffer] Reset ListDescriptionNewOffer');

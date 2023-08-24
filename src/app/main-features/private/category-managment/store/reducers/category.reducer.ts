@@ -2,11 +2,13 @@ import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
 import { loadListAddress, loadListAddressFailure, loadListAddressSuccess, resetAddress } from '../../../address-managment/store/actions/address.action';
 import { CategoryState, initCategoryState } from '../state/init.state';
 import {
-  importCategories, importCategoriesFailure, importCategoriesSuccess,
-  loadListCategories,
-  loadListCategoriesFailure,
-  loadListCategoriesSuccess,
-  resetCategories
+    importCategories,
+    importCategoriesFailure,
+    importCategoriesSuccess,
+    loadListCategories,
+    loadListCategoriesFailure,
+    loadListCategoriesSuccess,
+    resetCategories,
 } from '../actions/category.action';
 
 export const categoryReducer: ActionReducer<CategoryState, Action> = createReducer(
@@ -37,23 +39,23 @@ export const categoryReducer: ActionReducer<CategoryState, Action> = createReduc
     }),
 
     on(importCategories, (state: CategoryState) => {
-      return {
-        ...state,
-        loading: false
-      };
+        return {
+            ...state,
+            loading: false,
+        };
     }),
     on(importCategoriesSuccess, (state: CategoryState, action: ReturnType<typeof importCategoriesSuccess>) => {
-      return {
-        ...state,
-        loading: false
-      };
+        return {
+            ...state,
+            loading: false,
+        };
     }),
     on(importCategoriesFailure, (state: CategoryState, action: ReturnType<typeof importCategoriesFailure>) => {
-      return {
-        ...state,
-        loading: false,
-        errorMessage: action.error,
-      };
+        return {
+            ...state,
+            loading: false,
+            errorMessage: action.error,
+        };
     }),
 
     on(resetCategories, () => {

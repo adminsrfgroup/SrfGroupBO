@@ -1,11 +1,11 @@
-import {Component,inject, OnDestroy, OnInit, signal, ViewChild} from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { CategoryState } from '../../store/state/init.state';
 import { selectorCategory } from '../../store/selectors/category.selector';
-import {importCategories, loadListCategories} from '../../store/actions/category.action';
+import { importCategories, loadListCategories } from '../../store/actions/category.action';
 import { ICategory } from '../../../../../shared/models/category.model';
 
 @Component({
@@ -28,7 +28,6 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
     totalPages = signal<number>(0);
 
     ngOnInit() {
-
         this.representatives = [
             { name: 'Amy Elsner', image: 'amyelsner.png' },
             { name: 'Anna Fali', image: 'annafali.png' },
@@ -65,8 +64,8 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
                                 size: 5,
                             })
                         );
-                    } else if(result.entities.length){
-                      console.log('set items')
+                    } else if (result.entities.length) {
+                        console.log('set items');
                         this.listCategories.set(result.entities.slice());
                         this.totalElements.set(result.totalElements);
                         this.totalPages.set(result.totalPages);
@@ -77,7 +76,7 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
     }
 
     importCategories(): void {
-      this.store.dispatch(importCategories());
+        this.store.dispatch(importCategories());
     }
 
     onActivityChange(event: any) {

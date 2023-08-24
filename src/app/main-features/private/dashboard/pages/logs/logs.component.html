@@ -1,1 +1,56 @@
-<p>logs works!</p>
+<div class="list-categories">
+    <p-table
+        #dt
+        [value]="listLog()"
+        dataKey="id"
+        styleClass="p-datatable-customers"
+        [rowHover]="true"
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[2, 5]"
+        [loading]="loading()"
+        [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [filterDelay]="0"
+        [totalRecords]="listLog().length">
+        <ng-template pTemplate="caption">
+            <div class="table-header">
+                List of Customers {{ listLog().length }}
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="filterGlobal($event, 'contains')" placeholder="Global Search" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem"></th>
+                <th style="min-width: 5rem" pSortableColumn="Name">Name <p-sortIcon field="Name"></p-sortIcon></th>
+                <th>Level <p-sortIcon field="questionAr"></p-sortIcon></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customer>
+            <tr class="p-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+                </td>
+                <td>
+                    <span class="p-column-title">id</span>
+                    {{ customer.name }}
+                </td>
+                <td style="text-align: center">
+                    <p-button label="TRACE" styleClass="p-button-text"></p-button>
+                    <p-button label="DEBUG" styleClass="p-button-success p-button-text"></p-button>
+                    <p-button label="WARN" styleClass="p-button-warning p-button-text"></p-button>
+                    <p-button label="ERROR" styleClass="p-button-danger p-button-text"></p-button>
+                    <p-button label="OFF" styleClass="p-button-secondary p-button-text"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No customers found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

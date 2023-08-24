@@ -5,7 +5,7 @@ import { AddressState } from '../../store/state/init.state';
 import { Table } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { selectorAddress } from '../../store/serlectors/address.selector';
-import {importAddress, loadListAddress} from '../../store/actions/address.action';
+import { importAddress, loadListAddress } from '../../store/actions/address.action';
 import { IAddress } from '../../../../../shared/models/address.model';
 
 @Component({
@@ -64,7 +64,7 @@ export class ListAddressComponent implements OnInit, OnDestroy {
                                 size: 5,
                             })
                         );
-                    } else if(result.entities.length){
+                    } else if (result.entities.length) {
                         this.listAddress = result.entities.slice();
                         this.totalElements = result.totalElements;
                         this.totalPages = result.totalPages;
@@ -75,7 +75,7 @@ export class ListAddressComponent implements OnInit, OnDestroy {
     }
 
     importAddress(): void {
-      this.store.dispatch(importAddress());
+        this.store.dispatch(importAddress());
     }
 
     onActivityChange(event: any) {

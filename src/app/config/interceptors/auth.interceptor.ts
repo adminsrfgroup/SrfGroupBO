@@ -28,7 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
         );
     }
 
-    addAuthToken(request: HttpRequest<any>) {
+    addAuthToken(request: HttpRequest<any>) :  HttpRequest<any>{
         return request.clone({
             setHeaders: {
                 Authorization: `Bearer ${StorageService.local.get(AllAppConfig.NAME_TOKEN_CURRENT_USER)}`,
