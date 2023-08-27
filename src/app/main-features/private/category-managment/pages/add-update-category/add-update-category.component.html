@@ -1,0 +1,37 @@
+<form [formGroup]="formGroup">
+    <div class="flex" *ngIf="this.idEntity() > 0">
+        <div class="flex-1 bg-yellow-500 font-bold text-gray-900 m-2 px-5 py-3 border-round">
+            <h5>Id</h5>
+            <input type="text" pInputText formControlName="id" class="w-full" />
+        </div>
+        <div class="flex-1 font-bold text-gray-900 m-2 px-5 py-3 border-round"></div>
+        <div class="flex-1 font-bold text-gray-900 m-2 px-5 py-3 border-round"></div>
+    </div>
+    <div class="flex">
+        <div class="flex-1 bg-yellow-500 font-bold text-gray-900 m-2 px-5 py-3 border-round">
+            <h5>ContentAr</h5>
+            <input type="text" pInputText formControlName="titleAr" class="w-full" />
+        </div>
+        <div class="flex-1 bg-yellow-500 font-bold text-gray-900 m-2 px-5 py-3 border-round">
+            <h5>ContentFr</h5>
+            <input type="text" pInputText formControlName="titleFr" class="w-full" />
+        </div>
+        <div class="flex-1 bg-yellow-500 font-bold text-gray-900 m-2 px-5 py-3 border-round">
+            <h5>ContentEn</h5>
+            <input type="text" pInputText formControlName="titleEn" class="w-full" />
+        </div>
+    </div>
+
+    <div class="flex">
+        <div class="flex-1 bg-yellow-500 font-bold m-2 px-5 py-3 border-round">
+            <h5>Image</h5>
+            <p>Image (Width: 500, height: 300)</p>
+            <input type="file" (change)="selectFileCategory($event)" />
+            <img [src]="fileCategory" width="250" height="250" />
+        </div>
+        <div class="flex-1 font-bold text-gray-900 m-2 px-5 py-3 border-round"></div>
+        <div class="flex-1 font-bold text-gray-900 m-2 px-5 py-3 border-round">
+            <button pButton pRipple type="button" [label]="idEntity() > 0 ? 'Update new Content' : 'Add new Content'" class="p-button-help" (click)="addUpdateContent()"></button>
+        </div>
+    </div>
+</form>

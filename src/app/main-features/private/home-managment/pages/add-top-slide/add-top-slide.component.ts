@@ -41,13 +41,12 @@ export class AddTopSlideComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.store
             .select(selectorTopSlides)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: ITopSlides) => {
-                    console.log('result ', result);
                     if (result.addSuccess || result.updateSuccess) {
                         this.store.dispatch(resetTopSlide());
                         this.router.navigate(['/private/home/top-slides']).then();
@@ -88,25 +87,25 @@ export class AddTopSlideComponent implements OnInit, OnDestroy {
         }
     }
 
-    selectFileDesktop(event: any) {
-        if (event?.target?.files?.length) {
-            getBase64(event.target.files[0]).then((result: any) => {
+    selectFileDesktop(event: Event): void {
+        if ((event.target as HTMLInputElement).files?.length) {
+            getBase64((event.target as HTMLInputElement).files![0]).then((result: any) => {
                 this.fileStateDesktop = result;
             });
         }
     }
 
-    selectFileMobile(event: any) {
-        if (event?.target?.files?.length) {
-            getBase64(event.target.files[0]).then((result: any) => {
+    selectFileMobile(event: Event): void {
+        if ((event.target as HTMLInputElement).files?.length) {
+            getBase64((event.target as HTMLInputElement).files![0]).then((result: any) => {
                 this.fileStateMobile = result;
             });
         }
     }
 
-    loadImageDesktop(img: any) {
+    loadImageDesktop(img: Event): void {
         if (img) {
-            if (img.target.naturalWidth != 2000 || img.target.naturalHeight != 1000) {
+            if ((img.target as HTMLImageElement).naturalWidth != 2000 || (img.target as HTMLImageElement).naturalHeight != 1000) {
                 this.errorImageDesktop = false;
             } else {
                 this.errorImageDesktop = true;
@@ -114,9 +113,9 @@ export class AddTopSlideComponent implements OnInit, OnDestroy {
         }
     }
 
-    loadImageMobile(img: any) {
+    loadImageMobile(img: Event): void {
         if (img) {
-            if (img.target.naturalWidth != 500 || img.target.naturalHeight != 300) {
+            if ((img.target as HTMLImageElement).naturalWidth != 500 || (img.target as HTMLImageElement).naturalHeight != 300) {
                 this.errorImageMobile = false;
             } else {
                 this.errorImageMobile = true;
@@ -124,7 +123,7 @@ export class AddTopSlideComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next(true);
         this.destroy$.unsubscribe();
     }

@@ -2,7 +2,7 @@ import { IContactUs } from '../../../../../shared/models/contact-us.model';
 import { IAboutUs } from '../../../../../shared/models/about-us.model';
 import { INewsLetter } from '../../../../../shared/models/newsletter.model';
 import { IFaq } from '../../../../../shared/models/faq.model';
-import {ICgu} from "../../../../../shared/models/cgu.model";
+import { ICgu } from '../../../../../shared/models/cgu.model';
 
 export interface IContactUsState {
     loading: boolean;
@@ -38,12 +38,12 @@ export interface INewsLetterState {
 }
 
 export interface ICguState {
-  loading: boolean;
-  entity: ICgu;
-  errorMessage: any;
+    loading: boolean;
+    entity: ICgu;
+    errorMessage: any;
 
-  addSuccess: boolean;
-  updateSuccess: boolean;
+    addSuccess: boolean;
+    updateSuccess: boolean;
 }
 
 export interface IFaqState {
@@ -110,10 +110,10 @@ export const initSupportState: ISupportState = {
         updateSuccess: false,
     },
     cgu: {
-      loading: false,
-      entity: {},
-      errorMessage: null,
-      addSuccess: false,
-      updateSuccess: false,
-    }
+        loading: false,
+        entity: {},
+        errorMessage: null,
+        addSuccess: false,
+        updateSuccess: false,
+    },
 };

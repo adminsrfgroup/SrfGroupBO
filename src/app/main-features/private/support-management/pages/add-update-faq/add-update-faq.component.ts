@@ -33,7 +33,6 @@ export class AddUpdateFaqComponent implements OnInit, OnDestroy {
                     const requestData: IdEntity = {
                         id: Number(this.idEntity()),
                     };
-                    console.log('requestData ', requestData);
                     this.store.dispatch(fetchOneFaq(requestData));
                 }
             },
@@ -48,8 +47,6 @@ export class AddUpdateFaqComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IFaqState) => {
-                    console.log('result ', result);
-
                     if (result.addSuccess || result.updateSuccess) {
                         this.store.dispatch(resetFaq());
                         this.router.navigate(['/private/support/list-faq']).then();
@@ -70,7 +67,7 @@ export class AddUpdateFaqComponent implements OnInit, OnDestroy {
             });
     }
 
-    private initForm() {
+    private initForm(): void {
         this.formGroup = this.fb.group({
             questionAr: new FormControl('', [Validators.required]),
             questionFr: new FormControl('', [Validators.required]),
@@ -82,7 +79,6 @@ export class AddUpdateFaqComponent implements OnInit, OnDestroy {
     }
 
     addUpdateFaq(): void {
-        console.log('this.formGroup ', this.formGroup.getRawValue());
         if (this.formGroup.value) {
             const requestData: IFaq = {
                 id: this.idEntity(),

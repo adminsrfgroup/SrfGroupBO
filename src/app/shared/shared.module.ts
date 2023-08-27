@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { SideBarComponent } from './layouts/side-bar/side-bar.component';
@@ -28,6 +28,7 @@ import { EditorModule } from 'primeng/editor';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MessagesModule } from 'primeng/messages';
 import { ImageModule } from 'primeng/image';
+import {CheckboxModule} from "primeng/checkbox";
 
 @NgModule({
     declarations: [SideBarComponent, HeaderComponent, FooterComponent, BreadcrumbComponent, MessagesHelpComponent],
@@ -56,6 +57,7 @@ import { ImageModule } from 'primeng/image';
         ConfirmDialogModule,
         MessagesModule,
         ImageModule,
+        NgOptimizedImage,
     ],
     exports: [
         CardModule,
@@ -80,6 +82,8 @@ import { ImageModule } from 'primeng/image';
         ConfirmDialogModule,
         MessagesModule,
         ImageModule,
+        NgOptimizedImage,
+        CheckboxModule
     ],
     providers: [MessageService],
 })

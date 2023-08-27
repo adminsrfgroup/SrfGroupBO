@@ -16,7 +16,7 @@ import { selectorLog } from '../../store/selectors/dashboard.selectors';
     templateUrl: './logs.component.html',
     styleUrls: ['./logs.component.scss'],
 })
-export class LogsComponent implements OnInit, OnDestroy {
+export class LogsComponent implements OnInit {
     store = inject(Store<ILogState>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
@@ -34,7 +34,6 @@ export class LogsComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: any) => {
-                    console.log('result == ', result);
                     if (Object.keys(result.entities).length === 0 && !result.loadingEntities) {
                         this.store.dispatch(loadListLog());
                     } else if (Object.keys(result.entities).length) {
@@ -43,15 +42,12 @@ export class LogsComponent implements OnInit, OnDestroy {
                             return { name: item[0], level: item[1].effectiveLevel };
                         });
                         this.listLog.set(loggers.slice());
-                        console.log('this.listLog ', this.listLog());
                     }
                 },
             });
     }
 
-    filterGlobal(event: any, matchMode: string) {
-        this.table.filterGlobal(event.target.value, matchMode);
+    filterGlobal(event: Event, matchMode: string): void {
+        this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
     }
-
-    ngOnDestroy(): void {}
 }

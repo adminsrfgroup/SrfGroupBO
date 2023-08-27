@@ -6,9 +6,10 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LogsComponent } from './pages/logs/logs.component';
 import { OrganigrammeComponent } from './pages/organigramme/organigramme.component';
 import { SharedModule } from '../../../shared/shared.module';
+import { OrganizationChartModule } from 'primeng/organizationchart';
 
 @NgModule({
     declarations: [DashboardComponent, LogsComponent, OrganigrammeComponent],
-    imports: [CommonModule, DashboardRoutingModule, SharedModule],
+    imports: [CommonModule, DashboardRoutingModule, SharedModule, OrganizationChartModule],
 })
 export class DashboardModule {}

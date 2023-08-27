@@ -8,7 +8,7 @@ import { ListCguComponent } from './pages/list-cgu/list-cgu.component';
 import { AddUpdateAboutUsComponent } from './pages/add-update-about-us/add-update-about-us.component';
 import { ListFaqComponent } from './pages/list-faq/list-faq.component';
 import { AddUpdateFaqComponent } from './pages/add-update-faq/add-update-faq.component';
-import {AddUpdateCguComponent} from "./pages/add-update-cgu/add-update-cgu.component";
+import { AddUpdateCguComponent } from './pages/add-update-cgu/add-update-cgu.component';
 
 const routes: Routes = [
     {
@@ -40,12 +40,12 @@ const routes: Routes = [
         component: ListCguComponent,
     },
     {
-      path: 'add-update-cgu',
-      component: AddUpdateCguComponent,
+        path: 'add-update-cgu',
+        component: AddUpdateCguComponent,
     },
     {
-      path: 'add-update-cgu/:id',
-      component: AddUpdateCguComponent,
+        path: 'add-update-cgu/:id',
+        component: AddUpdateCguComponent,
     },
     {
         path: 'list-faq',

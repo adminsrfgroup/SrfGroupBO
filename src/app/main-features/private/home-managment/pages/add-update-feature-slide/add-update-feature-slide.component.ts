@@ -33,20 +33,18 @@ export class AddUpdateFeatureSlideComponent implements OnInit, OnDestroy {
                     const requestData: IdEntity = {
                         id: this.idEntity,
                     };
-                    console.log('requestData ', requestData);
                     this.store.dispatch(fetchOneFeatureSlide(requestData));
                 }
             },
         });
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.store
             .select(selectorFeatureHome)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IFeatureHome) => {
-                    console.log('result ', result);
                     if (result.addSuccess || result.updateSuccess) {
                         this.store.dispatch(resetFeatureSlide());
                         this.router.navigate(['/private/home/list-feature-slide']);
@@ -63,9 +61,9 @@ export class AddUpdateFeatureSlideComponent implements OnInit, OnDestroy {
             });
     }
 
-    selectFile(event: any) {
-        if (event?.target?.files?.length) {
-            getBase64(event.target.files[0]).then((result: any) => {
+    selectFile(event: Event): void {
+        if ((event.target as HTMLInputElement).files?.length) {
+            getBase64((event.target as HTMLInputElement).files![0]).then((result: any) => {
                 this.fileState = result;
             });
         }
@@ -94,7 +92,7 @@ export class AddUpdateFeatureSlideComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next(true);
         this.destroy$.unsubscribe();
     }

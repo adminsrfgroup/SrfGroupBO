@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { INewsLetter } from '../../../../shared/models/newsletter.model';
-import {PageCommon} from "../../../../shared/models/page.common";
+import { PageCommon } from '../../../../shared/models/page.common';
 
 @Injectable({
     providedIn: 'root',

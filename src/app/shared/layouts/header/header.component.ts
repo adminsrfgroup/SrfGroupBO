@@ -36,7 +36,7 @@ export class HeaderComponent {
 
     constructor(private sessionFacadeService: SessionFacadeService, private loginFacadeService: LoginFacadeService, private router: Router) {}
 
-    showModalDialog() {
+    showModalDialog(): void {
         this.displayModal = true;
     }
 

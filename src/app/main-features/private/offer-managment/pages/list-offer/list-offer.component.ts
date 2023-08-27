@@ -28,6 +28,8 @@ export class ListOfferComponent implements OnInit, OnDestroy {
     store = inject(Store<IMainOfferState>);
     primengConfig = inject(PrimeNGConfig);
 
+    sizePage = 5;
+
     ngOnInit(): void {
         this.representatives = [
             { name: 'Amy Elsner', image: 'amyelsner.png' },
@@ -57,16 +59,14 @@ export class ListOfferComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IOfferState) => {
-                    console.log('result ', result);
                     if (result.entities.length === 0 && result.totalPages === -1) {
-                        this.store.dispatch(
-                            loadListOffers({
-                                page: 0,
-                                size: 5,
-                            })
-                        );
+                        // this.store.dispatch(
+                        //     loadListOffers({
+                        //         page: 0,
+                        //         size: 5,
+                        //     })
+                        // );
                     } else if (result.entities.length) {
-                        console.log('set items');
                         this.listOffers = result.entities.slice();
                         this.totalElements = result.totalElements;
                         this.totalPages = result.totalPages;
@@ -76,17 +76,18 @@ export class ListOfferComponent implements OnInit, OnDestroy {
             });
     }
 
-    nextPage(event: LazyLoadEvent) {
-        console.log('event ', event);
-
-        // this.store.dispatch(setActivePageOffers({
-        //   page: 1,
-        //   size: 5
-        // }));
+    nextPage(event: LazyLoadEvent): void {
+        const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
+        this.store.dispatch(
+            loadListOffers({
+                page: newPage,
+                size: this.sizePage,
+            })
+        );
     }
 
-    onActivityChange(event: any) {
-        const value = event.target.value;
+    onActivityChange(event: Event): void {
+        const value = (event.target as HTMLInputElement).value;
         if (value && value.trim().length) {
             const activity = parseInt(value);
 
@@ -96,19 +97,19 @@ export class ListOfferComponent implements OnInit, OnDestroy {
         }
     }
 
-    onRepresentativeChange(event: any) {
-        this.table.filter(event.value, 'representative', 'in');
+    onRepresentativeChange(event: Event): void {
+        this.table.filter((event.target as HTMLInputElement).value, 'representative', 'in');
     }
 
-    filter(event: any, filed: string, matchMode: string) {
-        this.table.filter(event.target?.value, filed, matchMode);
+    filter(event: Event, filed: string, matchMode: string): void {
+        this.table.filter((event.target as HTMLInputElement).value, filed, matchMode);
     }
 
-    filterGlobal(event: any, matchMode: string) {
-        this.table.filterGlobal(event.target.value, matchMode);
+    filterGlobal(event: Event, matchMode: string): void {
+        this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next(true);
         this.destroy$.unsubscribe();
     }

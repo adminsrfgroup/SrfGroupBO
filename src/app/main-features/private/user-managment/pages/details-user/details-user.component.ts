@@ -27,7 +27,6 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
         this.activatedRoute.params.subscribe({
             next: params => {
                 this.idEntity = params['id'];
-                console.log('this.idEntity ', this.idEntity);
                 if (this.idEntity) {
                     const requestData: IdEntity = {
                         id: this.idEntity,
@@ -43,7 +42,6 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: UserState) => {
-                    console.log('result.entity ', result.entity);
                     if (result.entity && !result.loading) {
                         this.detailsUser = result.entity;
                     }
@@ -51,9 +49,12 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
             });
     }
 
-    updateAuthority() {
+    updateAuthority(): void {
         this.displayModal = true;
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        this.destroy$.next(true);
+        this.destroy$.unsubscribe();
+    }
 }

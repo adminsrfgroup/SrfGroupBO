@@ -63,8 +63,6 @@ describe('Home Reducers', () => {
         };
         const action = addTopSlidesSuccess({ payload: responseMock });
         const state = homeReducer(initHomeState, action);
-
-        console.log('state ', state);
         expect(state).toEqual(newState);
         expect(state).not.toBe(newState);
     });

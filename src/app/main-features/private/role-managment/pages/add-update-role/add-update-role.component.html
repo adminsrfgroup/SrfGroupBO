@@ -1,1 +1,27 @@
-<p>add-update-role works!</p>
+<div class="card flex justify-content-center">
+  <div class="flex flex-column pr-3">
+    <h5 class="mb-2" for="password">Authority</h5>
+    <input type="text" pInputText [(ngModel)]="nameAuthority" disabled="true"/>
+  </div>
+  <div class="flex flex-column pl-3">
+    <div *ngFor="let permission of listPermissions()" class="field-checkbox">
+      <p-checkbox name="group"
+                  [value]="permission"
+                  [(ngModel)]="selectedAuthorities"
+                  [inputId]="inputValueId(permission)"
+                  (onChange)="changeEvent($event)"></p-checkbox>
+      <label [for]="permission.id">{{ permission.name }}</label>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="flex flex-row-reverse flex-wrap card-container">
+    <div class="flex m-2">
+      <button pButton pRipple
+              type="button"
+              label="Update Authority"
+              class="p-button-help"
+              (click)="updateAuthority()"></button>
+    </div>
+  </div>
+</div>

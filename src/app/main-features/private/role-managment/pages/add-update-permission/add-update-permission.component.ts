@@ -51,8 +51,6 @@ export class AddUpdatePermissionComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IDescriptionNewOfferState) => {
-                    console.log('result ', result);
-
                     if (result.addSuccess || result.updateSuccess) {
                         this.store.dispatch(resetTopSlide());
                         this.router.navigate(['/private/role/list-permissions']).then();
@@ -65,26 +63,24 @@ export class AddUpdatePermissionComponent implements OnInit, OnDestroy {
             });
     }
 
-    private initForm() {
+    private initForm(): void {
         this.formGroup = this.fb.group({
             name: new FormControl('', [Validators.required]),
             pathApi: new FormControl('', [Validators.required]),
             description: new FormControl('', [Validators.required]),
         });
     }
-    submitForm() {
-        console.log('submitForm ', this.formGroup.getRawValue());
-        if (this.formGroup.invalid) {
-            return;
+    submitForm(): void {
+        if (this.formGroup.valid) {
+            const requestData: IPermission = {
+                ...this.formGroup.getRawValue(),
+                name: this.formGroup.get('name')?.value.name,
+            };
+            this.store.dispatch(addPermission(requestData));
         }
-        const requestData: IPermission = {
-            ...this.formGroup.getRawValue(),
-            name: this.formGroup.get('name')?.value.name,
-        };
-        this.store.dispatch(addPermission(requestData));
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next(true);
         this.destroy$.unsubscribe();
     }

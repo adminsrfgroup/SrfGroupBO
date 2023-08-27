@@ -6,6 +6,7 @@ import { UserState } from '../../store/state/user.state';
 import { loadListUsers } from '../../store/actions/list-user.actions';
 import { selectorEntitiesUser, selectorLoadingUser, selectorTotalElementsUser, selectorTotalPagesUser } from '../../store/selectors/list-user.selectors';
 import { IUser } from '../../../../../shared/models/user.model';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'app-list-users',
@@ -26,6 +27,8 @@ export class ListUsersComponent implements OnInit {
     totalPages = 0;
 
     @ViewChild('dt') table!: Table;
+
+    destroy$: Subject<boolean> = new Subject<boolean>();
 
     constructor(private primengConfig: PrimeNGConfig, private store: Store<UserState>) {}
 
@@ -53,11 +56,14 @@ export class ListUsersComponent implements OnInit {
         ];
         this.primengConfig.ripple = true;
 
-        this.store.select(selectorTotalPagesUser).subscribe({
-            next: (result: number) => {
-                this.totalPages = result;
-            },
-        });
+        this.store
+            .select(selectorTotalPagesUser)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (result: number) => {
+                    this.totalPages = result;
+                },
+            });
         this.store.select(selectorTotalElementsUser).subscribe({
             next: (result: number) => {
                 this.totalElements = result;
@@ -79,12 +85,12 @@ export class ListUsersComponent implements OnInit {
         });
     }
 
-    dispatchAllUsers() {
+    dispatchAllUsers(): void {
         this.store.dispatch(loadListUsers());
     }
 
-    onActivityChange(event: any) {
-        const value = event.target.value;
+    onActivityChange(event: Event): void {
+        const value = (event.target as HTMLInputElement).value;
         if (value && value.trim().length) {
             const activity = parseInt(value);
 
@@ -94,34 +100,36 @@ export class ListUsersComponent implements OnInit {
         }
     }
 
-    onDateSelect(value: any) {
+    onDateSelect(value: Date): void {
         this.table.filter(this.formatDate(value), 'date', 'equals');
     }
 
-    formatDate(date: any) {
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
+    formatDate(date: Date): string {
+        const month = date.getMonth() + 1;
+        let monthValue = '';
+        let dayValue = '';
+        const day = date.getDate();
 
         if (month < 10) {
-            month = '0' + month;
+            monthValue = '0' + month;
         }
 
         if (day < 10) {
-            day = '0' + day;
+            dayValue = '0' + day;
         }
 
-        return date.getFullYear() + '-' + month + '-' + day;
+        return date.getFullYear() + '-' + monthValue + '-' + dayValue;
     }
 
-    onRepresentativeChange(event: any) {
-        this.table.filter(event.value, 'representative', 'in');
+    onRepresentativeChange(event: Event): void {
+        this.table.filter((event.target as HTMLInputElement).value, 'representative', 'in');
     }
 
-    filter(event: any, filed: string, matchMode: string) {
-        this.table.filter(event.target?.value, filed, matchMode);
+    filter(event: Event, filed: string, matchMode: string): void {
+        this.table.filter((event.target as HTMLInputElement).value, filed, matchMode);
     }
 
-    filterGlobal(event: any, matchMode: string) {
-        this.table.filterGlobal(event.target.value, matchMode);
+    filterGlobal(event: Event, matchMode: string): void {
+        this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
     }
 }

@@ -15,7 +15,6 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(this.addAuthToken(request)).pipe(
             tap({
-                next: () => {},
                 error: (err: any) => {
                     if (err instanceof HttpErrorResponse) {
                         if (err.status !== 401) {
@@ -28,7 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
         );
     }
 
-    addAuthToken(request: HttpRequest<any>) :  HttpRequest<any>{
+    addAuthToken(request: HttpRequest<any>): HttpRequest<any> {
         return request.clone({
             setHeaders: {
                 Authorization: `Bearer ${StorageService.local.get(AllAppConfig.NAME_TOKEN_CURRENT_USER)}`,

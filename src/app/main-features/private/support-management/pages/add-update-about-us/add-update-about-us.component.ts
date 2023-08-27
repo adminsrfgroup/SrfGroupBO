@@ -5,7 +5,7 @@ import { IAboutUsState } from '../../store/state/support.state';
 import { IAboutUs } from '../../../../../shared/models/about-us.model';
 import { addAboutUs, fetchOneAboutUs, resetAboutUs } from '../../store/actions/about-us.actions';
 import { Subject, takeUntil } from 'rxjs';
-import { selectorAbouttUs } from '../../store/selectors/support.selectors';
+import { selectorAboutUs } from '../../store/selectors/support.selectors';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IdEntity } from '../../../../../shared/models/id-entity.model';
 
@@ -33,7 +33,6 @@ export class AddUpdateAboutUsComponent implements OnInit, OnDestroy {
                     const requestData: IdEntity = {
                         id: Number(this.idEntity()),
                     };
-                    console.log('requestData ', requestData);
                     this.store.dispatch(fetchOneAboutUs(requestData));
                 }
             },
@@ -43,12 +42,10 @@ export class AddUpdateAboutUsComponent implements OnInit, OnDestroy {
         this.initForm();
 
         this.store
-            .select(selectorAbouttUs)
+            .select(selectorAboutUs)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IAboutUsState) => {
-                    console.log('result ', result);
-
                     if (result.addSuccess || result.updateSuccess) {
                         this.store.dispatch(resetAboutUs());
                         this.router.navigate(['/private/support/list-about-us']).then();
@@ -66,7 +63,7 @@ export class AddUpdateAboutUsComponent implements OnInit, OnDestroy {
             });
     }
 
-    private initForm() {
+    private initForm(): void {
         this.formGroup = this.fb.group({
             contentAr: new FormControl('', [Validators.required]),
             contentFr: new FormControl('', [Validators.required]),
@@ -75,7 +72,6 @@ export class AddUpdateAboutUsComponent implements OnInit, OnDestroy {
     }
 
     addUpdateContent(): void {
-        console.log('thid.form ', this.formGroup.getRawValue());
         if (this.formGroup.value) {
             const requestData: IAboutUs = {
                 ...this.formGroup.getRawValue(),

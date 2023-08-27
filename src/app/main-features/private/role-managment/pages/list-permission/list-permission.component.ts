@@ -1,4 +1,4 @@
-import {Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal} from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { CategoryState } from '../../../category-managment/store/state/init.state';
@@ -19,7 +19,7 @@ import { selectorPermission } from '../../store/selectors/role.selectors';
     styleUrls: ['./list-permission.component.scss'],
 })
 export class ListPermissionComponent implements OnInit, OnDestroy {
-    store = inject(Store<RoleState>);
+    store = inject(Store<IRolePermission>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
 
@@ -32,7 +32,9 @@ export class ListPermissionComponent implements OnInit, OnDestroy {
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    ngOnInit() {
+    sizePage = 5;
+
+    ngOnInit(): void {
         this.representatives = [
             { name: 'Amy Elsner', image: 'amyelsner.png' },
             { name: 'Anna Fali', image: 'annafali.png' },
@@ -61,7 +63,6 @@ export class ListPermissionComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IRolePermission) => {
-                    console.log('result ', result);
                     if (result.entities.length === 0 && result.totalPages === -1) {
                         this.store.dispatch(
                             loadListPermissions({
@@ -79,20 +80,21 @@ export class ListPermissionComponent implements OnInit, OnDestroy {
             });
     }
 
-    nextPage(event: LazyLoadEvent) {
-        console.log('event ', event);
-
-        // this.store.dispatch(setActivePageOffers({
-        //   page: 1,
-        //   size: 5
-        // }));
+    nextPage(event: LazyLoadEvent): void {
+        const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
+        this.store.dispatch(
+            loadListPermissions({
+                page: newPage,
+                size: this.sizePage,
+            })
+        );
     }
 
-    filterGlobal(event: any, matchMode: string) {
-        this.table.filterGlobal(event.target.value, matchMode);
+    filterGlobal(event: Event, matchMode: string): void {
+        this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next(true);
         this.destroy$.unsubscribe();
     }

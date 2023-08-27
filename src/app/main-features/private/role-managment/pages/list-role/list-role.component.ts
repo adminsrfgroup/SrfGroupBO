@@ -1,4 +1,4 @@
-import {Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal} from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
@@ -27,20 +27,21 @@ export class ListRoleComponent implements OnInit, OnDestroy {
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    ngOnInit() {
+    sizePage = 5;
+
+    ngOnInit(): void {
         this.store
             .select(selectorRole)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IRoleAuthority) => {
-                    console.log('result ', result);
                     if (result.entities.length === 0 && result.totalPages === -1) {
-                        this.store.dispatch(
-                            loadListRoles({
-                                page: 0,
-                                size: 5,
-                            })
-                        );
+                        // this.store.dispatch(
+                        //     loadListRoles({
+                        //         page: 0,
+                        //         size: 5,
+                        //     })
+                        // );
                     } else if (result.entities.length) {
                         this.listRole.set(result.entities.slice());
                         this.totalElements.set(result.totalElements);
@@ -51,15 +52,21 @@ export class ListRoleComponent implements OnInit, OnDestroy {
             });
     }
 
-    nextPage(event: LazyLoadEvent) {
-        console.log('event ', event);
+    nextPage(event: LazyLoadEvent): void {
+        const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
+        this.store.dispatch(
+            loadListRoles({
+                page: newPage,
+                size: this.sizePage,
+            })
+        );
     }
 
-    filterGlobal(event: any, matchMode: string) {
-        this.table.filterGlobal(event.target.value, matchMode);
+    filterGlobal(event: Event, matchMode: string): void {
+        this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next(true);
         this.destroy$.unsubscribe();
     }

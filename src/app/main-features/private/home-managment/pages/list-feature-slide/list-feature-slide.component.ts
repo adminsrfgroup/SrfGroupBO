@@ -29,13 +29,12 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
 
     constructor(private store: Store<HomeState>, private confirmationService: ConfirmationService) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.store
             .select(selectorFeatureHome)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IFeatureHome) => {
-                    console.log('result ', result);
                     if (!result.entities.length && result.totalPages === -1) {
                         this.store.dispatch(fetchFeatureSlides());
                     } else {
@@ -53,39 +52,41 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
             });
     }
 
-    formatDate(date: any) {
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
+    formatDate(date: Date): string {
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        let monthValue = '';
+        let dayValue = '';
 
         if (month < 10) {
-            month = '0' + month;
+            monthValue = '0' + month;
         }
 
         if (day < 10) {
-            day = '0' + day;
+            dayValue = '0' + day;
         }
 
-        return date.getFullYear() + '-' + month + '-' + day;
+        return date.getFullYear() + '-' + monthValue + '-' + dayValue;
     }
 
-    onDateSelect(value: any) {
+    onDateSelect(value: Date): void {
         this.table.filter(this.formatDate(value), 'date', 'equals');
     }
 
-    onRepresentativeChange(event: any) {
-        this.table.filter(event.value, 'representative', 'in');
+    onRepresentativeChange(event: Event): void {
+        this.table.filter((event.target as HTMLInputElement).value, 'representative', 'in');
     }
 
-    filter(event: any, filed: string, matchMode: string) {
-        this.table.filter(event.target?.value, filed, matchMode);
+    filter(event: Event, filed: string, matchMode: string): void {
+        this.table.filter((event.target as HTMLInputElement).value, filed, matchMode);
     }
 
-    filterGlobal(event: any, matchMode: string) {
-        this.table.filterGlobal(event.target.value, matchMode);
+    filterGlobal(event: Event, matchMode: string): void {
+        this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
     }
 
-    onActivityChange(event: any) {
-        const value = event.target.value;
+    onActivityChange(event: Event): void {
+        const value = (event.target as HTMLInputElement).value;
         if (value && value.trim().length) {
             const activity = parseInt(value);
 
@@ -95,7 +96,7 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
         }
     }
 
-    deleteSlide(id: number) {
+    deleteSlide(id: number): void {
         this.idDeleteFeature = id;
         this.confirmationService.confirm({
             message: 'Do you want to delete this feature?',
@@ -104,15 +105,15 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
         });
     }
 
-    acceptDelete() {
+    acceptDelete(): void {
         this.store.dispatch(deleteFeatureSlide({ id: this.idDeleteFeature }));
     }
 
-    rejectDelete() {
+    rejectDelete(): void {
         this.confirmationService.close();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next(true);
         this.destroy$.unsubscribe();
     }

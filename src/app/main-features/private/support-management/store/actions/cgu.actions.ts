@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import {ICgu} from "../../../../../shared/models/cgu.model";
-import {IAboutUs} from "../../../../../shared/models/about-us.model";
+import { ICgu } from '../../../../../shared/models/cgu.model';
+import { IAboutUs } from '../../../../../shared/models/about-us.model';
 
 export const loadListCgu = createAction('[ListCguLetter] Load ListCguLetter');
 

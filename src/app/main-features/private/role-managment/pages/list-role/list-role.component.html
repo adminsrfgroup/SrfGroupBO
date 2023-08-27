@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-container blue-container flex align-items-center justify-content-end">
         <div class="p-4">
-            <p-button label="Add New Description Offer" styleClass="p-button-success" routerLink="/private/offer/add-update-description-add-new-offer"></p-button>
+            <p-button label="Add New Description Offer" styleClass="p-button-success" routerLink="/private/role/add-update-role"></p-button>
         </div>
     </div>
 </div>
@@ -69,7 +69,7 @@
                     <div class="image-text" [innerHTML]="customer.descriptionEn"></div>
                 </td>
                 <td style="text-align: center">
-                    <a pButton class="p-button-secondary" icon="pi pi-cog" routerLink="/private/role/add-update-role/{{ customer.id }}"></a>
+                    <a pButton class="p-button-success" icon="pi pi-pencil" routerLink="/private/role/add-update-role/{{ customer.id }}"></a>
                 </td>
             </tr>
         </ng-template>

@@ -15,21 +15,19 @@ import { addDescriptionNewOffer } from '../../store/actions/offer.actions';
     styleUrls: ['./add-update-description-add-new-offer.component.scss'],
 })
 export class AddUpdateDescriptionAddNewOfferComponent implements OnInit, OnDestroy {
-    store = inject(Store<CategoryState>);
+    store = inject(Store<IDescriptionNewOfferState>);
     router = inject(Router);
     descriptionAddNewOffer = signal<IDescriptionAddOffer>({});
     idEntity = signal<number>(-1);
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.store
             .select(selectorDescriptionAddNewOffer)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IDescriptionNewOfferState) => {
-                    console.log('result ', result);
-
                     if (result.addSuccess || result.updateSuccess) {
                         this.store.dispatch(resetTopSlide());
                         this.router.navigate(['private/offer/description-add-new-offer']).then();
@@ -46,7 +44,7 @@ export class AddUpdateDescriptionAddNewOfferComponent implements OnInit, OnDestr
             });
     }
 
-    addUpdateDescNewOffer() {
+    addUpdateDescNewOffer(): void {
         const requestData: IDescriptionAddOffer = {
             descriptionAr: this.descriptionAddNewOffer().descriptionAr,
             descriptionFr: this.descriptionAddNewOffer().descriptionFr,
@@ -56,7 +54,7 @@ export class AddUpdateDescriptionAddNewOfferComponent implements OnInit, OnDestr
         this.store.dispatch(addDescriptionNewOffer(requestData));
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next(true);
         this.destroy$.unsubscribe();
     }

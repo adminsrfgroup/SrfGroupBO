@@ -3,7 +3,7 @@
  * @param file
  * @returns {Promise}
  */
-export const getBase64 = (file: any) => {
+export const getBase64 = (file: File): Promise<string | ArrayBuffer | null> => {
     return new Promise((resolve, reject) => {
         if (file) {
             const reader = new FileReader();

@@ -30,7 +30,7 @@ export class TopSlideComponent implements OnInit, OnDestroy {
 
     constructor(private store: Store<HomeState>, private confirmationService: ConfirmationService) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.store
             .select(selectorTopSlides)
             .pipe(takeUntil(this.destroy$))
@@ -53,8 +53,8 @@ export class TopSlideComponent implements OnInit, OnDestroy {
             });
     }
 
-    onActivityChange(event: any) {
-        const value = event.target.value;
+    onActivityChange(event: Event): void {
+        const value = (event.target as HTMLInputElement).value;
         if (value && value.trim().length) {
             const activity = parseInt(value);
 
@@ -64,38 +64,40 @@ export class TopSlideComponent implements OnInit, OnDestroy {
         }
     }
 
-    formatDate(date: any) {
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
+    formatDate(date: Date): string {
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        let monthValue = '';
+        let dayValue = '';
 
         if (month < 10) {
-            month = '0' + month;
+            monthValue = '0' + month;
         }
 
         if (day < 10) {
-            day = '0' + day;
+            dayValue = '0' + day;
         }
 
-        return date.getFullYear() + '-' + month + '-' + day;
+        return date.getFullYear() + '-' + monthValue + '-' + dayValue;
     }
 
-    onDateSelect(value: any) {
+    onDateSelect(value: Date): void {
         this.table.filter(this.formatDate(value), 'date', 'equals');
     }
 
-    onRepresentativeChange(event: any) {
-        this.table.filter(event.value, 'representative', 'in');
+    onRepresentativeChange(event: Event): void {
+        this.table.filter((event.target as HTMLInputElement).value, 'representative', 'in');
     }
 
-    filter(event: any, filed: string, matchMode: string) {
-        this.table.filter(event.target?.value, filed, matchMode);
+    filter(event: Event, filed: string, matchMode: string): void {
+        this.table.filter((event.target as HTMLInputElement).value, filed, matchMode);
     }
 
-    filterGlobal(event: any, matchMode: string) {
-        this.table.filterGlobal(event.target.value, matchMode);
+    filterGlobal(event: Event, matchMode: string): void {
+        this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
     }
 
-    deleteSlide(id: number) {
+    deleteSlide(id: number): void {
         this.idDeleteSlide = id;
         this.confirmationService.confirm({
             message: 'Do you want to delete this record?',
@@ -104,11 +106,11 @@ export class TopSlideComponent implements OnInit, OnDestroy {
         });
     }
 
-    acceptDelete() {
+    acceptDelete(): void {
         this.store.dispatch(deleteTopSlides({ id: this.idDeleteSlide }));
     }
 
-    rejectDelete() {
+    rejectDelete(): void {
         this.confirmationService.close();
     }
 

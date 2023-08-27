@@ -9,6 +9,8 @@ export interface CategoryState {
     totalPages: number;
     errorMessage: any;
     activePage: number;
+    addSuccess: boolean;
+    updateSuccess: boolean;
 }
 
 export const initCategoryState: CategoryState = {
@@ -19,5 +21,7 @@ export const initCategoryState: CategoryState = {
     totalElements: -1,
     totalPages: -1,
     errorMessage: '',
-    activePage: 5,
+    activePage: -1,
+    addSuccess: false,
+    updateSuccess: false,
 };

@@ -5,11 +5,8 @@ import { Store } from '@ngrx/store';
 import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { IAboutUsState } from '../../store/state/support.state';
-import { selectorRole } from '../../../role-managment/store/selectors/role.selectors';
-import { IRoleAuthority } from '../../../role-managment/store/state/init.state';
-import { loadListRoles } from '../../../role-managment/store/actions/role.action';
 import { loadListAboutUs } from '../../store/actions/about-us.actions';
-import { selectorAbouttUs } from '../../store/selectors/support.selectors';
+import { selectorAboutUs } from '../../store/selectors/support.selectors';
 
 @Component({
     selector: 'app-list-about-us',
@@ -31,21 +28,15 @@ export class ListAboutUsComponent implements OnInit, OnDestroy {
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    ngOnInit() {
+    sizePage = 5;
+
+    ngOnInit(): void {
         this.store
-            .select(selectorAbouttUs)
+            .select(selectorAboutUs)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IAboutUsState) => {
-                    console.log('result ', result);
-                    if (result.entities.length === 0 && result.totalPages === -1) {
-                        this.store.dispatch(
-                            loadListAboutUs({
-                                page: 0,
-                                size: 5,
-                            })
-                        );
-                    } else if (result.entities.length) {
+                    if (result.entities.length) {
                         this.listAboutUs.set(result.entities.slice());
                         this.totalElements.set(result.totalElements);
                         this.totalPages.set(result.totalPages);
@@ -55,15 +46,21 @@ export class ListAboutUsComponent implements OnInit, OnDestroy {
             });
     }
 
-    nextPage(event: LazyLoadEvent) {
-        console.log('event ', event);
+    nextPage(event: LazyLoadEvent): void {
+        const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
+        this.store.dispatch(
+            loadListAboutUs({
+                page: newPage,
+                size: this.sizePage,
+            })
+        );
     }
 
-    filterGlobal(event: any, matchMode: string) {
-        this.table.filterGlobal(event.target.value, matchMode);
+    filterGlobal(event: Event, matchMode: string): void {
+        this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next(true);
         this.destroy$.unsubscribe();
     }

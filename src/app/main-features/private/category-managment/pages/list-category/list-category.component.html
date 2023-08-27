@@ -12,7 +12,7 @@
         dataKey="id"
         styleClass="p-datatable-customers"
         [rowHover]="true"
-        [rows]="5"
+        [rows]="sizePage"
         [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[2, 5]"
         [loading]="loading()"
@@ -21,8 +21,8 @@
         [filterDelay]="0"
         [globalFilterFields]="['titleAr', 'titleEn', 'titleFr']"
         [totalRecords]="totalElements()"
-        [lazy]="true"
-        (onLazyLoad)="nextPage($event)">
+        (onLazyLoad)="nextPage($event)"
+        [lazy]="true">
         <ng-template pTemplate="caption">
             <div class="table-header">
                 List of Customers {{ totalElements() }}
@@ -32,7 +32,7 @@
                 </span>
             </div>
         </ng-template>
-        <ng-template pTemplate="header">
+        <ng-template pTemplate="header" let-i="rowIndex">
             <tr>
                 <th style="width: 3rem"></th>
                 <th style="min-width: 5rem" pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
@@ -66,10 +66,10 @@
                 </td>
                 <td>
                     <span class="p-column-title">imageContent</span>
-                    {{ customer.imageContent }}
+                    <img src="{{ customer.imageContent }}" alt="Image" width="100" />
                 </td>
                 <td style="text-align: center">
-                    <a pButton class="p-button-secondary" icon="pi pi-cog" routerLink="/private/user/details-users/{{ customer.id }}"></a>
+                    <a pButton class="p-button-secondary" icon="pi pi-cog" routerLink="/private/category/add-update-category/{{ customer.id }}"></a>
                 </td>
             </tr>
         </ng-template>

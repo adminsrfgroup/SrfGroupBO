@@ -27,9 +27,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.initForm();
 
-        const t = this.fgLogin.get('email')?.value;
-        console.log(typeof t);
-
         this.loginFacadeService
             .fetchToken()
             .pipe(takeUntil(this.destroy$))
@@ -46,7 +43,6 @@ export class LoginComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (response: IResponseSession) => {
-                    console.log('response for session ', response);
                     if (response.isAuthenticated) {
                         StorageService.local.set(AllAppConfig.VALUE_CURRENT_USER, JSON.stringify(response.currentUser));
                         this.router.navigate(['/private/dashboard/home']);
@@ -76,7 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.loginFacadeService.login(requestData);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next(true);
         this.destroy$.unsubscribe();
     }

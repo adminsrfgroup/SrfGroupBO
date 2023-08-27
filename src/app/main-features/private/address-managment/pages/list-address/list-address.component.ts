@@ -27,7 +27,9 @@ export class ListAddressComponent implements OnInit, OnDestroy {
     totalElements = 0;
     totalPages = 0;
 
-    ngOnInit() {
+    sizePage = 5;
+
+    ngOnInit(): void {
         this.representatives = [
             { name: 'Amy Elsner', image: 'amyelsner.png' },
             { name: 'Anna Fali', image: 'annafali.png' },
@@ -56,14 +58,13 @@ export class ListAddressComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: AddressState) => {
-                    console.log('result ', result);
                     if (result.entities.length === 0 && result.totalPages === -1) {
-                        this.store.dispatch(
-                            loadListAddress({
-                                page: 0,
-                                size: 5,
-                            })
-                        );
+                        // this.store.dispatch(
+                        //     loadListAddress({
+                        //         page: 0,
+                        //         size: 5,
+                        //     })
+                        // );
                     } else if (result.entities.length) {
                         this.listAddress = result.entities.slice();
                         this.totalElements = result.totalElements;
@@ -78,8 +79,8 @@ export class ListAddressComponent implements OnInit, OnDestroy {
         this.store.dispatch(importAddress());
     }
 
-    onActivityChange(event: any) {
-        const value = event.target.value;
+    onActivityChange(event: Event): void {
+        const value = (event.target as HTMLInputElement).value;
         if (value && value.trim().length) {
             const activity = parseInt(value);
 
@@ -89,28 +90,29 @@ export class ListAddressComponent implements OnInit, OnDestroy {
         }
     }
 
-    onRepresentativeChange(event: any) {
-        this.table.filter(event.value, 'representative', 'in');
+    onRepresentativeChange(event: Event): void {
+        this.table.filter((event.target as HTMLInputElement).value, 'representative', 'in');
     }
 
-    filter(event: any, filed: string, matchMode: string) {
-        this.table.filter(event.target?.value, filed, matchMode);
+    filter(event: Event, filed: string, matchMode: string): void {
+        this.table.filter((event.target as HTMLInputElement).value, filed, matchMode);
     }
 
-    nextPage(event: LazyLoadEvent) {
-        console.log('event ', event);
-
-        // this.store.dispatch(setActivePageOffers({
-        //   page: 1,
-        //   size: 5
-        // }));
+    nextPage(event: LazyLoadEvent): void {
+        const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
+        this.store.dispatch(
+            loadListAddress({
+                page: newPage,
+                size: this.sizePage,
+            })
+        );
     }
 
-    filterGlobal(event: any, matchMode: string) {
-        this.table.filterGlobal(event.target.value, matchMode);
+    filterGlobal(event: Event, matchMode: string): void {
+        this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next(true);
         this.destroy$.unsubscribe();
     }

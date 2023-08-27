@@ -11,8 +11,12 @@ const routes: Routes = [
         component: ListRoleComponent,
     },
     {
-        path: 'add-update-role/:id',
+        path: 'add-update-role',
         component: AddUpdateRoleComponent,
+    },
+    {
+      path: 'add-update-role/:id',
+      component: AddUpdateRoleComponent,
     },
     {
         path: 'list-permissions',

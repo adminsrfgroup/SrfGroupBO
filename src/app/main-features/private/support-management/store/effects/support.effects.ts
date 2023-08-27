@@ -36,16 +36,9 @@ import {
     updateFaqSuccess,
 } from '../actions/faq.actions';
 import { IFaq } from '../../../../../shared/models/faq.model';
-import {CguService} from "../../services/cgu.service";
-import {
-  addCgu,
-  addCguFailure,
-  addCguSuccess,
-  loadListCgu,
-  loadListCguFailure,
-  loadListCguSuccess, updateCgu, updateCguFailure, updateCguSuccess
-} from "../actions/cgu.actions";
-import {ICgu} from "../../../../../shared/models/cgu.model";
+import { CguService } from '../../services/cgu.service';
+import { addCgu, addCguFailure, addCguSuccess, loadListCgu, loadListCguFailure, loadListCguSuccess, updateCgu, updateCguFailure, updateCguSuccess } from '../actions/cgu.actions';
+import { ICgu } from '../../../../../shared/models/cgu.model';
 
 @Injectable()
 export class SupportEffects {
@@ -202,52 +195,51 @@ export class SupportEffects {
         )
     );
 
-  fetchListCgu$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadListCgu.type),
-      switchMap(() => {
-        return this.cguService.fetchCgu().pipe(
-          map((data: any) => {
-            return loadListCguSuccess({ payload: data });
-          }),
-          catchError((exception: any) => {
-            return of(loadListCguFailure({ error: exception.error }));
-          })
-        );
-      })
-    )
-  );
+    fetchListCgu$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(loadListCgu.type),
+            switchMap(() => {
+                return this.cguService.fetchCgu().pipe(
+                    map((data: any) => {
+                        return loadListCguSuccess({ payload: data });
+                    }),
+                    catchError((exception: any) => {
+                        return of(loadListCguFailure({ error: exception.error }));
+                    })
+                );
+            })
+        )
+    );
 
-  addCgu$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(addCgu.type),
-      switchMap((payload: ICgu) => {
-        return this.cguService.addCgu(payload).pipe(
-          map((data: any) => {
-            return addCguSuccess({ payload: data });
-          }),
-          catchError((exception: any) => {
-            return of(addCguFailure({ error: exception.error }));
-          })
-        );
-      })
-    )
-  );
+    addCgu$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(addCgu.type),
+            switchMap((payload: ICgu) => {
+                return this.cguService.addCgu(payload).pipe(
+                    map((data: any) => {
+                        return addCguSuccess({ payload: data });
+                    }),
+                    catchError((exception: any) => {
+                        return of(addCguFailure({ error: exception.error }));
+                    })
+                );
+            })
+        )
+    );
 
-
-  updateCgu$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(updateCgu.type),
-      switchMap((payload: ICgu) => {
-        return this.cguService.updateCgu(payload).pipe(
-          map((data: any) => {
-            return updateCguSuccess({ payload: data });
-          }),
-          catchError((exception: any) => {
-            return of(updateCguFailure({ error: exception.error }));
-          })
-        );
-      })
-    )
-  );
+    updateCgu$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(updateCgu.type),
+            switchMap((payload: ICgu) => {
+                return this.cguService.updateCgu(payload).pipe(
+                    map((data: any) => {
+                        return updateCguSuccess({ payload: data });
+                    }),
+                    catchError((exception: any) => {
+                        return of(updateCguFailure({ error: exception.error }));
+                    })
+                );
+            })
+        )
+    );
 }

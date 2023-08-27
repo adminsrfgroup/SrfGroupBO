@@ -1,7 +1,14 @@
 import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
 import { RoleState } from '../state/init.state';
 import { initRoleState } from '../../../role-managment/store/state/init.state';
-import { loadListRoles, loadListRolesFailure, loadListRolesSuccess, resetListRoles, setActivePageRoles } from '../actions/role.action';
+import {
+  fetchOneRole, loadfOneRoleSuccess,
+  loadListRoles,
+  loadListRolesFailure,
+  loadListRolesSuccess, loadOneRoleFailure,
+  resetRoles,
+  setActivePageRoles, updateRole, updateRoleFailure, updateRoleSuccess
+} from '../actions/role.action';
 import { addPermission, addPermissionFailure, addPermissionSuccess, loadListPermissions, loadListPermissionsFailure, loadListPermissionsSuccess } from '../actions/permission.action';
 
 export const roleReducer: ActionReducer<RoleState, Action> = createReducer(
@@ -51,7 +58,70 @@ export const roleReducer: ActionReducer<RoleState, Action> = createReducer(
         };
     }),
 
-    on(resetListRoles, () => {
+
+    on(fetchOneRole, (state: RoleState) => {
+      return {
+        ...state,
+        authority: {
+          ...state.authority,
+          loading: true,
+        }
+      };
+    }),
+    on(loadfOneRoleSuccess, (state: RoleState, action: ReturnType<typeof loadfOneRoleSuccess>) => {
+      return {
+        ...state,
+        authority: {
+          ...state.authority,
+          loading: false,
+          entity: action.payload,
+        }
+      };
+    }),
+    on(loadOneRoleFailure, (state: RoleState, action: ReturnType<typeof loadOneRoleFailure>) => {
+      return {
+        ...state,
+        authority: {
+          ...state.authority,
+          loading: false,
+          errorMessage: action.error,
+        }
+      };
+    }),
+
+    on(updateRole, (state: RoleState) => {
+      return {
+        ...state,
+        authority: {
+          ...state.authority,
+          loading: true,
+          updateSuccess: false,
+        }
+      };
+    }),
+    on(updateRoleSuccess, (state: RoleState, action: ReturnType<typeof updateRoleSuccess>) => {
+      return {
+        ...state,
+        authority: {
+          ...state.authority,
+          loading: false,
+          entity: action.payload,
+          updateSuccess: true
+        }
+      };
+    }),
+    on(updateRoleFailure, (state: RoleState, action: ReturnType<typeof updateRoleFailure>) => {
+      return {
+        ...state,
+        authority: {
+          ...state.authority,
+          loading: false,
+          errorMessage: action.error,
+        }
+      };
+    }),
+
+    on(resetRoles, () => {
         return {
             ...initRoleState,
         };
