@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angula
 import { Store } from '@ngrx/store';
 import { IFaqState } from '../../../support-management/store/state/support.state';
 import { PrimeNGConfig } from 'primeng/api';
-import { Table } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { IFaq } from '../../../../../shared/models/faq.model';
 import { Subject, takeUntil } from 'rxjs';
 import { ILogState } from '../../store/state/dashboard.state';

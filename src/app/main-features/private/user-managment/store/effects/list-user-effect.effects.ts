@@ -11,7 +11,10 @@ import { PageCommon } from '../../../../../shared/models/page.common';
 
 @Injectable()
 export class ListUserEffects {
-    constructor(private actions$: Actions, private listUsersService: ListUsersService) {}
+    constructor(
+        private actions$: Actions,
+        private listUsersService: ListUsersService
+    ) {}
 
     fetchListUsers$ = createEffect(() =>
         this.actions$.pipe(

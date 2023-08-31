@@ -22,7 +22,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private fb: FormBuilder, private loginFacadeService: LoginFacadeService, private sessionFacadeService: SessionFacadeService, private router: Router) {}
+    constructor(
+        private fb: FormBuilder,
+        private loginFacadeService: LoginFacadeService,
+        private sessionFacadeService: SessionFacadeService,
+        private router: Router
+    ) {}
 
     ngOnInit(): void {
         this.initForm();

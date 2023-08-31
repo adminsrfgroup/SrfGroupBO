@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal
 import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { CategoryState } from '../../../category-managment/store/state/init.state';
-import { Table } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { IRolePermission, RoleState } from '../../store/state/init.state';
 import { Subject, takeUntil } from 'rxjs';
 import { IDescriptionAddOffer } from '../../../../../shared/models/description-add-offer.model';
@@ -80,7 +80,7 @@ export class ListPermissionComponent implements OnInit, OnDestroy {
             });
     }
 
-    nextPage(event: LazyLoadEvent): void {
+    nextPage(event: TableLazyLoadEvent): void {
         const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
         this.store.dispatch(
             loadListPermissions({

@@ -10,6 +10,7 @@ export interface ILogin {
 export interface IResponseLogin {
     refreshToken: string;
     token: string;
+    error?: string;
 }
 
 export interface IResponseSession {

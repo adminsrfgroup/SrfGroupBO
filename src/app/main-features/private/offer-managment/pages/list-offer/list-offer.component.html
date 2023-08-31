@@ -1,24 +1,24 @@
 <div class="list-offers">
     <p-table
         #dt
-        [value]="listOffers"
+        [value]="loadListOffers()"
         dataKey="id"
         styleClass="p-datatable-customers"
         [rowHover]="true"
-        [rows]="5"
+        [rows]="sizePage()"
         [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[2, 5]"
-        [loading]="loading"
+        [rowsPerPageOptions]="[sizePage()]"
+        [loading]="loading()"
         [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [filterDelay]="0"
         [globalFilterFields]="['title', 'amount', 'typeOffer', 'dateCreated']"
-        [totalRecords]="totalElements"
+        [totalRecords]="totalElements()"
         [lazy]="true"
         (onLazyLoad)="nextPage($event)">
         <ng-template pTemplate="caption">
             <div class="table-header">
-                List of Customers {{ totalElements }}
+                List of Customers {{ totalElements() }}
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="filterGlobal($event, 'contains')" placeholder="Global Search" />
@@ -96,7 +96,7 @@
                 </td>
                 <td>
                     <span class="p-column-title">DateCreated</span>
-                    {{ customer.dateCreated }}
+                    {{ customer.dateCreated | sgDate }}
                 </td>
                 <td>
                     <span class="p-column-title">Activity</span>

@@ -13,7 +13,7 @@ export interface SessionState {
     nbeCarts: number;
     oneSignalId: string;
     loading: boolean;
-    errorMessage: any;
+    errorMessage: string;
 }
 
 export const initSessionState: SessionState = {

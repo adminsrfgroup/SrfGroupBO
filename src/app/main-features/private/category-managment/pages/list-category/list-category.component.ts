@@ -1,12 +1,14 @@
 import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
-import { Table } from 'primeng/table';
+import { PrimeNGConfig } from 'primeng/api';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { CategoryState } from '../../store/state/init.state';
 import { selectorCategory } from '../../store/selectors/category.selector';
-import { importCategories, loadListCategories } from '../../store/actions/category.action';
+import { importCategories, loadListCategories, resetCategories } from '../../store/actions/category.action';
 import { ICategory } from '../../../../../shared/models/category.model';
+import { MultiSelectChangeEvent } from 'primeng/multiselect';
+import { AllAppConfig } from '../../../../../config';
 
 @Component({
     selector: 'app-list-category',
@@ -23,11 +25,16 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
     destroy$: Subject<boolean> = new Subject<boolean>();
 
     listCategories: WritableSignal<ICategory[]> = signal<ICategory[]>([]);
+    loadListCategories: WritableSignal<ICategory[]> = signal<ICategory[]>([]);
     loading = signal<boolean>(false);
     totalElements = signal<number>(0);
     totalPages = signal<number>(0);
 
-    sizePage = 5;
+    sizePage: WritableSignal<number> = signal<number>(AllAppConfig.CATEGORY_MODULE.ITEMS_PER_PAGINATION);
+    newPage: WritableSignal<number> = signal<number>(0);
+
+    isFirstLoading: WritableSignal<boolean> = signal<boolean>(true);
+    currentIndex: WritableSignal<number> = signal<number>(0);
 
     ngOnInit(): void {
         this.representatives = [
@@ -58,15 +65,16 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: CategoryState) => {
-                    if (result.entities.length === 0 && result.totalPages === -1) {
-                        // this.activePage.set(result.activePage);
-                        // this.store.dispatch(
-                        //     loadListCategories({
-                        //         page: this.activePage(),
-                        //         size: 5,
-                        //     })
-                        // );
+                    // if (result.entities.length === 0 && result.totalPages === -1) {
+                    if (this.isFirstLoading() && result.totalPages === -1) {
+                        this.store.dispatch(
+                            loadListCategories({
+                                page: this.newPage(),
+                                size: this.sizePage(),
+                            })
+                        );
                     } else if (result.entities.length) {
+                        this.loadListCategories.set(result.entities.slice(this.newPage() * this.sizePage(), result.entities.length));
                         this.listCategories.set(result.entities.slice());
                         this.totalElements.set(result.totalElements);
                         this.totalPages.set(result.totalPages);
@@ -91,22 +99,43 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
         }
     }
 
-    onRepresentativeChange(event: Event): void {
-        this.table.filter((event.target as HTMLInputElement).value, 'representative', 'in');
+    onRepresentativeChange(event: MultiSelectChangeEvent): void {
+        this.table.filter(event.value, 'representative', 'in');
     }
 
     filter(event: Event, filed: string, matchMode: string): void {
         this.table.filter((event.target as HTMLInputElement).value, filed, matchMode);
     }
 
-    nextPage(event: LazyLoadEvent): void {
-        const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
-        this.store.dispatch(
-            loadListCategories({
-                page: newPage,
-                size: this.sizePage,
-            })
-        );
+    nextPage(event: TableLazyLoadEvent): void {
+        if (!this.isFirstLoading()) {
+            this.newPage.set(Math.trunc(Number(event.first) / this.sizePage()));
+            if (this.newPage() * this.sizePage() >= this.listCategories().length) {
+                // New step
+                if (this.newPage() === this.currentIndex() + 1) {
+                    this.currentIndex.set(this.newPage());
+                    this.store.dispatch(
+                        loadListCategories({
+                            page: this.newPage(),
+                            size: this.sizePage(),
+                        })
+                    );
+                } else {
+                    // Jump of many steps
+                    this.store.dispatch(resetCategories());
+                    this.store.dispatch(
+                        loadListCategories({
+                            page: 0,
+                            size: (this.newPage() + 1) * this.sizePage(),
+                        })
+                    );
+                }
+            } else {
+                this.loadListCategories.set(this.listCategories().slice(this.newPage() * this.sizePage(), this.listCategories().length));
+            }
+        } else {
+            this.isFirstLoading.set(false);
+        }
     }
 
     filterGlobal(event: Event, matchMode: string): void {

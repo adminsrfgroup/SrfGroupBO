@@ -4,7 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CategoryState } from '../../../category-managment/store/state/init.state';
 import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
-import { Table } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { selectorDescriptionAddNewOffer } from '../../store/selectors/offer.selectors';
 import { IDescriptionNewOfferState } from '../../store/state/offer.state';
 import { loadListDescriptionNewOffer } from '../../store/actions/offer.actions';
@@ -76,7 +76,7 @@ export class DescriptionAddNewOfferComponent implements OnInit, OnDestroy {
             });
     }
 
-    nextPage(event: LazyLoadEvent): void {
+    nextPage(event: TableLazyLoadEvent): void {
         const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
         this.store.dispatch(
             loadListDescriptionNewOffer({

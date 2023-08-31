@@ -8,13 +8,13 @@
 <div class="list-categories">
     <p-table
         #dt
-        [value]="listCategories()"
+        [value]="loadListCategories()"
         dataKey="id"
         styleClass="p-datatable-customers"
         [rowHover]="true"
-        [rows]="sizePage"
+        [rows]="sizePage()"
         [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[2, 5]"
+        [rowsPerPageOptions]="[sizePage()]"
         [loading]="loading()"
         [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"

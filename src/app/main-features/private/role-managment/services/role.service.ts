@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import {IAuthority} from "../../../../shared/models/authority.model";
-import {PageCommon} from "../../../../shared/models/page.common";
+import { IAuthority } from '../../../../shared/models/authority.model';
+import { PageCommon } from '../../../../shared/models/page.common';
 
 @Injectable({
     providedIn: 'root',
@@ -16,10 +16,10 @@ export class RoleService {
     }
 
     fetchOneRole(id: number): Observable<IAuthority> {
-      return this.httpClient.get<IAuthority>(`${environment.baseUrl}api/authority/admin/${id}`);
+        return this.httpClient.get<IAuthority>(`${environment.baseUrl}api/authority/admin/${id}`);
     }
 
     updateRole(data: IAuthority): Observable<IAuthority> {
-      return this.httpClient.put<IAuthority>(`${environment.baseUrl}api/authority/admin/${data.id}`, data);
+        return this.httpClient.put<IAuthority>(`${environment.baseUrl}api/authority/admin/${data.id}`, data);
     }
 }

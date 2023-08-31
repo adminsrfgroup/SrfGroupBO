@@ -25,7 +25,10 @@ export class AddUpdateAboutUsComponent implements OnInit, OnDestroy {
 
     router = inject(Router);
 
-    constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute) {
+    constructor(
+        private fb: FormBuilder,
+        private activatedRoute: ActivatedRoute
+    ) {
         this.activatedRoute.params.subscribe({
             next: params => {
                 this.idEntity.set(params['id']);

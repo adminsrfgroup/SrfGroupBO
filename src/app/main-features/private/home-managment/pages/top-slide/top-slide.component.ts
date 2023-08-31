@@ -5,8 +5,9 @@ import { selectorTopSlides } from '../../store/selectors/home.selectors';
 import { Subject, takeUntil } from 'rxjs';
 import { deleteTopSlides, fetchTopSlides, resetTopSlide } from '../../store/actions/home.actions';
 import { ITopHomeSlidesImages } from '../../../../../shared/models/top-home-slides-images.model';
-import { Table } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
+import { MultiSelectChangeEvent } from 'primeng/multiselect';
 @Component({
     selector: 'app-top-slide',
     templateUrl: './top-slide.component.html',
@@ -28,7 +29,10 @@ export class TopSlideComponent implements OnInit, OnDestroy {
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private store: Store<HomeState>, private confirmationService: ConfirmationService) {}
+    constructor(
+        private store: Store<HomeState>,
+        private confirmationService: ConfirmationService
+    ) {}
 
     ngOnInit(): void {
         this.store
@@ -85,8 +89,8 @@ export class TopSlideComponent implements OnInit, OnDestroy {
         this.table.filter(this.formatDate(value), 'date', 'equals');
     }
 
-    onRepresentativeChange(event: Event): void {
-        this.table.filter((event.target as HTMLInputElement).value, 'representative', 'in');
+    onRepresentativeChange(event: MultiSelectChangeEvent): void {
+        this.table.filter(event.value, 'representative', 'in');
     }
 
     filter(event: Event, filed: string, matchMode: string): void {

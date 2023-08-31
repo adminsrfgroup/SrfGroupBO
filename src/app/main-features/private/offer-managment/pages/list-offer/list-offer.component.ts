@@ -1,25 +1,25 @@
-import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
+import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
+import { PrimeNGConfig } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { IMainOfferState, IOfferState } from '../../store/state/offer.state';
-import { Table } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { IOffer } from '../../../../../shared/models/offer.model';
-import { loadListOffers } from '../../store/actions/offer.actions';
+import { loadListOffers, resetListOffers } from '../../store/actions/offer.actions';
 import { Subject, takeUntil } from 'rxjs';
 import { selectorOffers } from '../../store/selectors/offer.selectors';
+import { MultiSelectChangeEvent } from 'primeng/multiselect';
+import { AllAppConfig } from '../../../../../config';
 @Component({
     selector: 'app-list-offer',
     templateUrl: './list-offer.component.html',
     styleUrls: ['./list-offer.component.scss'],
 })
 export class ListOfferComponent implements OnInit, OnDestroy {
-    loading = false;
-    totalElements = 0;
-    totalPages = 0;
-
+  
     selectedOffers!: any[];
     representatives!: any[];
-    listOffers: IOffer[] = [];
+    listOffers: WritableSignal<IOffer[]> = signal<IOffer[]>([]);
+    loadListOffers: WritableSignal<IOffer[]> = signal<IOffer[]>([]);
     @ViewChild('dt') table!: Table;
     statuses!: any[];
 
@@ -28,7 +28,16 @@ export class ListOfferComponent implements OnInit, OnDestroy {
     store = inject(Store<IMainOfferState>);
     primengConfig = inject(PrimeNGConfig);
 
-    sizePage = 5;
+    // sizePage = 5;
+
+    loading = signal<boolean>(false);
+    totalElements = signal<number>(0);
+    totalPages = signal<number>(0);
+
+    sizePage: WritableSignal<number> = signal<number>(AllAppConfig.OFFER_MODULE.ITEMS_PER_PAGINATION);
+    newPage: WritableSignal<number> = signal<number>(0);
+    isFirstLoading: WritableSignal<boolean> = signal<boolean>(true);
+    currentIndex: WritableSignal<number> = signal<number>(0);
 
     ngOnInit(): void {
         this.representatives = [
@@ -59,31 +68,53 @@ export class ListOfferComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IOfferState) => {
-                    if (result.entities.length === 0 && result.totalPages === -1) {
-                        // this.store.dispatch(
-                        //     loadListOffers({
-                        //         page: 0,
-                        //         size: 5,
-                        //     })
-                        // );
+                    if (this.isFirstLoading() && result.totalPages === -1) {
+                        this.store.dispatch(
+                            loadListOffers({
+                                page: this.newPage(),
+                                size: this.sizePage(),
+                            })
+                        );
                     } else if (result.entities.length) {
-                        this.listOffers = result.entities.slice();
-                        this.totalElements = result.totalElements;
-                        this.totalPages = result.totalPages;
-                        this.loading = result.loadingEntities;
+                        this.loadListOffers.set(result.entities.slice(this.newPage() * this.sizePage(), result.entities.length));
+                        this.listOffers.set(result.entities.slice());
+                        this.totalElements.set(result.totalElements);
+                        this.totalPages.set(result.totalPages);
+                        this.loading.set(result.loadingEntities);
                     }
                 },
             });
     }
 
-    nextPage(event: LazyLoadEvent): void {
-        const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
-        this.store.dispatch(
-            loadListOffers({
-                page: newPage,
-                size: this.sizePage,
-            })
-        );
+    nextPage(event: TableLazyLoadEvent): void {
+        if (!this.isFirstLoading()) {
+            this.newPage.set(Math.trunc(Number(event.first) / this.sizePage()));
+            if (this.newPage() * this.sizePage() >= this.listOffers().length) {
+                // New step
+                if (this.newPage() === this.currentIndex() + 1) {
+                    this.currentIndex.set(this.newPage());
+                    this.store.dispatch(
+                        loadListOffers({
+                            page: this.newPage(),
+                            size: this.sizePage(),
+                        })
+                    );
+                } else {
+                    // Jump of many steps
+                    this.store.dispatch(resetListOffers());
+                    this.store.dispatch(
+                        loadListOffers({
+                            page: 0,
+                            size: (this.newPage() + 1) * this.sizePage(),
+                        })
+                    );
+                }
+            } else {
+                this.loadListOffers.set(this.listOffers().slice(this.newPage() * this.sizePage(), this.listOffers().length));
+            }
+        } else {
+            this.isFirstLoading.set(false);
+        }
     }
 
     onActivityChange(event: Event): void {
@@ -97,8 +128,8 @@ export class ListOfferComponent implements OnInit, OnDestroy {
         }
     }
 
-    onRepresentativeChange(event: Event): void {
-        this.table.filter((event.target as HTMLInputElement).value, 'representative', 'in');
+    onRepresentativeChange(event: MultiSelectChangeEvent): void {
+        this.table.filter(event.value, 'representative', 'in');
     }
 
     filter(event: Event, filed: string, matchMode: string): void {

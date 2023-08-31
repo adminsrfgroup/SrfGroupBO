@@ -1,13 +1,13 @@
 export interface LoginState {
     loading: boolean;
-    errorMessage: any;
+    errorMessage: string;
     token: string;
     refreshToken: string;
 }
 
 export const initLoginState: LoginState = {
     loading: false,
-    errorMessage: null,
+    errorMessage: '',
     token: '',
     refreshToken: '',
 };

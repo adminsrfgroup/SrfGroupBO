@@ -13,6 +13,7 @@ export interface IRoleAuthority {
 
     updateSuccess: boolean;
     addSuccess: boolean;
+    isFirstLoading: boolean;
 }
 
 export interface IRolePermission {
@@ -59,6 +60,7 @@ export const initRoleState: RoleState = {
         totalElements: -1,
         totalPages: -1,
         activePage: 5,
+        isFirstLoading: true,
     },
     userAuthority: {
         loading: false,

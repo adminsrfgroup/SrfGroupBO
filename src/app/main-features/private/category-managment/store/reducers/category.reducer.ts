@@ -1,7 +1,7 @@
 import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
-import { loadListAddress, loadListAddressFailure, loadListAddressSuccess, resetAddress } from '../../../address-managment/store/actions/address.action';
 import { CategoryState, initCategoryState } from '../state/init.state';
 import {
+    addIndexVisited,
     fetchOneCategory,
     fetchOneCategoryFailure,
     fetchOneCategorySuccess,
@@ -31,9 +31,10 @@ export const categoryReducer: ActionReducer<CategoryState, Action> = createReduc
         return {
             ...state,
             loadingEntities: false,
-            entities: action.payload.content,
+            entities: [...state.entities, ...action.payload.content],
             totalElements: action.payload.totalElements,
             totalPages: action.payload.totalPages,
+            isFirstLoading: false,
         };
     }),
     on(loadListCategoriesFailure, (state: CategoryState, action: ReturnType<typeof loadListCategoriesFailure>) => {
@@ -41,6 +42,14 @@ export const categoryReducer: ActionReducer<CategoryState, Action> = createReduc
             ...state,
             loadingEntities: false,
             errorMessage: action.error,
+            isFirstLoading: false,
+        };
+    }),
+
+    on(addIndexVisited, (state: CategoryState, action: ReturnType<typeof addIndexVisited>) => {
+        return {
+            ...state,
+            listIndexVisited: [...state.listIndexVisited, ...[action.payload]],
         };
     }),
 

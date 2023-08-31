@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IPostHomeFeature } from '../../../../../shared/models/post-home-feature.model';
-import { Table } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { HomeState, IFeatureHome } from '../../store/state/init.state';
 import { selectorFeatureHome } from '../../store/selectors/home.selectors';
 import { Subject, takeUntil } from 'rxjs';
 import { deleteFeatureSlide, fetchFeatureSlides, resetFeatureSlide } from '../../store/actions/feature-home.actions';
+import { MultiSelectChangeEvent } from 'primeng/multiselect';
 
 @Component({
     selector: 'app-list-feature-slide',
@@ -27,7 +28,10 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
     idDeleteFeature!: number;
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private store: Store<HomeState>, private confirmationService: ConfirmationService) {}
+    constructor(
+        private store: Store<HomeState>,
+        private confirmationService: ConfirmationService
+    ) {}
 
     ngOnInit(): void {
         this.store
@@ -73,8 +77,8 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
         this.table.filter(this.formatDate(value), 'date', 'equals');
     }
 
-    onRepresentativeChange(event: Event): void {
-        this.table.filter((event.target as HTMLInputElement).value, 'representative', 'in');
+    onRepresentativeChange(event: MultiSelectChangeEvent): void {
+        this.table.filter(event.value, 'representative', 'in');
     }
 
     filter(event: Event, filed: string, matchMode: string): void {

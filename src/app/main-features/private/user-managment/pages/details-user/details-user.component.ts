@@ -23,7 +23,10 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private store: Store<UserState>, private activatedRoute: ActivatedRoute) {
+    constructor(
+        private store: Store<UserState>,
+        private activatedRoute: ActivatedRoute
+    ) {
         this.activatedRoute.params.subscribe({
             next: params => {
                 this.idEntity = params['id'];

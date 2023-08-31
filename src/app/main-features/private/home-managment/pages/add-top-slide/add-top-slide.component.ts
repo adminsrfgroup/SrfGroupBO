@@ -27,7 +27,11 @@ export class AddTopSlideComponent implements OnInit, OnDestroy {
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private store: Store<HomeState>, private router: Router, private activatedRoute: ActivatedRoute) {
+    constructor(
+        private store: Store<HomeState>,
+        private router: Router,
+        private activatedRoute: ActivatedRoute
+    ) {
         this.activatedRoute.params.subscribe({
             next: params => {
                 this.idEntity = params['id'];

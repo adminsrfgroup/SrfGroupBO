@@ -1,12 +1,13 @@
 import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 import { AddressState } from '../../store/state/init.state';
-import { Table } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { selectorAddress } from '../../store/serlectors/address.selector';
 import { importAddress, loadListAddress } from '../../store/actions/address.action';
 import { IAddress } from '../../../../../shared/models/address.model';
+import { MultiSelectChangeEvent } from 'primeng/multiselect';
 
 @Component({
     selector: 'app-list-address',
@@ -90,15 +91,15 @@ export class ListAddressComponent implements OnInit, OnDestroy {
         }
     }
 
-    onRepresentativeChange(event: Event): void {
-        this.table.filter((event.target as HTMLInputElement).value, 'representative', 'in');
+    onRepresentativeChange(event: MultiSelectChangeEvent): void {
+        this.table.filter(event.value, 'representative', 'in');
     }
 
     filter(event: Event, filed: string, matchMode: string): void {
         this.table.filter((event.target as HTMLInputElement).value, filed, matchMode);
     }
 
-    nextPage(event: LazyLoadEvent): void {
+    nextPage(event: TableLazyLoadEvent): void {
         const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
         this.store.dispatch(
             loadListAddress({

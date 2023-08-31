@@ -11,6 +11,8 @@ export interface CategoryState {
     activePage: number;
     addSuccess: boolean;
     updateSuccess: boolean;
+    isFirstLoading: boolean;
+    listIndexVisited: number[];
 }
 
 export const initCategoryState: CategoryState = {
@@ -24,4 +26,6 @@ export const initCategoryState: CategoryState = {
     activePage: -1,
     addSuccess: false,
     updateSuccess: false,
+    isFirstLoading: true,
+    listIndexVisited: [1],
 };

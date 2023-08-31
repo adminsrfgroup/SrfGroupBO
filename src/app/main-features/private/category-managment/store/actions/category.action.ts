@@ -12,6 +12,7 @@ export const loadListCategoriesSuccess = createAction('[ListCategories] Load Lis
 export const loadListCategoriesFailure = createAction('[ListCategories] Load ListCategories Failure', props<{ error: any }>());
 
 export const setActivePageCategories = createAction('[ListCategories] Set Active Page ListCategories', props<Pagination>());
+export const addIndexVisited = createAction('[AddIndexVisited] Add Index Visited for Category AddIndexVisited', props<{ payload: number }>());
 
 export const importCategories = createAction('[ImportCategories] Load ImportCategories');
 

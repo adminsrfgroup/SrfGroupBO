@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
-import { Table } from 'primeng/table';
+import { PrimeNGConfig } from 'primeng/api';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { IAuthority } from '../../../../../shared/models/authority.model';
 import { loadListRoles } from '../../store/actions/role.action';
@@ -29,19 +29,23 @@ export class ListRoleComponent implements OnInit, OnDestroy {
 
     sizePage = 5;
 
+    isFirstLoading: WritableSignal<boolean> = signal<boolean>(true);
+
     ngOnInit(): void {
         this.store
             .select(selectorRole)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IRoleAuthority) => {
-                    if (result.entities.length === 0 && result.totalPages === -1) {
-                        // this.store.dispatch(
-                        //     loadListRoles({
-                        //         page: 0,
-                        //         size: 5,
-                        //     })
-                        // );
+                    this.isFirstLoading.set(result.isFirstLoading);
+                    // if (result.entities.length === 0 && result.totalPages === -1) {
+                    if (this.isFirstLoading()) {
+                        this.store.dispatch(
+                            loadListRoles({
+                                page: 0,
+                                size: this.sizePage,
+                            })
+                        );
                     } else if (result.entities.length) {
                         this.listRole.set(result.entities.slice());
                         this.totalElements.set(result.totalElements);
@@ -52,14 +56,16 @@ export class ListRoleComponent implements OnInit, OnDestroy {
             });
     }
 
-    nextPage(event: LazyLoadEvent): void {
-        const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
-        this.store.dispatch(
-            loadListRoles({
-                page: newPage,
-                size: this.sizePage,
-            })
-        );
+    nextPage(event: TableLazyLoadEvent): void {
+        if (!this.isFirstLoading()) {
+            const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
+            this.store.dispatch(
+                loadListRoles({
+                    page: newPage,
+                    size: this.sizePage,
+                })
+            );
+        }
     }
 
     filterGlobal(event: Event, matchMode: string): void {

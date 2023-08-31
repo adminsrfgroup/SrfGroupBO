@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PrivateMainComponent } from './private-main/private-main.component';
-import { RoleManagmentModule } from './role-managment/role-managment.module';
 
 const routes: Routes = [
     {

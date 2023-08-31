@@ -10,7 +10,10 @@ import { logoutAction } from '../../main-features/login/store/actions/session.ac
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-    constructor(private router: Router, private storeSession: Store<SessionState>) {}
+    constructor(
+        private router: Router,
+        private storeSession: Store<SessionState>
+    ) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(this.addAuthToken(request)).pipe(

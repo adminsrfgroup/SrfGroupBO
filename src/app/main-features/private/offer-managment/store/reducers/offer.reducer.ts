@@ -35,7 +35,7 @@ export const offerReducer: ActionReducer<IMainOfferState, Action> = createReduce
             offers: {
                 ...state.offers,
                 loadingEntities: false,
-                entities: action.payload.content,
+                entities: [...state.offers.entities, ...action.payload.content],
                 totalElements: action.payload.totalElements,
                 totalPages: action.payload.totalPages,
             },

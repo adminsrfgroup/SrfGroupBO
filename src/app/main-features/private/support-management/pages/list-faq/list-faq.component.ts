@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal
 import { Store } from '@ngrx/store';
 import { IFaqState } from '../../store/state/support.state';
 import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
-import { Table } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { selectorFaq } from '../../store/selectors/support.selectors';
 import { IFaq } from '../../../../../shared/models/faq.model';
@@ -53,7 +53,7 @@ export class ListFaqComponent implements OnInit, OnDestroy {
             });
     }
 
-    nextPage(event: LazyLoadEvent): void {
+    nextPage(event: TableLazyLoadEvent): void {
         const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
         this.store.dispatch(
             loadListFaq({

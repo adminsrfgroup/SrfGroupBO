@@ -44,7 +44,11 @@ import { IdEntity } from '../../../../../shared/models/id-entity.model';
 
 @Injectable()
 export class HomeEffects {
-    constructor(private actions$: Actions, private homeService: HomeService, private featureHomeService: FeatureHomeService) {}
+    constructor(
+        private actions$: Actions,
+        private homeService: HomeService,
+        private featureHomeService: FeatureHomeService
+    ) {}
 
     addTopSlide$ = createEffect(() =>
         this.actions$.pipe(

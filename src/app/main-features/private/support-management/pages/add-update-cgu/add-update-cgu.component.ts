@@ -5,12 +5,10 @@ import { ICgu } from '../../../../../shared/models/cgu.model';
 import { Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IdEntity } from '../../../../../shared/models/id-entity.model';
-import { addAboutUs, fetchOneAboutUs } from '../../store/actions/about-us.actions';
-import { IAboutUs } from '../../../../../shared/models/about-us.model';
-import { addCgu, loadListCgu, resetCgu, updateCgu } from '../../store/actions/cgu.actions';
+import { fetchOneAboutUs } from '../../store/actions/about-us.actions';
+import { addCgu, resetCgu, updateCgu } from '../../store/actions/cgu.actions';
 import { selectorCgu } from '../../store/selectors/support.selectors';
 import { ICguState } from '../../store/state/support.state';
-import { resetFaq } from '../../store/actions/faq.actions';
 
 @Component({
     selector: 'app-add-update-cgu',
@@ -27,7 +25,10 @@ export class AddUpdateCguComponent implements OnInit, OnDestroy {
 
     router = inject(Router);
 
-    constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute) {
+    constructor(
+        private fb: FormBuilder,
+        private activatedRoute: ActivatedRoute
+    ) {
         this.activatedRoute.params.subscribe({
             next: params => {
                 this.idEntity.set(params['id']);

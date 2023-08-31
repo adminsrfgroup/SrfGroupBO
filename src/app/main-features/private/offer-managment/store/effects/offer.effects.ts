@@ -21,7 +21,10 @@ import { IDescriptionAddOffer } from '../../../../../shared/models/description-a
 export class OfferEffects {
     descriptionOfferService = inject(DescriptionOfferService);
 
-    constructor(private actions$: Actions, private offerService: OfferService) {}
+    constructor(
+        private actions$: Actions,
+        private offerService: OfferService
+    ) {}
 
     fetchListOffers$ = createEffect(() =>
         this.actions$.pipe(

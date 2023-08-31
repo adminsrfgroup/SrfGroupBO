@@ -1,15 +1,15 @@
-import {initUserState, UserState} from "../state/user.state";
-import {selectorUser} from "./user.selectors";
+import { initUserState, UserState } from '../state/user.state';
+import { selectorUser } from './user.selectors';
 
 describe('ListUser Selectors', () => {
     it('should select the feature state', () => {
-      // Given
-      const initialState: UserState = initUserState;
+        // Given
+        const initialState: UserState = initUserState;
 
-      // When
-      const resultUser = selectorUser.projector(initialState);
+        // When
+        const resultUser = selectorUser.projector(initialState);
 
-      // Then
-      expect(resultUser.loading).toEqual(false);
+        // Then
+        expect(resultUser.loading).toEqual(false);
     });
 });

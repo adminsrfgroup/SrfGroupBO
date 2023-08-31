@@ -4,17 +4,21 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { loginAction, loginActionFailure, loginActionSuccess } from '../actions/login.action';
 import { sessionAction, sessionActionFailure, sessionActionSuccess } from '../actions/session.action';
+import { ILogin, IResponseLogin } from '../../models/login.model';
 
 @Injectable()
 export class LoginEffects {
-    constructor(private actions$: Actions, private loginService: LoginService) {}
+    constructor(
+        private actions$: Actions,
+        private loginService: LoginService
+    ) {}
 
     loginUser$ = createEffect(() =>
         this.actions$.pipe(
             ofType(loginAction.type),
-            switchMap((payload: any) => {
+            switchMap((payload: ILogin) => {
                 return this.loginService.login(payload).pipe(
-                    map((data: any) => {
+                    map((data: IResponseLogin) => {
                         if (data.error) {
                             return loginActionFailure({ error: data.error });
                         }

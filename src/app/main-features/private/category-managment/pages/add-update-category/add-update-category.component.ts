@@ -31,7 +31,10 @@ export class AddUpdateCategoryComponent implements OnInit {
 
     router = inject(Router);
 
-    constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute) {
+    constructor(
+        private fb: FormBuilder,
+        private activatedRoute: ActivatedRoute
+    ) {
         this.activatedRoute.params.subscribe({
             next: params => {
                 this.idEntity.set(params['id']);

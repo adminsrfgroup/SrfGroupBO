@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule, DatePipe, NgOptimizedImage } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { SideBarComponent } from './layouts/side-bar/side-bar.component';
@@ -28,10 +28,12 @@ import { EditorModule } from 'primeng/editor';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MessagesModule } from 'primeng/messages';
 import { ImageModule } from 'primeng/image';
-import {CheckboxModule} from "primeng/checkbox";
+import { CheckboxModule } from 'primeng/checkbox';
+import { TagModule } from 'primeng/tag';
+import { SgDatePipe } from './pipes/sg-date.pipe';
 
 @NgModule({
-    declarations: [SideBarComponent, HeaderComponent, FooterComponent, BreadcrumbComponent, MessagesHelpComponent],
+    declarations: [SideBarComponent, HeaderComponent, FooterComponent, BreadcrumbComponent, MessagesHelpComponent, SgDatePipe],
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -46,6 +48,7 @@ import {CheckboxModule} from "primeng/checkbox";
         FormsModule,
         DialogModule,
         TableModule,
+        TagModule,
         DropdownModule,
         CalendarModule,
         MultiSelectModule,
@@ -70,6 +73,7 @@ import {CheckboxModule} from "primeng/checkbox";
         PasswordModule,
         FormsModule,
         TableModule,
+        TagModule,
         DropdownModule,
         CalendarModule,
         MultiSelectModule,
@@ -83,8 +87,9 @@ import {CheckboxModule} from "primeng/checkbox";
         MessagesModule,
         ImageModule,
         NgOptimizedImage,
-        CheckboxModule
+        CheckboxModule,
+        SgDatePipe,
     ],
-    providers: [MessageService],
+    providers: [MessageService, DatePipe],
 })
 export class SharedModule {}

@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
 import { PermissionService } from './permission.service';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('PermissionService', () => {
     let service: PermissionService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-          imports: [HttpClientTestingModule],
+            imports: [HttpClientTestingModule],
         });
         service = TestBed.inject(PermissionService);
     });

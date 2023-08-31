@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal
 import { Store } from '@ngrx/store';
 import { ICguState, IFaqState } from '../../store/state/support.state';
 import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
-import { Table } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { IFaq } from '../../../../../shared/models/faq.model';
 import { Subject, takeUntil } from 'rxjs';
 import { selectorCgu, selectorFaq } from '../../store/selectors/support.selectors';
@@ -48,7 +48,7 @@ export class ListCguComponent implements OnInit, OnDestroy {
             });
     }
 
-    nextPage(event: LazyLoadEvent): void {
+    nextPage(event: TableLazyLoadEvent): void {
         this.store.dispatch(loadListCgu());
     }
 

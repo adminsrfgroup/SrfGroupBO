@@ -3,7 +3,7 @@ import { IAboutUs } from '../../../../../shared/models/about-us.model';
 import { Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
-import { Table } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { IAboutUsState } from '../../store/state/support.state';
 import { loadListAboutUs } from '../../store/actions/about-us.actions';
 import { selectorAboutUs } from '../../store/selectors/support.selectors';
@@ -46,7 +46,7 @@ export class ListAboutUsComponent implements OnInit, OnDestroy {
             });
     }
 
-    nextPage(event: LazyLoadEvent): void {
+    nextPage(event: TableLazyLoadEvent): void {
         const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
         this.store.dispatch(
             loadListAboutUs({

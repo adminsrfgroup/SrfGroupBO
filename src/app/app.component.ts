@@ -7,6 +7,7 @@ import { AllAppConfig } from './config';
 import { Router } from '@angular/router';
 import { LoginState } from './main-features/login/store/state/login.state';
 import { resetLoginAction } from './main-features/login/store/actions/login.action';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
     selector: 'app-root',
@@ -14,7 +15,11 @@ import { resetLoginAction } from './main-features/login/store/actions/login.acti
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-    constructor(private router: Router, private sotreSession: Store<SessionState>, private storeLogin: Store<LoginState>) {}
+    constructor(
+        private router: Router,
+        private sotreSession: Store<SessionState>,
+        private storeLogin: Store<LoginState>
+    ) {}
 
     ngOnInit(): void {
         this.sotreSession.select(selectorSession).subscribe({

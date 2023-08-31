@@ -6,7 +6,10 @@ import { loadListLog, loadListLogFailure, loadListLogSuccess } from '../actions/
 
 @Injectable()
 export class DashboardEffects {
-    constructor(private actions$: Actions, private logService: LogService) {}
+    constructor(
+        private actions$: Actions,
+        private logService: LogService
+    ) {}
 
     fetchListLog$ = createEffect(() =>
         this.actions$.pipe(

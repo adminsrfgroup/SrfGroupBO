@@ -4,7 +4,7 @@ export interface IAuthority {
     descriptionAr?: string;
     descriptionFr?: string;
     descriptionEn?: string;
-  permissions?: any[];
+    permissions?: any[];
 }
 
 export const defaultValue: Readonly<IAuthority> = {};

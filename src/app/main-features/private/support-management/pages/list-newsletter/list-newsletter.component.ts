@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angula
 import { Store } from '@ngrx/store';
 import { INewsLetterState } from '../../store/state/support.state';
 import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
-import { Table } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { selectorNewsLetter } from '../../store/selectors/support.selectors';
 import { INewsLetter } from '../../../../../shared/models/newsletter.model';
@@ -52,7 +52,7 @@ export class ListNewsletterComponent implements OnInit, OnDestroy {
             });
     }
 
-    nextPage(event: LazyLoadEvent): void {
+    nextPage(event: TableLazyLoadEvent): void {
         const newPage: number = Math.trunc(Number(event.first) / this.sizePage);
         this.store.dispatch(
             loadListNewsLetter({

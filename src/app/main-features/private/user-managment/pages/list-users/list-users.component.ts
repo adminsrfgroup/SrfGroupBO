@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Table } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { PrimeNGConfig } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../store/state/user.state';
@@ -7,6 +7,7 @@ import { loadListUsers } from '../../store/actions/list-user.actions';
 import { selectorEntitiesUser, selectorLoadingUser, selectorTotalElementsUser, selectorTotalPagesUser } from '../../store/selectors/list-user.selectors';
 import { IUser } from '../../../../../shared/models/user.model';
 import { Subject, takeUntil } from 'rxjs';
+import { MultiSelectChangeEvent } from 'primeng/multiselect';
 
 @Component({
     selector: 'app-list-users',
@@ -30,7 +31,10 @@ export class ListUsersComponent implements OnInit {
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private primengConfig: PrimeNGConfig, private store: Store<UserState>) {}
+    constructor(
+        private primengConfig: PrimeNGConfig,
+        private store: Store<UserState>
+    ) {}
 
     ngOnInit(): void {
         this.representatives = [
@@ -121,8 +125,8 @@ export class ListUsersComponent implements OnInit {
         return date.getFullYear() + '-' + monthValue + '-' + dayValue;
     }
 
-    onRepresentativeChange(event: Event): void {
-        this.table.filter((event.target as HTMLInputElement).value, 'representative', 'in');
+    onRepresentativeChange(event: MultiSelectChangeEvent): void {
+        this.table.filter(event.value, 'representative', 'in');
     }
 
     filter(event: Event, filed: string, matchMode: string): void {
