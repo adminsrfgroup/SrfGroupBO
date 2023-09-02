@@ -8,7 +8,7 @@ export interface IRoleAuthority {
     entities: IAuthority[];
     totalElements: number;
     totalPages: number;
-    errorMessage: any;
+    errorMessage: string;
     activePage: number;
 
     updateSuccess: boolean;
@@ -23,7 +23,7 @@ export interface IRolePermission {
     entities: IPermission[];
     totalElements: number;
     totalPages: number;
-    errorMessage: any;
+    errorMessage: string;
     activePage: number;
 
     updateSuccess: boolean;
@@ -31,9 +31,9 @@ export interface IRolePermission {
 }
 
 export interface RoleState {
-    permission: IRolePermission;
     authority: IRoleAuthority;
-    userAuthority: any;
+    permission: IRolePermission;
+    // userAuthority: any;
 }
 
 export const initRoleState: RoleState = {
@@ -44,7 +44,7 @@ export const initRoleState: RoleState = {
         entities: [],
         updateSuccess: false,
         addSuccess: false,
-        errorMessage: null,
+        errorMessage: '',
         totalElements: -1,
         totalPages: -1,
         activePage: 5,
@@ -56,21 +56,21 @@ export const initRoleState: RoleState = {
         entities: [],
         updateSuccess: false,
         addSuccess: false,
-        errorMessage: null,
+        errorMessage: '',
         totalElements: -1,
         totalPages: -1,
         activePage: 5,
         isFirstLoading: true,
     },
-    userAuthority: {
-        loading: false,
-        entity: {},
-        loadingEntities: false,
-        entities: [],
-        updateSuccess: false,
-        addSuccess: false,
-        errorMessage: null,
-        totalItems: -1,
-        totalPages: 0,
-    },
+    // userAuthority: {
+    //     loading: false,
+    //     entity: {},
+    //     loadingEntities: false,
+    //     entities: [],
+    //     updateSuccess: false,
+    //     addSuccess: false,
+    //     errorMessage: '',
+    //     totalItems: -1,
+    //     totalPages: -1,
+    // },
 };

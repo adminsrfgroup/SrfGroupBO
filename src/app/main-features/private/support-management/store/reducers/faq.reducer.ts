@@ -1,5 +1,5 @@
 import { ActionReducer, createReducer, on } from '@ngrx/store';
-import { IAboutUsState, IFaqState, initSupportState } from '../state/support.state';
+import { IFaqState, initSupportState } from '../state/support.state';
 import {
     addFaq,
     addFaqFailure,
@@ -65,6 +65,16 @@ export const faqReducer: ActionReducer<IFaqState> = createReducer(
             errorMessage: action.error,
         };
     }),
+
+    // on(addFaq, (state: IFaqState) => {
+    //   return adapterFaq.addOne({}, state)
+    // }),
+    // on(addFaqSuccess, (state, { user }) => {
+    //   return adapterFaq.setOne(user, state)
+    // }),
+    // on(addFaqFailure, (state, { user }) => {
+    //   return adapterFaq.upsertOne(user, state);
+    // }),
 
     on(fetchOneFaq, (state: IFaqState) => {
         return {

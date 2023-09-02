@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
-import { Pagination } from '../../../../../shared/models/page.common';
+import { PageCommon, Pagination } from '../../../../../shared/models/page.common';
 import { SupportService } from '../../services/support.service';
 import { loadListContactUs, loadListContactUsFailure, loadListContactUsSuccess } from '../actions/contact-us.actions';
 import { AboutUsService } from '../../services/about-us.service';
@@ -39,6 +39,9 @@ import { IFaq } from '../../../../../shared/models/faq.model';
 import { CguService } from '../../services/cgu.service';
 import { addCgu, addCguFailure, addCguSuccess, loadListCgu, loadListCguFailure, loadListCguSuccess, updateCgu, updateCguFailure, updateCguSuccess } from '../actions/cgu.actions';
 import { ICgu } from '../../../../../shared/models/cgu.model';
+import { IContactUs } from '../../../../../shared/models/contact-us.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { INewsLetter } from '../../../../../shared/models/newsletter.model';
 
 @Injectable()
 export class SupportEffects {
@@ -56,10 +59,10 @@ export class SupportEffects {
             ofType(loadListContactUs.type),
             switchMap((payload: Pagination) => {
                 return this.supportService.fetchAllContactUs(payload.page, payload.size).pipe(
-                    map((data: any) => {
+                    map((data: PageCommon<IContactUs>) => {
                         return loadListContactUsSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(loadListContactUsFailure({ error: exception.error }));
                     })
                 );
@@ -72,10 +75,10 @@ export class SupportEffects {
             ofType(addAboutUs.type),
             switchMap((payload: IAboutUs) => {
                 return this.aboutUsService.addAboutUs(payload).pipe(
-                    map((data: any) => {
+                    map((data: IAboutUs) => {
                         return addAboutUsSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(addAboutUsFailure({ error: exception.error }));
                     })
                 );
@@ -88,10 +91,10 @@ export class SupportEffects {
             ofType(loadListAboutUs.type),
             switchMap((payload: Pagination) => {
                 return this.aboutUsService.fetchAllAboutUs(payload.page, payload.size).pipe(
-                    map((data: any) => {
+                    map((data: PageCommon<IAboutUs>) => {
                         return loadListAboutUsSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(loadListAboutUsFailure({ error: exception.error }));
                     })
                 );
@@ -107,7 +110,7 @@ export class SupportEffects {
                     map((data: IAboutUs) => {
                         return fetchOneAboutUsSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(fetchOneAboutUsFailure({ error: exception.error }));
                     })
                 );
@@ -120,10 +123,10 @@ export class SupportEffects {
             ofType(loadListNewsLetter.type),
             switchMap((payload: Pagination) => {
                 return this.newsletterService.fetchAllNewsLetter(payload.page, payload.size).pipe(
-                    map((data: any) => {
+                    map((data: PageCommon<INewsLetter>) => {
                         return loadListNewsLetterSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(loadListNewsLetterFailure({ error: exception.error }));
                     })
                 );
@@ -139,7 +142,7 @@ export class SupportEffects {
                     map((data: any) => {
                         return loadListFaqSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(loadListFaqFailure({ error: exception.error }));
                     })
                 );
@@ -152,10 +155,10 @@ export class SupportEffects {
             ofType(addFaq.type),
             switchMap((payload: IFaq) => {
                 return this.faqService.addFaq(payload).pipe(
-                    map((data: any) => {
+                    map((data: IFaq) => {
                         return addFaqSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(addFaqFailure({ error: exception.error }));
                     })
                 );
@@ -171,7 +174,7 @@ export class SupportEffects {
                     map((data: IAboutUs) => {
                         return fetchOneFaqSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(fetchOneFaqFailure({ error: exception.error }));
                     })
                 );
@@ -187,7 +190,7 @@ export class SupportEffects {
                     map((data: IAboutUs) => {
                         return updateFaqSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(updateFaqFailure({ error: exception.error }));
                     })
                 );
@@ -200,10 +203,10 @@ export class SupportEffects {
             ofType(loadListCgu.type),
             switchMap(() => {
                 return this.cguService.fetchCgu().pipe(
-                    map((data: any) => {
+                    map((data: ICgu) => {
                         return loadListCguSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(loadListCguFailure({ error: exception.error }));
                     })
                 );
@@ -216,10 +219,10 @@ export class SupportEffects {
             ofType(addCgu.type),
             switchMap((payload: ICgu) => {
                 return this.cguService.addCgu(payload).pipe(
-                    map((data: any) => {
+                    map((data: ICgu) => {
                         return addCguSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(addCguFailure({ error: exception.error }));
                     })
                 );
@@ -232,10 +235,10 @@ export class SupportEffects {
             ofType(updateCgu.type),
             switchMap((payload: ICgu) => {
                 return this.cguService.updateCgu(payload).pipe(
-                    map((data: any) => {
+                    map((data: ICgu) => {
                         return updateCguSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(updateCguFailure({ error: exception.error }));
                     })
                 );

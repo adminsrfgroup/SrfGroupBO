@@ -7,7 +7,7 @@ export const enum StorageType {
  * Get either localStorage or sessionStorage
  * @param type storage type
  */
-export const getStorage: any = (type: StorageType) => {
+export const getStorage = (type: StorageType): Storage => {
     if (type === StorageType.SESSION) {
         return window.sessionStorage;
     }

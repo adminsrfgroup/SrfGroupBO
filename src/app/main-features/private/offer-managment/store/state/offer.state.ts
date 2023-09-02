@@ -8,7 +8,7 @@ export interface IOfferState {
     entities: IOffer[];
     totalElements: number;
     totalPages: number;
-    errorMessage: any;
+    errorMessage: string;
     activePage: number;
 }
 
@@ -19,7 +19,7 @@ export interface IDescriptionNewOfferState {
     entities: IDescriptionAddOffer[];
     totalElements: number;
     totalPages: number;
-    errorMessage: any;
+    errorMessage: string;
     activePage: number;
     addSuccess: boolean;
     updateSuccess: boolean;
@@ -38,7 +38,7 @@ export const initOfferState: IMainOfferState = {
         entities: [],
         totalElements: -1,
         totalPages: -1,
-        errorMessage: null,
+        errorMessage: '',
         activePage: 5,
     },
     descriptionNewOffer: {
@@ -48,7 +48,7 @@ export const initOfferState: IMainOfferState = {
         entities: [],
         totalElements: -1,
         totalPages: -1,
-        errorMessage: null,
+        errorMessage: '',
         activePage: 5,
         addSuccess: false,
         updateSuccess: false,

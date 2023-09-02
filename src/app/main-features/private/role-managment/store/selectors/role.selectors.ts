@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { RoleState } from '../state/init.state';
 
-export const roleSelectKey = 'role';
+export const roleSelectKey = 'role-permission';
 
 export const selectRoleState = createFeatureSelector<RoleState>(roleSelectKey);
 

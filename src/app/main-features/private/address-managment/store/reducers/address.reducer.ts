@@ -35,7 +35,7 @@ export const addressReducer: ActionReducer<AddressState, Action> = createReducer
             loading: false,
         };
     }),
-    on(importAddressSuccess, (state: AddressState, action: ReturnType<typeof importAddressSuccess>) => {
+    on(importAddressSuccess, (state: AddressState) => {
         return {
             ...state,
             loading: false,

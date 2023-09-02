@@ -4,7 +4,7 @@ import * as fromLoginActions from '../actions/login.action';
 
 export const loginReducer: ActionReducer<LoginState, Action> = createReducer(
     initLoginState,
-    on(fromLoginActions.loginAction, (state: LoginState, action: ReturnType<typeof fromLoginActions.loginAction>) => {
+    on(fromLoginActions.loginAction, (state: LoginState) => {
         return {
             ...state,
             loading: true,

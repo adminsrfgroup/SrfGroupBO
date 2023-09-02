@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LogsComponent } from './pages/logs/logs.component';
 import { OrganigrammeComponent } from './pages/organigramme/organigramme.component';
+import { MetricsComponent } from './pages/metrics/metrics.component';
 
 const routes: Routes = [
     {
-        path: 'home',
-        component: DashboardComponent,
+        path: 'metrics',
+        component: MetricsComponent,
     },
     {
         path: 'logs',
@@ -19,7 +19,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'metrics',
         pathMatch: 'full',
     },
 ];

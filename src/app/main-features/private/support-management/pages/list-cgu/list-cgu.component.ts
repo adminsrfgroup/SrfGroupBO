@@ -1,13 +1,11 @@
 import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ICguState, IFaqState } from '../../store/state/support.state';
-import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
-import { Table, TableLazyLoadEvent } from 'primeng/table';
-import { IFaq } from '../../../../../shared/models/faq.model';
+import { ICguState } from '../../store/state/support.state';
+import { PrimeNGConfig } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
-import { selectorCgu, selectorFaq } from '../../store/selectors/support.selectors';
-import { loadListFaq } from '../../store/actions/faq.actions';
-import { defaultValue, ICgu } from '../../../../../shared/models/cgu.model';
+import { selectorCgu } from '../../store/selectors/support.selectors';
+import { ICgu } from '../../../../../shared/models/cgu.model';
 import { loadListCgu } from '../../store/actions/cgu.actions';
 
 @Component({
@@ -19,8 +17,8 @@ export class ListCguComponent implements OnInit, OnDestroy {
     store = inject(Store<ICguState>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
-    statuses!: any[];
-    representatives!: any[];
+    statuses = [];
+    representatives = [];
 
     listCgu: WritableSignal<ICgu[]> = signal<ICgu[]>([]);
 
@@ -48,7 +46,7 @@ export class ListCguComponent implements OnInit, OnDestroy {
             });
     }
 
-    nextPage(event: TableLazyLoadEvent): void {
+    nextPage(): void {
         this.store.dispatch(loadListCgu());
     }
 

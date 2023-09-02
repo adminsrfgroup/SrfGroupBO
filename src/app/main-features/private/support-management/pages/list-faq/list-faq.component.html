@@ -24,7 +24,7 @@
         [lazy]="true"
         (onLazyLoad)="nextPage($event)">
         <ng-template pTemplate="caption">
-            <div class="table-header">
+            <div class="table-header flex justify-content-between">
                 List of Customers {{ totalElements() }}
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>

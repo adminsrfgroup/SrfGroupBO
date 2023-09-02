@@ -15,13 +15,24 @@
                 <h5>Advanced</h5>
                 <div class="formgrid grid">
                     <div class="field col-12 md:col-4">
+                        <label for="id">Id</label>
+                        <input
+                            id="id"
+                            type="text"
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
+                            readonly="true"
+                            [(ngModel)]="detailsUser.firstName"
+                            [readOnly]="true" />
+                    </div>
+                    <div class="field col-12 md:col-4">
                         <label for="firstname6">Firstname</label>
                         <input
                             id="firstname6"
                             type="text"
                             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
                             readonly="true"
-                            [(ngModel)]="detailsUser.firstName" />
+                            [(ngModel)]="detailsUser.firstName"
+                            [readOnly]="true" />
                     </div>
                     <div class="field col-12 md:col-4">
                         <label for="lastname6">Lastname</label>
@@ -29,7 +40,8 @@
                             id="lastname6"
                             type="text"
                             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
-                            [(ngModel)]="detailsUser.lastName" />
+                            [(ngModel)]="detailsUser.lastName"
+                            [readOnly]="true" />
                     </div>
                     <div class="field col-12 md:col-4">
                         <label for="email">Email</label>
@@ -37,7 +49,8 @@
                             id="email"
                             type="text"
                             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
-                            [(ngModel)]="detailsUser.email" />
+                            [(ngModel)]="detailsUser.email"
+                            [readOnly]="true" />
                     </div>
                     <div class="field col-12 md:col-4">
                         <label for="registerDate">RegisterDate</label>
@@ -45,7 +58,8 @@
                             id="registerDate"
                             type="text"
                             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
-                            [(ngModel)]="detailsUser.registerDate" />
+                            [(ngModel)]="detailsUser.registerDate"
+                            [readOnly]="true" />
                     </div>
 
                     <div class="field col-12 md:col-4">
@@ -54,7 +68,8 @@
                             id="phone"
                             type="text"
                             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
-                            [(ngModel)]="detailsUser.phone" />
+                            [(ngModel)]="detailsUser.phone"
+                            [readOnly]="true" />
                     </div>
 
                     <div class="field col-12 md:col-4">
@@ -63,7 +78,45 @@
                             id="sourceConnectedDevice"
                             type="text"
                             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
-                            [(ngModel)]="detailsUser.sourceConnectedDevice" />
+                            [(ngModel)]="detailsUser.sourceConnectedDevice"
+                            [readOnly]="true" />
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                        <label for="activatedAccount">Activated Account</label>
+                        <input
+                            id="activatedAccount"
+                            type="text"
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
+                            [(ngModel)]="detailsUser.activatedAccount"
+                            [readOnly]="true" />
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                        <label for="address">Adresse</label>
+                        <input
+                            id="address"
+                            type="text"
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
+                            [value]="getValueAddress()"
+                            [readOnly]="true" />
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                        <label for="linkProfileFacebook">LinkProfileFacebook</label>
+                        <input
+                            id="linkProfileFacebook"
+                            type="text"
+                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full"
+                            [value]="detailsUser.linkProfileFacebook"
+                            [readOnly]="true" />
+                    </div>
+
+                    <div class="field col-12 md:col-4" *ngIf="valuesAuthorities.length">
+                        <label for="listAuthorities">List authorities</label>
+                        <p-chips [(ngModel)]="valuesAuthorities" id="listAuthorities" [disabled]="true">
+                            <ng-template let-item pTemplate="item"> {{ item.name }} <i class="pi pi-user ml-2"></i> </ng-template>
+                        </p-chips>
                     </div>
                 </div>
             </div>
@@ -71,14 +124,17 @@
     </div>
 </div>
 
-<p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{ width: '50vw' }" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
-    <p class="m-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-        nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-        sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
+<p-dialog header="List of authorities" [(visible)]="displayModal" [modal]="true" [style]="{ width: '50vw' }" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <div class="card flex justify-content-center">
+        <div class="flex flex-column gap-2">
+            <div *ngFor="let role of listRole()" class="field-checkbox">
+                <p-checkbox name="group" [value]="role" [(ngModel)]="selectedAuthorities" [inputId]="inputValueId(role)"></p-checkbox>
+                <label [for]="role.id">{{ role.name }}</label>
+            </div>
+        </div>
+    </div>
     <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="displayModal = false" label="Yes" class="p-button-text"></p-button>
-        <p-button icon="pi pi-times" (click)="displayModal = false" label="No"></p-button>
+        <p-button icon="pi pi-times" (click)="displayModal = false" label="Cancel" styleClass="p-button-secondary"></p-button>
+        <p-button icon="pi pi-check" (click)="updateUserAuthority()" label="Update" styleClass="p-button-success"></p-button>
     </ng-template>
 </p-dialog>

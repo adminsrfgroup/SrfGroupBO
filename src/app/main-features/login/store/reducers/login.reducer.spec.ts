@@ -16,7 +16,7 @@ describe('Login Selectors', () => {
     it('should update the login state in an immutable way', () => {
         const newState: LoginState = {
             loading: false,
-            errorMessage: null,
+            errorMessage: '',
             token: 'azerty',
             refreshToken: 'azerty',
         };

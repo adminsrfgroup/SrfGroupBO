@@ -7,7 +7,7 @@ export interface CategoryState {
     entities: ICategory[];
     totalElements: number;
     totalPages: number;
-    errorMessage: any;
+    errorMessage: string;
     activePage: number;
     addSuccess: boolean;
     updateSuccess: boolean;

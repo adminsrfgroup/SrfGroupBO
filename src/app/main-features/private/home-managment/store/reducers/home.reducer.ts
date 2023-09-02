@@ -177,7 +177,7 @@ export const homeReducer: ActionReducer<HomeState, Action> = createReducer(
             },
         };
     }),
-    on(deleteTopSlidesSuccess, (state: HomeState, action: ReturnType<typeof deleteTopSlidesSuccess>) => {
+    on(deleteTopSlidesSuccess, (state: HomeState) => {
         return {
             ...state,
             topSlides: {
@@ -343,12 +343,11 @@ export const homeReducer: ActionReducer<HomeState, Action> = createReducer(
             },
         };
     }),
-    on(deleteFeatureSlideSuccess, (state: HomeState, action: ReturnType<typeof deleteFeatureSlideSuccess>) => {
+    on(deleteFeatureSlideSuccess, (state: HomeState) => {
         return {
             ...state,
             featureHome: {
                 ...state.featureHome,
-                entity: action.payload,
                 loading: false,
                 deleteSuccess: true,
             },

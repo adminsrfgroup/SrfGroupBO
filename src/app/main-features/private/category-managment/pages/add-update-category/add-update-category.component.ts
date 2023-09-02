@@ -3,23 +3,19 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { getBase64 } from '../../../../../shared/utils/utils-functions';
 import { IdEntity } from '../../../../../shared/models/id-entity.model';
-import { fetchOneAboutUs, resetAboutUs } from '../../../support-management/store/actions/about-us.actions';
 import { Store } from '@ngrx/store';
 import { ICgu } from '../../../../../shared/models/cgu.model';
 import { CategoryState } from '../../store/state/init.state';
 import { fetchOneCategory, resetCategories, updateCategory } from '../../store/actions/category.action';
-import { selectorAboutUs } from '../../../support-management/store/selectors/support.selectors';
 import { Subject, takeUntil } from 'rxjs';
-import { IAboutUsState } from '../../../support-management/store/state/support.state';
 import { selectorCategory } from '../../store/selectors/category.selector';
-import { addCgu, updateCgu } from '../../../support-management/store/actions/cgu.actions';
 
 @Component({
     selector: 'app-add-update-category',
     templateUrl: './add-update-category.component.html',
     styleUrls: ['./add-update-category.component.scss'],
 })
-export class AddUpdateCategoryComponent implements OnInit {
+export class AddUpdateCategoryComponent implements OnInit, OnDestroy {
     store = inject(Store<CategoryState>);
     formGroup!: FormGroup;
 
@@ -89,8 +85,8 @@ export class AddUpdateCategoryComponent implements OnInit {
 
     selectFileCategory(event: Event): void {
         if ((event.target as HTMLInputElement).files?.length) {
-            getBase64((event.target as HTMLInputElement).files![0]).then((result: any) => {
-                this.fileCategory = result;
+            getBase64((event.target as HTMLInputElement).files![0]).then((result: string | ArrayBuffer | null) => {
+                this.fileCategory = (result || '').toString();
                 this.formGroup.patchValue({
                     imageContent: this.fileCategory,
                 });
@@ -110,5 +106,10 @@ export class AddUpdateCategoryComponent implements OnInit {
                 // this.store.dispatch(addCgu(requestData));
             }
         }
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next(true);
+        this.destroy$.unsubscribe();
     }
 }

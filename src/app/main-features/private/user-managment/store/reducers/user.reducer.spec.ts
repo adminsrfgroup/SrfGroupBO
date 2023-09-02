@@ -19,7 +19,7 @@ describe('User Reducers', () => {
             loading: false,
             entity: {},
             loadingEntities: false,
-            errorMessage: null,
+            errorMessage: '',
             entities: [],
             totalElements: 0,
             totalPages: 0,

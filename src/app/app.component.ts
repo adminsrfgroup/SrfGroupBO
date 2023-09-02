@@ -7,7 +7,6 @@ import { AllAppConfig } from './config';
 import { Router } from '@angular/router';
 import { LoginState } from './main-features/login/store/state/login.state';
 import { resetLoginAction } from './main-features/login/store/actions/login.action';
-import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
     selector: 'app-root',

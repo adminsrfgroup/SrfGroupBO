@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 next: (response: IResponseSession) => {
                     if (response.isAuthenticated) {
                         StorageService.local.set(AllAppConfig.VALUE_CURRENT_USER, JSON.stringify(response.currentUser));
-                        this.router.navigate(['/private/dashboard/home']);
+                        this.router.navigate(['/private/dashboard/metrics']);
                     }
                 },
             });

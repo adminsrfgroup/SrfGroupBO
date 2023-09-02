@@ -1,13 +1,15 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, signal, ViewChild, ViewEncapsulation, WritableSignal } from '@angular/core';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { PrimeNGConfig } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../store/state/user.state';
 import { loadListUsers } from '../../store/actions/list-user.actions';
-import { selectorEntitiesUser, selectorLoadingUser, selectorTotalElementsUser, selectorTotalPagesUser } from '../../store/selectors/list-user.selectors';
 import { IUser } from '../../../../../shared/models/user.model';
 import { Subject, takeUntil } from 'rxjs';
 import { MultiSelectChangeEvent } from 'primeng/multiselect';
+import { selectorUser } from '../../store/selectors/user.selectors';
+import { AllAppConfig } from '../../../../../config';
+import { resetCategories } from '../../../category-managment/store/actions/category.action';
 
 @Component({
     selector: 'app-list-users',
@@ -16,16 +18,23 @@ import { MultiSelectChangeEvent } from 'primeng/multiselect';
     encapsulation: ViewEncapsulation.None,
 })
 export class ListUsersComponent implements OnInit {
-    selectedCustomers!: any[];
+    selectedCustomers = [];
 
-    representatives!: any[];
+    representatives = [];
 
-    statuses!: any[];
+    statuses = [];
 
-    listUsers: IUser[] = [];
-    loading = false;
-    totalElements = 0;
-    totalPages = 0;
+    listUsers: WritableSignal<IUser[]> = signal<IUser[]>([]);
+    loadListUsers: WritableSignal<IUser[]> = signal<IUser[]>([]);
+    loading = signal<boolean>(false);
+    totalElements = signal<number>(0);
+    totalPages = signal<number>(0);
+
+    sizePage: WritableSignal<number> = signal<number>(AllAppConfig.USER_MODULE.ITEMS_PER_PAGINATION);
+    newPage: WritableSignal<number> = signal<number>(0);
+
+    isFirstLoading: WritableSignal<boolean> = signal<boolean>(true);
+    currentIndex: WritableSignal<number> = signal<number>(0);
 
     @ViewChild('dt') table!: Table;
 
@@ -37,60 +46,60 @@ export class ListUsersComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.representatives = [
-            { name: 'Amy Elsner', image: 'amyelsner.png' },
-            { name: 'Anna Fali', image: 'annafali.png' },
-            { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
-            { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
-            { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
-            { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
-            { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
-            { name: 'Onyama Limba', image: 'onyamalimba.png' },
-            { name: 'Stephen Shaw', image: 'stephenshaw.png' },
-            { name: 'XuXue Feng', image: 'xuxuefeng.png' },
-        ];
-
-        this.statuses = [
-            { label: 'Unqualified', value: 'unqualified' },
-            { label: 'Qualified', value: 'qualified' },
-            { label: 'New', value: 'new' },
-            { label: 'Negotiation', value: 'negotiation' },
-            { label: 'Renewal', value: 'renewal' },
-            { label: 'Proposal', value: 'proposal' },
-        ];
         this.primengConfig.ripple = true;
 
         this.store
-            .select(selectorTotalPagesUser)
+            .select(selectorUser)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
-                next: (result: number) => {
-                    this.totalPages = result;
+                next: (result: UserState) => {
+                    if (this.isFirstLoading() && result.totalPages === -1) {
+                        this.store.dispatch(
+                            loadListUsers({
+                                page: this.newPage(),
+                                size: this.sizePage(),
+                            })
+                        );
+                    } else if (result.entities.length) {
+                        this.loadListUsers.set(result.entities.slice(this.newPage() * this.sizePage(), result.entities.length));
+                        this.listUsers.set(result.entities.slice());
+                        this.totalElements.set(result.totalElements);
+                        this.totalPages.set(result.totalPages);
+                        this.loading.set(result.loadingEntities);
+                    }
                 },
             });
-        this.store.select(selectorTotalElementsUser).subscribe({
-            next: (result: number) => {
-                this.totalElements = result;
-            },
-        });
-        this.store.select(selectorLoadingUser).subscribe({
-            next: (result: boolean) => {
-                this.loading = result;
-            },
-        });
-        this.store.select(selectorEntitiesUser).subscribe({
-            next: (result: IUser[]) => {
-                if (!result.length) {
-                    this.dispatchAllUsers();
-                } else {
-                    this.listUsers = result.slice();
-                }
-            },
-        });
     }
 
-    dispatchAllUsers(): void {
-        this.store.dispatch(loadListUsers());
+    nextPage(event: TableLazyLoadEvent): void {
+        if (!this.isFirstLoading()) {
+            this.newPage.set(Math.trunc(Number(event.first) / this.sizePage()));
+            if (this.newPage() * this.sizePage() >= this.listUsers().length) {
+                // New step
+                if (this.newPage() === this.currentIndex() + 1) {
+                    this.currentIndex.set(this.newPage());
+                    this.store.dispatch(
+                        loadListUsers({
+                            page: this.newPage(),
+                            size: this.sizePage(),
+                        })
+                    );
+                } else {
+                    // Jump of many steps
+                    this.store.dispatch(resetCategories());
+                    this.store.dispatch(
+                        loadListUsers({
+                            page: 0,
+                            size: (this.newPage() + 1) * this.sizePage(),
+                        })
+                    );
+                }
+            } else {
+                this.loadListUsers.set(this.listUsers().slice(this.newPage() * this.sizePage(), this.listUsers().length));
+            }
+        } else {
+            this.isFirstLoading.set(false);
+        }
     }
 
     onActivityChange(event: Event): void {

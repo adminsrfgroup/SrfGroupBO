@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IContactUsState } from '../../store/state/support.state';
-import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { IContactUs } from '../../../../../shared/models/contact-us.model';
 import { Subject, takeUntil } from 'rxjs';
@@ -17,8 +17,8 @@ export class ListContactUsComponent implements OnInit, OnDestroy {
     store = inject(Store<IContactUsState>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
-    statuses!: any[];
-    representatives!: any[];
+    statuses = [];
+    representatives = [];
 
     listContactUs = signal<IContactUs[]>([]);
 

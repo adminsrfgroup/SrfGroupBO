@@ -8,7 +8,7 @@ describe('LoginFacadeService', () => {
     let store: MockStore;
     const initialState = {
         loading: false,
-        errorMessage: null,
+        errorMessage: '',
         token: '',
         refreshToken: '',
     };

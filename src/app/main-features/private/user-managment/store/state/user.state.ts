@@ -1,4 +1,5 @@
 import { IUser } from '../../../../../shared/models/user.model';
+import {IAuthority} from "../../../../../shared/models/authority.model";
 
 export interface UserState {
     loading: boolean;
@@ -7,7 +8,11 @@ export interface UserState {
     entities: IUser[];
     totalElements: number;
     totalPages: number;
-    errorMessage: any;
+    errorMessage: string;
+
+    updateAuthoritiesSuccess: boolean;
+
+    authorities: IAuthority[];
 }
 
 export const initUserState: UserState = {
@@ -16,6 +21,8 @@ export const initUserState: UserState = {
     loadingEntities: false,
     entities: [],
     totalElements: -1,
-    totalPages: 0,
-    errorMessage: null,
+    totalPages: -1,
+    errorMessage: '',
+    updateAuthoritiesSuccess: false,
+    authorities: [],
 };

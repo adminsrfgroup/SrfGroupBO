@@ -31,6 +31,7 @@ import { ImageModule } from 'primeng/image';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TagModule } from 'primeng/tag';
 import { SgDatePipe } from './pipes/sg-date.pipe';
+import { ChipsModule } from 'primeng/chips';
 
 @NgModule({
     declarations: [SideBarComponent, HeaderComponent, FooterComponent, BreadcrumbComponent, MessagesHelpComponent, SgDatePipe],
@@ -61,6 +62,7 @@ import { SgDatePipe } from './pipes/sg-date.pipe';
         MessagesModule,
         ImageModule,
         NgOptimizedImage,
+        ChipsModule,
     ],
     exports: [
         CardModule,
@@ -89,6 +91,7 @@ import { SgDatePipe } from './pipes/sg-date.pipe';
         NgOptimizedImage,
         CheckboxModule,
         SgDatePipe,
+        ChipsModule,
     ],
     providers: [MessageService, DatePipe],
 })

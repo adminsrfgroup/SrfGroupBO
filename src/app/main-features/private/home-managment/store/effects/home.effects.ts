@@ -41,6 +41,7 @@ import {
 import { IPostHomeFeature } from '../../../../../shared/models/post-home-feature.model';
 import { FeatureHomeService } from '../../services/feature-home.service';
 import { IdEntity } from '../../../../../shared/models/id-entity.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class HomeEffects {
@@ -58,7 +59,7 @@ export class HomeEffects {
                     map((data: ITopHomeSlidesImages) => {
                         return addTopSlidesSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(addTopSlidesFailure({ error: exception.error }));
                     })
                 );
@@ -74,7 +75,7 @@ export class HomeEffects {
                     map((data: PageCommon<ITopHomeSlidesImages>) => {
                         return fetchTopSlidesSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(fetchTopSlidesFailure({ error: exception.error }));
                     })
                 );
@@ -90,7 +91,7 @@ export class HomeEffects {
                     map((data: ITopHomeSlidesImages) => {
                         return fetchOneTopSlidesSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(fetchOneTopSlidesFailure({ error: exception.error }));
                     })
                 );
@@ -106,7 +107,7 @@ export class HomeEffects {
                     map((data: ITopHomeSlidesImages) => {
                         return updateTopSlidesSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(updateTopSlidesFailure({ error: exception.error }));
                     })
                 );
@@ -122,7 +123,7 @@ export class HomeEffects {
                     map((data: boolean) => {
                         return deleteTopSlidesSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(deleteTopSlidesFailure({ error: exception.error }));
                     })
                 );
@@ -138,7 +139,7 @@ export class HomeEffects {
                     map((data: IPostHomeFeature) => {
                         return addFeatureSlideSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(addFeatureSlideFailure({ error: exception.error }));
                     })
                 );
@@ -154,7 +155,7 @@ export class HomeEffects {
                     map((data: PageCommon<IPostHomeFeature>) => {
                         return fetchFeatureSlidesSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(fetchFeatureSlidesFailure({ error: exception.error }));
                     })
                 );
@@ -170,7 +171,7 @@ export class HomeEffects {
                     map((data: IPostHomeFeature) => {
                         return fetchOneFeatureSlideSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(fetchOneFeatureSlideFailure({ error: exception.error }));
                     })
                 );
@@ -186,7 +187,7 @@ export class HomeEffects {
                     map((data: IPostHomeFeature) => {
                         return updateFeatureSlideSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(updateFeatureSlideFailure({ error: exception.error }));
                     })
                 );
@@ -202,7 +203,7 @@ export class HomeEffects {
                     map((data: boolean) => {
                         return deleteFeatureSlideSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(deleteFeatureSlideFailure({ error: exception.error }));
                     })
                 );

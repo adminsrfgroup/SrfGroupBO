@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { IUser } from './user.model';
 
 export interface IConversation {

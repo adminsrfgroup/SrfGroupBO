@@ -7,7 +7,7 @@ export const loadListOffers = createAction('[ListOffer] Load ListOffers', props<
 
 export const loadListOffersSuccess = createAction('[ListOffer] Load ListOffers Success', props<{ payload: PageCommon<IOffer> }>());
 
-export const loadListOffersFailure = createAction('[ListOffer] Load ListOffers Failure', props<{ error: any }>());
+export const loadListOffersFailure = createAction('[ListOffer] Load ListOffers Failure', props<{ error: string }>());
 
 export const setActivePageOffers = createAction('[ListOffer] Set Active Page ListOffers', props<Pagination>());
 
@@ -17,7 +17,7 @@ export const loadListDescriptionNewOffer = createAction('[ListDescriptionNewOffe
 
 export const loadListDescriptionNewOfferSuccess = createAction('[ListDescriptionNewOffer] Load ListDescriptionNewOffer Success', props<{ payload: PageCommon<IDescriptionAddOffer> }>());
 
-export const loadListDescriptionNewOfferFailure = createAction('[ListDescriptionNewOffer] Load ListDescriptionNewOffer Failure', props<{ error: any }>());
+export const loadListDescriptionNewOfferFailure = createAction('[ListDescriptionNewOffer] Load ListDescriptionNewOffer Failure', props<{ error: string }>());
 
 export const setActivePageListDescriptionNewOffer = createAction('[ListDescriptionNewOffer] Set Active Page ListDescriptionNewOffer', props<Pagination>());
 
@@ -25,6 +25,6 @@ export const addDescriptionNewOffer = createAction('[AddDescriptionNewOffer] Loa
 
 export const addDescriptionNewOfferSuccess = createAction('[AddDescriptionNewOffer] Load AddDescriptionNewOffer Success', props<{ payload: IDescriptionAddOffer }>());
 
-export const addDescriptionNewOfferFailure = createAction('[AddDescriptionNewOffer] Load AddDescriptionNewOffer Failure', props<{ error: any }>());
+export const addDescriptionNewOfferFailure = createAction('[AddDescriptionNewOffer] Load AddDescriptionNewOffer Failure', props<{ error: string }>());
 
 export const resetListDescriptionNewOffer = createAction('[ListDescriptionNewOffer] Reset ListDescriptionNewOffer');

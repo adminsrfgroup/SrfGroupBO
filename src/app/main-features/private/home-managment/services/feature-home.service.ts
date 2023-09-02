@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ITopHomeSlidesImages } from '../../../../shared/models/top-home-slides-images.model';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { IPostHomeFeature } from '../../../../shared/models/post-home-feature.model';

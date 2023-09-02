@@ -1,15 +1,10 @@
 import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
-import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 import { Store } from '@ngrx/store';
-import { CategoryState } from '../../../category-managment/store/state/init.state';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
-import { IRolePermission, RoleState } from '../../store/state/init.state';
+import { IRolePermission } from '../../store/state/init.state';
 import { Subject, takeUntil } from 'rxjs';
-import { IDescriptionAddOffer } from '../../../../../shared/models/description-add-offer.model';
 import { IPermission } from '../../../../../shared/models/permission.model';
-import { selectorDescriptionAddNewOffer } from '../../../offer-managment/store/selectors/offer.selectors';
-import { IDescriptionNewOfferState } from '../../../offer-managment/store/state/offer.state';
-import { loadListDescriptionNewOffer } from '../../../offer-managment/store/actions/offer.actions';
 import { loadListPermissions } from '../../store/actions/permission.action';
 import { selectorPermission } from '../../store/selectors/role.selectors';
 
@@ -23,8 +18,8 @@ export class ListPermissionComponent implements OnInit, OnDestroy {
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
 
-    statuses!: any[];
-    representatives!: any[];
+    statuses = [];
+    representatives = [];
     listPermissions: WritableSignal<IPermission[]> = signal<IPermission[]>([]);
     loading = signal<boolean>(false);
     totalElements = signal<number>(0);
@@ -35,27 +30,6 @@ export class ListPermissionComponent implements OnInit, OnDestroy {
     sizePage = 5;
 
     ngOnInit(): void {
-        this.representatives = [
-            { name: 'Amy Elsner', image: 'amyelsner.png' },
-            { name: 'Anna Fali', image: 'annafali.png' },
-            { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
-            { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
-            { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
-            { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
-            { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
-            { name: 'Onyama Limba', image: 'onyamalimba.png' },
-            { name: 'Stephen Shaw', image: 'stephenshaw.png' },
-            { name: 'XuXue Feng', image: 'xuxuefeng.png' },
-        ];
-
-        this.statuses = [
-            { label: 'Unqualified', value: 'unqualified' },
-            { label: 'Qualified', value: 'qualified' },
-            { label: 'New', value: 'new' },
-            { label: 'Negotiation', value: 'negotiation' },
-            { label: 'Renewal', value: 'renewal' },
-            { label: 'Proposal', value: 'proposal' },
-        ];
         this.primengConfig.ripple = true;
 
         this.store

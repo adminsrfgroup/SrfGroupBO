@@ -1,7 +1,6 @@
 import { ActionReducer, createReducer, on } from '@ngrx/store';
-import { IAboutUsState, ICguState, initSupportState } from '../state/support.state';
+import { ICguState, initSupportState } from '../state/support.state';
 import { addCgu, addCguFailure, addCguSuccess, loadListCgu, loadListCguFailure, loadListCguSuccess, resetCgu, updateCgu, updateCguFailure, updateCguSuccess } from '../actions/cgu.actions';
-import { addAboutUs, addAboutUsFailure, addAboutUsSuccess } from '../actions/about-us.actions';
 
 export const cguReducer: ActionReducer<ICguState> = createReducer(
     initSupportState.cgu,

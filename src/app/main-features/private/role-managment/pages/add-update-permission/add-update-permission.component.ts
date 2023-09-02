@@ -1,11 +1,10 @@
-import { Component, inject, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { RoleState } from '../../store/state/init.state';
 import { addPermission } from '../../store/actions/permission.action';
 import { IPermission } from '../../../../../shared/models/permission.model';
-import { EPermission, LIST_PERMISSIONS } from '../../../../../shared/constants/authorities';
-import { selectorDescriptionAddNewOffer } from '../../../offer-managment/store/selectors/offer.selectors';
+import { LIST_PERMISSIONS } from '../../../../../shared/constants/authorities';
 import { Subject, takeUntil } from 'rxjs';
 import { IDescriptionNewOfferState } from '../../../offer-managment/store/state/offer.state';
 import { resetTopSlide } from '../../../home-managment/store/actions/home.actions';

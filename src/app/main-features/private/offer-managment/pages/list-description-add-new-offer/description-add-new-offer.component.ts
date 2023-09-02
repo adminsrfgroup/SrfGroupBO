@@ -2,8 +2,7 @@ import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal
 import { IDescriptionAddOffer } from '../../../../../shared/models/description-add-offer.model';
 import { Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { CategoryState } from '../../../category-managment/store/state/init.state';
-import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { selectorDescriptionAddNewOffer } from '../../store/selectors/offer.selectors';
 import { IDescriptionNewOfferState } from '../../store/state/offer.state';
@@ -18,8 +17,8 @@ export class DescriptionAddNewOfferComponent implements OnInit, OnDestroy {
     store = inject(Store<IDescriptionNewOfferState>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
-    statuses!: any[];
-    representatives!: any[];
+    statuses = [];
+    representatives = [];
 
     listDescriptionAddNewOffer: WritableSignal<IDescriptionAddOffer[]> = signal<IDescriptionAddOffer[]>([]);
     loading = signal<boolean>(false);
@@ -31,27 +30,6 @@ export class DescriptionAddNewOfferComponent implements OnInit, OnDestroy {
     sizePage = 5;
 
     ngOnInit(): void {
-        this.representatives = [
-            { name: 'Amy Elsner', image: 'amyelsner.png' },
-            { name: 'Anna Fali', image: 'annafali.png' },
-            { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
-            { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
-            { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
-            { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
-            { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
-            { name: 'Onyama Limba', image: 'onyamalimba.png' },
-            { name: 'Stephen Shaw', image: 'stephenshaw.png' },
-            { name: 'XuXue Feng', image: 'xuxuefeng.png' },
-        ];
-
-        this.statuses = [
-            { label: 'Unqualified', value: 'unqualified' },
-            { label: 'Qualified', value: 'qualified' },
-            { label: 'New', value: 'new' },
-            { label: 'Negotiation', value: 'negotiation' },
-            { label: 'Renewal', value: 'renewal' },
-            { label: 'Proposal', value: 'proposal' },
-        ];
         this.primengConfig.ripple = true;
 
         this.store

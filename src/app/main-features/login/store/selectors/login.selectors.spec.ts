@@ -1,4 +1,3 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { LoginState } from '../state/login.state';
 import { selectorLoadingLogin, selectorTokenLogin } from './login.selectors';
 
@@ -7,7 +6,7 @@ describe('Login  Selectors', () => {
         // Given
         const initialState: LoginState = {
             loading: false,
-            errorMessage: null,
+            errorMessage: '',
             token: 'azerty',
             refreshToken: 'azerty',
         };
@@ -23,7 +22,7 @@ describe('Login  Selectors', () => {
         // Given
         const initialState: LoginState = {
             loading: false,
-            errorMessage: null,
+            errorMessage: '',
             token: 'azerty',
             refreshToken: 'azerty',
         };

@@ -13,9 +13,11 @@ import {
     loadListOffersFailure,
     loadListOffersSuccess,
 } from '../actions/offer.actions';
-import { Pagination } from '../../../../../shared/models/page.common';
+import { PageCommon, Pagination } from '../../../../../shared/models/page.common';
 import { DescriptionOfferService } from '../../services/description-offer.service';
 import { IDescriptionAddOffer } from '../../../../../shared/models/description-add-offer.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { IOffer } from '../../../../../shared/models/offer.model';
 
 @Injectable()
 export class OfferEffects {
@@ -31,10 +33,10 @@ export class OfferEffects {
             ofType(loadListOffers.type),
             switchMap((payload: Pagination) => {
                 return this.offerService.fetchAllOffers(payload.page, payload.size).pipe(
-                    map((data: any) => {
+                    map((data: PageCommon<IOffer>) => {
                         return loadListOffersSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(loadListOffersFailure({ error: exception.error }));
                     })
                 );
@@ -47,10 +49,10 @@ export class OfferEffects {
             ofType(loadListDescriptionNewOffer.type),
             switchMap((payload: Pagination) => {
                 return this.descriptionOfferService.fetchDescriptionOffers(payload.page, payload.size).pipe(
-                    map((data: any) => {
+                    map((data: PageCommon<IDescriptionAddOffer>) => {
                         return loadListDescriptionNewOfferSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(loadListDescriptionNewOfferFailure({ error: exception.error }));
                     })
                 );
@@ -63,10 +65,10 @@ export class OfferEffects {
             ofType(addDescriptionNewOffer.type),
             switchMap((payload: IDescriptionAddOffer) => {
                 return this.descriptionOfferService.addDescriptionOffers(payload).pipe(
-                    map((data: any) => {
+                    map((data: IDescriptionAddOffer) => {
                         return addDescriptionNewOfferSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(addDescriptionNewOfferFailure({ error: exception.error }));
                     })
                 );

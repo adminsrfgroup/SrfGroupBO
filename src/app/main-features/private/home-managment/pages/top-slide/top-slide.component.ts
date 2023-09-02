@@ -5,7 +5,7 @@ import { selectorTopSlides } from '../../store/selectors/home.selectors';
 import { Subject, takeUntil } from 'rxjs';
 import { deleteTopSlides, fetchTopSlides, resetTopSlide } from '../../store/actions/home.actions';
 import { ITopHomeSlidesImages } from '../../../../../shared/models/top-home-slides-images.model';
-import { Table, TableLazyLoadEvent } from 'primeng/table';
+import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
 import { MultiSelectChangeEvent } from 'primeng/multiselect';
 @Component({
@@ -22,8 +22,8 @@ export class TopSlideComponent implements OnInit, OnDestroy {
     totalItems = 0;
     totalPages = 0;
     @ViewChild('dt') table!: Table;
-    representatives!: any[];
-    statuses!: any[];
+    representatives = [];
+    statuses = [];
 
     idDeleteSlide!: number;
 

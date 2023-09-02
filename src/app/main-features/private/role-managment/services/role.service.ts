@@ -22,4 +22,8 @@ export class RoleService {
     updateRole(data: IAuthority): Observable<IAuthority> {
         return this.httpClient.put<IAuthority>(`${environment.baseUrl}api/authority/admin/${data.id}`, data);
     }
+
+    addRole(data: IAuthority): Observable<IAuthority> {
+        return this.httpClient.post<IAuthority>(`${environment.baseUrl}api/authority/admin`, data);
+    }
 }

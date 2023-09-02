@@ -34,7 +34,6 @@ export const categoryReducer: ActionReducer<CategoryState, Action> = createReduc
             entities: [...state.entities, ...action.payload.content],
             totalElements: action.payload.totalElements,
             totalPages: action.payload.totalPages,
-            isFirstLoading: false,
         };
     }),
     on(loadListCategoriesFailure, (state: CategoryState, action: ReturnType<typeof loadListCategoriesFailure>) => {
@@ -42,7 +41,6 @@ export const categoryReducer: ActionReducer<CategoryState, Action> = createReduc
             ...state,
             loadingEntities: false,
             errorMessage: action.error,
-            isFirstLoading: false,
         };
     }),
 
@@ -59,7 +57,7 @@ export const categoryReducer: ActionReducer<CategoryState, Action> = createReduc
             loading: false,
         };
     }),
-    on(importCategoriesSuccess, (state: CategoryState, action: ReturnType<typeof importCategoriesSuccess>) => {
+    on(importCategoriesSuccess, (state: CategoryState) => {
         return {
             ...state,
             loading: false,

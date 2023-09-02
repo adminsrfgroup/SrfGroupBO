@@ -12,6 +12,6 @@ export const loginAction = createAction(LoginActions.Login, props<ILogin>());
 
 export const loginActionSuccess = createAction(LoginActions.LoginSuccess, props<{ payload: IResponseLogin }>());
 
-export const loginActionFailure = createAction(LoginActions.LoginFailure, props<{ error: any }>());
+export const loginActionFailure = createAction(LoginActions.LoginFailure, props<{ error: string }>());
 
 export const resetLoginAction = createAction(LoginActions.ResetLogin);

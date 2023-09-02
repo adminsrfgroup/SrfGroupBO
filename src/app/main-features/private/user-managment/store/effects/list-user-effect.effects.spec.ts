@@ -41,7 +41,7 @@ describe('ListUserEffects', () => {
             totalPages: 1,
         };
 
-        const action = loadListUsers();
+        const action = loadListUsers({ page: 0, size: 1 });
         const outcome = loadListUsersSuccess({ payload: responseMock });
 
         testScheduler.run(({ hot, cold, expectObservable }) => {

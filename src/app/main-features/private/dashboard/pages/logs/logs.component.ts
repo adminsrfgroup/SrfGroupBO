@@ -1,13 +1,9 @@
 import { Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IFaqState } from '../../../support-management/store/state/support.state';
 import { PrimeNGConfig } from 'primeng/api';
-import { Table, TableLazyLoadEvent } from 'primeng/table';
-import { IFaq } from '../../../../../shared/models/faq.model';
+import { Table } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { ILogState } from '../../store/state/dashboard.state';
-import { selectorFaq } from '../../../support-management/store/selectors/support.selectors';
-import { loadListFaq } from '../../../support-management/store/actions/faq.actions';
 import { loadListLog } from '../../store/actions/log.actions';
 import { selectorLog } from '../../store/selectors/dashboard.selectors';
 
@@ -16,12 +12,12 @@ import { selectorLog } from '../../store/selectors/dashboard.selectors';
     templateUrl: './logs.component.html',
     styleUrls: ['./logs.component.scss'],
 })
-export class LogsComponent implements OnInit {
+export class LogsComponent implements OnInit, OnDestroy {
     store = inject(Store<ILogState>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
-    statuses!: any[];
-    representatives!: any[];
+    statuses = [];
+    representatives = [];
 
     listLog = signal<any>([]);
 
@@ -49,5 +45,10 @@ export class LogsComponent implements OnInit {
 
     filterGlobal(event: Event, matchMode: string): void {
         this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next(true);
+        this.destroy$.unsubscribe();
     }
 }

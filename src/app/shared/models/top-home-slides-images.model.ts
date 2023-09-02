@@ -1,5 +1,5 @@
 export interface ITopHomeSlidesImages {
-    id?: any;
+    id?: number;
     descriptionAr?: string;
     descriptionFr?: string;
     descriptionEn?: string;

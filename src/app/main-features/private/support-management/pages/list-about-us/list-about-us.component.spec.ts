@@ -53,7 +53,7 @@ describe('ListAboutUsComponent', () => {
             ],
             totalElements: -1,
             totalPages: -1,
-            errorMessage: null,
+            errorMessage: '',
             addSuccess: false,
             updateSuccess: false,
         };

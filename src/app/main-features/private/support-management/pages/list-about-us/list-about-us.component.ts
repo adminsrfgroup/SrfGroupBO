@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angula
 import { IAboutUs } from '../../../../../shared/models/about-us.model';
 import { Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { IAboutUsState } from '../../store/state/support.state';
 import { loadListAboutUs } from '../../store/actions/about-us.actions';
@@ -17,8 +17,8 @@ export class ListAboutUsComponent implements OnInit, OnDestroy {
     store = inject(Store<IAboutUsState>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
-    statuses!: any[];
-    representatives!: any[];
+    statuses = [];
+    representatives = [];
 
     listAboutUs = signal<IAboutUs[]>([]);
 

@@ -1,7 +1,8 @@
 import { IAddress } from './address.model';
+import { IAuthority } from './authority.model';
 
 export interface IUser {
-    id?: any;
+    id?: number;
     username?: string;
     firstName?: string;
     lastName?: string;
@@ -9,7 +10,7 @@ export interface IUser {
     activated?: boolean;
     imageUrl?: string;
     langKey?: string;
-    authorities?: any[];
+    authorities?: IAuthority[];
     createdBy?: string;
     createdDate?: Date | null;
     lastModifiedBy?: string;
@@ -19,33 +20,17 @@ export interface IUser {
     address?: IAddress;
     phone?: string;
     linkProfileFacebook?: string;
-
     registerDate?: string;
+    activatedAccount?: boolean;
 }
 
-export const defaultValue: Readonly<IUser> = {
-    id: '',
-    username: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    activated: true,
-    langKey: '',
-    authorities: [],
-    createdBy: '',
-    createdDate: null,
-    lastModifiedBy: '',
-    lastModifiedDate: null,
-    password: '',
-    phone: '',
-    registerDate: '',
-};
+export const defaultValue: Readonly<IUser> = {};
 
 export interface IGooglePlus {
     Ba: string;
     tokenId: string;
     googleId: string;
-    profileObj: any;
+    profileObj: string;
     idOneSignal: string;
     sourceConnectedDevice: string;
 }
@@ -57,7 +42,7 @@ export interface IFacebook {
     graphDomain: string;
     id: string;
     name: string;
-    picture: any;
+    picture: string;
     signedRequest: string;
     userID: string;
     sourceConnectedDevice: string;

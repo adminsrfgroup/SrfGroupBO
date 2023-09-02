@@ -16,7 +16,7 @@ export class AboutUsService {
     }
 
     fetchAllAboutUs(page: number, size: number): Observable<PageCommon<IAboutUs>> {
-        return this.httpClient.get<any>(`${environment.baseUrl}api/aboutus/admin?page=${page}&size=${size}`);
+        return this.httpClient.get<PageCommon<IAboutUs>>(`${environment.baseUrl}api/aboutus/admin?page=${page}&size=${size}`);
     }
 
     fetchOneAboutUs(id: number): Observable<IAboutUs> {

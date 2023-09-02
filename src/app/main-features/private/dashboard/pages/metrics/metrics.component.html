@@ -1,0 +1,11 @@
+<p>List of metrics</p>
+
+<div class="card">
+    <div class="flex card-container indigo-container">
+        <div class="flex-1 bg-purple-500 text-white font-bold p-4 border-round mx-4" *ngFor="let item of listMetrics()">
+            <p-card [header]="item.name" subheader="{{ item.value }}">
+                <p>{{ item.description }}</p>
+            </p-card>
+        </div>
+    </div>
+</div>

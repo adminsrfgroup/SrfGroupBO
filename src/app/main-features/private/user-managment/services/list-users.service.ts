@@ -4,6 +4,7 @@ import { environment } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { PageCommon } from '../../../../shared/models/page.common';
 import { IUser } from '../../../../shared/models/user.model';
+import { UpdateUserAuthorities } from '../models/update-user-authorities';
 
 @Injectable({
     providedIn: 'root',

@@ -4,7 +4,6 @@ import { ListUsersService } from './list-users.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { PageCommon } from '../../../../shared/models/page.common';
-import { ITopHomeSlidesImages } from '../../../../shared/models/top-home-slides-images.model';
 import { environment } from '../../../../../environments/environment';
 import { IUser } from '../../../../shared/models/user.model';
 
@@ -14,7 +13,7 @@ describe('ListUsersService', () => {
 
     const initialState = {
         loading: false,
-        errorMessage: null,
+        errorMessage: '',
         token: '',
         refreshToken: '',
     };

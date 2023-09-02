@@ -6,7 +6,7 @@ export const loadListAddress = createAction('[ListAddress] Load ListAddress', pr
 
 export const loadListAddressSuccess = createAction('[Address] Load ListAddress Success', props<{ payload: PageCommon<IAddress> }>());
 
-export const loadListAddressFailure = createAction('[Address] Load ListAddress Failure', props<{ error: any }>());
+export const loadListAddressFailure = createAction('[Address] Load ListAddress Failure', props<{ error: string }>());
 
 export const setActivePageAddress = createAction('[ListAddress] Set Active Page ListAddress', props<Pagination>());
 
@@ -14,6 +14,6 @@ export const importAddress = createAction('[ImportAddress] Load ImportAddress');
 
 export const importAddressSuccess = createAction('[ImportAddress] Load ListAddress Success', props<{ payload: string }>());
 
-export const importAddressFailure = createAction('[ImportAddress] Load ImportAddress Failure', props<{ error: any }>());
+export const importAddressFailure = createAction('[ImportAddress] Load ImportAddress Failure', props<{ error: string }>());
 
 export const resetAddress = createAction('[Address] Reset Address');

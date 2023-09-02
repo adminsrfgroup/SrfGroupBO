@@ -22,8 +22,8 @@ export class ListFeatureSlideComponent implements OnInit, OnDestroy {
     totalItems = 0;
     totalPages = 0;
     @ViewChild('dt') table!: Table;
-    representatives!: any[];
-    statuses!: any[];
+    representatives = [];
+    statuses = [];
 
     idDeleteFeature!: number;
     destroy$: Subject<boolean> = new Subject<boolean>();

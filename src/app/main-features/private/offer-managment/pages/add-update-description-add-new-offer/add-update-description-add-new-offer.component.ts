@@ -4,7 +4,6 @@ import { selectorDescriptionAddNewOffer } from '../../store/selectors/offer.sele
 import { Subject, takeUntil } from 'rxjs';
 import { IDescriptionNewOfferState } from '../../store/state/offer.state';
 import { Store } from '@ngrx/store';
-import { CategoryState } from '../../../category-managment/store/state/init.state';
 import { resetTopSlide } from '../../../home-managment/store/actions/home.actions';
 import { Router } from '@angular/router';
 import { addDescriptionNewOffer } from '../../store/actions/offer.actions';

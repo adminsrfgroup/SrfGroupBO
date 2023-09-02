@@ -5,6 +5,8 @@ import { catchError, map, of, switchMap } from 'rxjs';
 import { loginAction, loginActionFailure, loginActionSuccess } from '../actions/login.action';
 import { sessionAction, sessionActionFailure, sessionActionSuccess } from '../actions/session.action';
 import { ILogin, IResponseLogin } from '../../models/login.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { IUser } from '../../../../shared/models/user.model';
 
 @Injectable()
 export class LoginEffects {
@@ -29,7 +31,7 @@ export class LoginEffects {
                             },
                         });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(loginActionFailure({ error: exception.error }));
                     })
                 );
@@ -40,15 +42,12 @@ export class LoginEffects {
     sessionUser$ = createEffect(() =>
         this.actions$.pipe(
             ofType(sessionAction.type),
-            switchMap((payload: any) => {
+            switchMap(() => {
                 return this.loginService.session().pipe(
-                    map((data: any) => {
-                        if (data.error) {
-                            return sessionActionFailure({ error: data.error });
-                        }
+                    map((data: IUser) => {
                         return sessionActionSuccess({ payload: data });
                     }),
-                    catchError((exception: any) => {
+                    catchError((exception: HttpErrorResponse) => {
                         return of(sessionActionFailure({ error: exception.error }));
                     })
                 );

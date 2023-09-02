@@ -6,6 +6,6 @@ export const loadListNewsLetter = createAction('[ListNewsLetter] Load ListNewsLe
 
 export const loadListNewsLetterSuccess = createAction('[ListNewsLetter] Load ListNewsLetter Success', props<{ payload: PageCommon<INewsLetter> }>());
 
-export const loadListNewsLetterFailure = createAction('[ListNewsLetter] Load ListNewsLetter Failure', props<{ error: any }>());
+export const loadListNewsLetterFailure = createAction('[ListNewsLetter] Load ListNewsLetter Failure', props<{ error: string }>());
 
 export const resetNewsLetter = createAction('[NewsLetter] Reset ListNewsLetter');

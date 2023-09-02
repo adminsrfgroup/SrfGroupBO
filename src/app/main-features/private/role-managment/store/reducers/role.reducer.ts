@@ -1,7 +1,10 @@
 import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
-import { RoleState } from '../state/init.state';
+import { IRoleAuthority } from '../state/init.state';
 import { initRoleState } from '../../../role-managment/store/state/init.state';
 import {
+    addRole,
+    addRoleFailure,
+    addRoleSuccess,
     fetchOneRole,
     loadfOneRoleSuccess,
     loadListRoles,
@@ -14,187 +17,112 @@ import {
     updateRoleFailure,
     updateRoleSuccess,
 } from '../actions/role.action';
-import { addPermission, addPermissionFailure, addPermissionSuccess, loadListPermissions, loadListPermissionsFailure, loadListPermissionsSuccess } from '../actions/permission.action';
 
-export const roleReducer: ActionReducer<RoleState, Action> = createReducer(
-    initRoleState,
-    on(loadListRoles, (state: RoleState) => {
+export const authorityReducer: ActionReducer<IRoleAuthority, Action> = createReducer(
+    initRoleState.authority,
+    on(loadListRoles, (state: IRoleAuthority) => {
         return {
             ...state,
-            authority: {
-                ...state.authority,
-                loadingEntities: true,
-                totalPages: 0,
-                totalItems: 0,
-                isFirstLoading: false,
-            },
+            loadingEntities: true,
+            totalPages: 0,
+            totalItems: 0,
         };
     }),
-    on(loadListRolesSuccess, (state: RoleState, action: ReturnType<typeof loadListRolesSuccess>) => {
+    on(loadListRolesSuccess, (state: IRoleAuthority, action: ReturnType<typeof loadListRolesSuccess>) => {
         return {
             ...state,
-            authority: {
-                ...state.authority,
-                loadingEntities: false,
-                entities: action.payload.content,
-                totalElements: action.payload.totalElements,
-                totalPages: action.payload.totalPages,
-            },
+            loadingEntities: false,
+            entities: action.payload.content,
+            totalElements: action.payload.totalElements,
+            totalPages: action.payload.totalPages,
         };
     }),
-    on(loadListRolesFailure, (state: RoleState, action: ReturnType<typeof loadListRolesFailure>) => {
+    on(loadListRolesFailure, (state: IRoleAuthority, action: ReturnType<typeof loadListRolesFailure>) => {
         return {
             ...state,
-            authority: {
-                ...state.authority,
-                loadingEntities: false,
-                errorMessage: action.error,
-            },
+            loadingEntities: false,
+            errorMessage: action.error,
         };
     }),
 
-    on(setActivePageRoles, (state: RoleState, action: ReturnType<typeof setActivePageRoles>) => {
+    on(setActivePageRoles, (state: IRoleAuthority, action: ReturnType<typeof setActivePageRoles>) => {
         return {
             ...state,
-            authority: {
-                ...state.authority,
-                loadingEntities: true,
-                activePage: action.page,
-            },
+            loadingEntities: true,
+            activePage: action.page,
         };
     }),
 
-    on(fetchOneRole, (state: RoleState) => {
+    on(fetchOneRole, (state: IRoleAuthority) => {
         return {
             ...state,
-            authority: {
-                ...state.authority,
-                loading: true,
-            },
+            loading: true,
         };
     }),
-    on(loadfOneRoleSuccess, (state: RoleState, action: ReturnType<typeof loadfOneRoleSuccess>) => {
+    on(loadfOneRoleSuccess, (state: IRoleAuthority, action: ReturnType<typeof loadfOneRoleSuccess>) => {
         return {
             ...state,
-            authority: {
-                ...state.authority,
-                loading: false,
-                entity: action.payload,
-            },
+            loading: false,
+            entity: action.payload,
         };
     }),
-    on(loadOneRoleFailure, (state: RoleState, action: ReturnType<typeof loadOneRoleFailure>) => {
+    on(loadOneRoleFailure, (state: IRoleAuthority, action: ReturnType<typeof loadOneRoleFailure>) => {
         return {
             ...state,
-            authority: {
-                ...state.authority,
-                loading: false,
-                errorMessage: action.error,
-            },
+            loading: false,
+            errorMessage: action.error,
         };
     }),
 
-    on(updateRole, (state: RoleState) => {
+    on(updateRole, (state: IRoleAuthority) => {
         return {
             ...state,
-            authority: {
-                ...state.authority,
-                loading: true,
-                updateSuccess: false,
-            },
+            loading: true,
+            updateSuccess: false,
         };
     }),
-    on(updateRoleSuccess, (state: RoleState, action: ReturnType<typeof updateRoleSuccess>) => {
+    on(updateRoleSuccess, (state: IRoleAuthority, action: ReturnType<typeof updateRoleSuccess>) => {
         return {
             ...state,
-            authority: {
-                ...state.authority,
-                loading: false,
-                entity: action.payload,
-                updateSuccess: true,
-            },
+            loading: false,
+            entity: action.payload,
+            updateSuccess: true,
         };
     }),
-    on(updateRoleFailure, (state: RoleState, action: ReturnType<typeof updateRoleFailure>) => {
+    on(updateRoleFailure, (state: IRoleAuthority, action: ReturnType<typeof updateRoleFailure>) => {
         return {
             ...state,
-            authority: {
-                ...state.authority,
-                loading: false,
-                errorMessage: action.error,
-            },
+            loading: false,
+            errorMessage: action.error,
+        };
+    }),
+
+    on(addRole, (state: IRoleAuthority) => {
+        return {
+            ...state,
+            loading: true,
+            addSuccess: false,
+        };
+    }),
+    on(addRoleSuccess, (state: IRoleAuthority, action: ReturnType<typeof addRoleSuccess>) => {
+        return {
+            ...state,
+            loading: false,
+            entity: action.payload,
+            addSuccess: true,
+        };
+    }),
+    on(addRoleFailure, (state: IRoleAuthority, action: ReturnType<typeof addRoleFailure>) => {
+        return {
+            ...state,
+            loading: false,
+            errorMessage: action.error,
         };
     }),
 
     on(resetRoles, () => {
         return {
-            ...initRoleState,
-        };
-    }),
-
-    on(addPermission, (state: RoleState) => {
-        return {
-            ...state,
-            permission: {
-                ...state.permission,
-                loading: true,
-                addSuccess: false,
-            },
-        };
-    }),
-    on(addPermissionSuccess, (state: RoleState, action: ReturnType<typeof addPermissionSuccess>) => {
-        return {
-            ...state,
-            permission: {
-                ...state.permission,
-                loading: false,
-                entity: action.payload,
-                addSuccess: true,
-            },
-        };
-    }),
-    on(addPermissionFailure, (state: RoleState, action: ReturnType<typeof addPermissionFailure>) => {
-        return {
-            ...state,
-            permission: {
-                ...state.permission,
-                loading: false,
-                errorMessage: action.error,
-            },
-        };
-    }),
-
-    on(loadListPermissions, (state: RoleState) => {
-        return {
-            ...state,
-            permission: {
-                ...state.permission,
-                loadingEntities: true,
-                totalPages: 0,
-                totalItems: 0,
-            },
-        };
-    }),
-    on(loadListPermissionsSuccess, (state: RoleState, action: ReturnType<typeof loadListPermissionsSuccess>) => {
-        return {
-            ...state,
-            permission: {
-                ...state.permission,
-                loadingEntities: false,
-                entities: action.payload.content,
-                totalElements: action.payload.totalElements,
-                totalPages: action.payload.totalPages,
-            },
-        };
-    }),
-    on(loadListPermissionsFailure, (state: RoleState, action: ReturnType<typeof loadListPermissionsFailure>) => {
-        return {
-            ...state,
-            permission: {
-                ...state.permission,
-                loadingEntities: false,
-                errorMessage: action.error,
-            },
+            ...initRoleState.authority,
         };
     })
 );

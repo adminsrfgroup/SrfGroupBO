@@ -1,21 +1,24 @@
 <div class="list-users">
     <p-table
         #dt
-        [value]="listUsers"
+        [value]="loadListUsers()"
         [(selection)]="selectedCustomers"
         dataKey="id"
         styleClass="p-datatable-customers"
         [rowHover]="true"
-        [rows]="10"
+        [rows]="sizePage()"
         [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[10, 25, 50]"
-        [loading]="loading"
+        [rowsPerPageOptions]="[sizePage()]"
+        [loading]="loading()"
         [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [filterDelay]="0"
-        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']">
+        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+        [totalRecords]="totalElements()"
+        (onLazyLoad)="nextPage($event)"
+        [lazy]="true">
         <ng-template pTemplate="caption">
-            <div class="table-header">
+            <div class="table-header flex justify-content-between">
                 List of Customers
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
@@ -93,11 +96,11 @@
                 </td>
                 <td>
                     <span class="p-column-title">Phone</span>
-                    <span class="image-text">{{ customer.Phone }}</span>
+                    <span class="image-text">{{ customer.phone }}</span>
                 </td>
                 <td>
                     <span class="p-column-title">RegisterDate</span>
-                    {{ customer.registerDate }}
+                    {{ customer.registerDate | sgDate }}
                 </td>
                 <td>
                     <span class="p-column-title">Address</span>

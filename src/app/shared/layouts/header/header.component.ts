@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { SessionFacadeService } from '../../../main-features/login/store/facade/session-facade.service';
-import { StorageService } from '../../services/storage.service';
-import { AllAppConfig } from '../../../config';
 import { Router } from '@angular/router';
 import { LoginFacadeService } from '../../../main-features/login/store/facade/login-facade.service';
 

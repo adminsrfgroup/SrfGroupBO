@@ -12,7 +12,7 @@ describe('LoginComponent', () => {
 
     const initialState = {
         loading: false,
-        errorMessage: null,
+        errorMessage: '',
         token: '',
         refreshToken: '',
     };

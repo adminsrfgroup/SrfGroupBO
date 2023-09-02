@@ -6,6 +6,6 @@ export const loadListContactUs = createAction('[ListContactUs] Load ListContactU
 
 export const loadListContactUsSuccess = createAction('[ListContactUs] Load ListContactUs Success', props<{ payload: PageCommon<IContactUs> }>());
 
-export const loadListContactUsFailure = createAction('[ListContactUs] Load ListContactUs Failure', props<{ error: any }>());
+export const loadListContactUsFailure = createAction('[ListContactUs] Load ListContactUs Failure', props<{ error: string }>());
 
 export const resetListContactUs = createAction('[ListContactUs] Reset ListContactUs');

@@ -7,7 +7,7 @@ export interface AddressState {
     entities: IAddress[];
     totalElements: number;
     totalPages: number;
-    errorMessage: any;
+    errorMessage: string;
     activePage: number;
 }
 

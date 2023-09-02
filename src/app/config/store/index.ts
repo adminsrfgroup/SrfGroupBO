@@ -7,7 +7,6 @@ import { sessionReducer } from '../../main-features/login/store/reducers/session
 import { loginSelectKey } from '../../main-features/login/store/selectors/login.selectors';
 import { sessionSelectKey } from '../../main-features/login/store/selectors/session.selectors';
 import { ListUserEffects } from '../../main-features/private/user-managment/store/effects/list-user-effect.effects';
-import { listUsersSelectKey } from '../../main-features/private/user-managment/store/selectors/list-user.selectors';
 import { userReducer } from '../../main-features/private/user-managment/store/reducers/user.reducer';
 import { UserState } from '../../main-features/private/user-managment/store/state/user.state';
 import { homeSelectKey } from '../../main-features/private/home-managment/store/selectors/home.selectors';
@@ -34,17 +33,16 @@ import { categorySelectKey } from '../../main-features/private/category-managmen
 import { CategoryEffects } from '../../main-features/private/category-managment/store/effects/category.effect';
 import { roleSelectKey } from '../../main-features/private/role-managment/store/selectors/role.selectors';
 import { RoleState } from '../../main-features/private/role-managment/store/state/init.state';
-import { roleReducer } from '../../main-features/private/role-managment/store/reducers/role.reducer';
 import { RoleEffects } from '../../main-features/private/role-managment/store/effects/role.effect';
 import { dashboardSelectKey } from '../../main-features/private/dashboard/store/selectors/dashboard.selectors';
 import { IDashboardState } from '../../main-features/private/dashboard/store/state/dashboard.state';
 import { dashboardReducer } from '../../main-features/private/dashboard/store/reducers/dashboard.reducer';
 import { DashboardEffects } from '../../main-features/private/dashboard/store/effects/dashboard.effects';
+import { rolePermissionReducer } from '../../main-features/private/role-managment/store/reducers/role-permission.reducer';
 
 export interface AppStates {
     [loginSelectKey]: LoginState;
     [sessionSelectKey]: SessionState;
-    [listUsersSelectKey]: UserState;
     [homeSelectKey]: HomeState;
     [userSelectKey]: UserState;
     [offerSelectKey]: IMainOfferState;
@@ -61,14 +59,13 @@ export interface AppStates {
 export const appReducers: ActionReducerMap<AppStates> = {
     [loginSelectKey]: loginReducer,
     [sessionSelectKey]: sessionReducer,
-    [listUsersSelectKey]: userReducer,
     [homeSelectKey]: homeReducer,
     [userSelectKey]: userReducer,
     [offerSelectKey]: offerReducer,
     [supportSelectKey]: supportReducer,
     [addressSelectKey]: addressReducer,
     [categorySelectKey]: categoryReducer,
-    [roleSelectKey]: roleReducer,
+    [roleSelectKey]: rolePermissionReducer,
     [dashboardSelectKey]: dashboardReducer,
 };
 

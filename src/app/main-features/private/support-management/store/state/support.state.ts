@@ -3,6 +3,7 @@ import { IAboutUs } from '../../../../../shared/models/about-us.model';
 import { INewsLetter } from '../../../../../shared/models/newsletter.model';
 import { IFaq } from '../../../../../shared/models/faq.model';
 import { ICgu } from '../../../../../shared/models/cgu.model';
+import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 
 export interface IContactUsState {
     loading: boolean;
@@ -11,7 +12,7 @@ export interface IContactUsState {
     entities: IContactUs[];
     totalElements: number;
     totalPages: number;
-    errorMessage: any;
+    errorMessage: string;
 }
 
 export interface IAboutUsState {
@@ -21,7 +22,7 @@ export interface IAboutUsState {
     entities: IAboutUs[];
     totalElements: number;
     totalPages: number;
-    errorMessage: any;
+    errorMessage: string;
 
     addSuccess: boolean;
     updateSuccess: boolean;
@@ -34,13 +35,13 @@ export interface INewsLetterState {
     entities: INewsLetter[];
     totalElements: number;
     totalPages: number;
-    errorMessage: any;
+    errorMessage: string;
 }
 
 export interface ICguState {
     loading: boolean;
     entity: ICgu;
-    errorMessage: any;
+    errorMessage: string;
 
     addSuccess: boolean;
     updateSuccess: boolean;
@@ -53,13 +54,13 @@ export interface IFaqState {
     entities: IFaq[];
     totalElements: number;
     totalPages: number;
-    errorMessage: any;
+    errorMessage: string;
 
     addSuccess: boolean;
     updateSuccess: boolean;
 }
 
-export interface ISupportState {
+export interface ISupportState /*extends EntityState<IFaq>*/ {
     contactUs: IContactUsState;
     aboutUs: IAboutUsState;
     newsLetter: INewsLetterState;
@@ -67,6 +68,58 @@ export interface ISupportState {
 
     cgu: ICguState;
 }
+
+export const adapterFaq: EntityAdapter<IFaqState> = createEntityAdapter<IFaqState>();
+
+// export const initSupportState1: ISupportState = adapterFaq.getInitialState({
+//     contactUs: {
+//         loading: false,
+//         entity: {},
+//         loadingEntities: false,
+//         entities: [],
+//         totalElements: -1,
+//         totalPages: -1,
+//         errorMessage: '',
+//     },
+//     aboutUs: {
+//         loading: false,
+//         entity: {},
+//         loadingEntities: false,
+//         entities: [],
+//         totalElements: -1,
+//         totalPages: -1,
+//         errorMessage: '',
+//         addSuccess: false,
+//         updateSuccess: false,
+//     },
+//     newsLetter: {
+//         loading: false,
+//         entity: {},
+//         loadingEntities: false,
+//         entities: [],
+//         totalElements: -1,
+//         totalPages: -1,
+//         errorMessage: '',
+//     },
+//     faq: {
+//         loading: false,
+//         entity: {},
+//         loadingEntities: false,
+//         entities: [],
+//         totalElements: -1,
+//         totalPages: -1,
+//         errorMessage: '',
+//         addSuccess: false,
+//         updateSuccess: false,
+//     },
+//     cgu: {
+//         loading: false,
+//         entity: {},
+//         errorMessage: '',
+//         addSuccess: false,
+//         updateSuccess: false,
+//     },
+// });
 
 export const initSupportState: ISupportState = {
     contactUs: {
@@ -76,7 +129,7 @@ export const initSupportState: ISupportState = {
         entities: [],
         totalElements: -1,
         totalPages: -1,
-        errorMessage: null,
+        errorMessage: '',
     },
     aboutUs: {
         loading: false,
@@ -85,7 +138,7 @@ export const initSupportState: ISupportState = {
         entities: [],
         totalElements: -1,
         totalPages: -1,
-        errorMessage: null,
+        errorMessage: '',
         addSuccess: false,
         updateSuccess: false,
     },
@@ -96,7 +149,7 @@ export const initSupportState: ISupportState = {
         entities: [],
         totalElements: -1,
         totalPages: -1,
-        errorMessage: null,
+        errorMessage: '',
     },
     faq: {
         loading: false,
@@ -105,14 +158,14 @@ export const initSupportState: ISupportState = {
         entities: [],
         totalElements: -1,
         totalPages: -1,
-        errorMessage: null,
+        errorMessage: '',
         addSuccess: false,
         updateSuccess: false,
     },
     cgu: {
         loading: false,
         entity: {},
-        errorMessage: null,
+        errorMessage: '',
         addSuccess: false,
         updateSuccess: false,
     },

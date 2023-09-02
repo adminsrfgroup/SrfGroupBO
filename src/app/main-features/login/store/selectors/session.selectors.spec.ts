@@ -1,6 +1,3 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { LoginState } from '../state/login.state';
-import { selectorLoadingLogin, selectorTokenLogin } from './login.selectors';
 import { SessionState } from '../state/session.state';
 import { IUser } from '../../../../shared/models/user.model';
 import { selectorCurrentSession, selectorIsAuthenticatedSession } from './session.selectors';

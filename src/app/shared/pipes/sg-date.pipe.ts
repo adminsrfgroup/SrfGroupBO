@@ -7,6 +7,6 @@ import { DatePipe } from '@angular/common';
 export class SgDatePipe implements PipeTransform {
     constructor(private datePipe: DatePipe) {}
     transform(value: Date | string | number | null | undefined): string | null {
-        return this.datePipe.transform(value, 'short');
+        return this.datePipe.transform(value, 'MM/dd/yyyy, h:mm a');
     }
 }

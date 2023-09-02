@@ -24,8 +24,8 @@
         [lazy]="true"
         (onLazyLoad)="nextPage($event)">
         <ng-template pTemplate="caption">
-            <div class="table-header">
-                List of Customers {{ totalElements() }}
+            <div class="table-header flex justify-content-between">
+                List of AboutUs {{ totalElements() }}
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="filterGlobal($event, 'contains')" placeholder="Global Search" />

@@ -17,8 +17,8 @@ export class ListRoleComponent implements OnInit, OnDestroy {
     store = inject(Store<RoleState>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
-    statuses!: any[];
-    representatives!: any[];
+    statuses = [];
+    representatives = [];
 
     listRole: WritableSignal<IAuthority[]> = signal<IAuthority[]>([]);
     loading = signal<boolean>(false);
@@ -37,9 +37,8 @@ export class ListRoleComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IRoleAuthority) => {
-                    this.isFirstLoading.set(result.isFirstLoading);
                     // if (result.entities.length === 0 && result.totalPages === -1) {
-                    if (this.isFirstLoading()) {
+                    if (this.isFirstLoading() && result.totalPages === -1) {
                         this.store.dispatch(
                             loadListRoles({
                                 page: 0,
@@ -65,6 +64,8 @@ export class ListRoleComponent implements OnInit, OnDestroy {
                     size: this.sizePage,
                 })
             );
+        } else {
+            this.isFirstLoading.set(false);
         }
     }
 

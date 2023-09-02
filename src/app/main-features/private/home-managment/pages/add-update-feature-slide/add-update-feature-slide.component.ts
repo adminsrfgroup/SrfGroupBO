@@ -67,8 +67,8 @@ export class AddUpdateFeatureSlideComponent implements OnInit, OnDestroy {
 
     selectFile(event: Event): void {
         if ((event.target as HTMLInputElement).files?.length) {
-            getBase64((event.target as HTMLInputElement).files![0]).then((result: any) => {
-                this.fileState = result;
+            getBase64((event.target as HTMLInputElement).files![0]).then((result: string | ArrayBuffer | null) => {
+                this.fileState = (result || '').toString();
             });
         }
     }

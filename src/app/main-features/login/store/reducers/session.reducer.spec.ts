@@ -1,6 +1,5 @@
 import { sessionReducer } from './session.reducer';
 import { initSessionState, SessionState } from '../state/session.state';
-import { IResponseSession } from '../../models/login.model';
 import { sessionActionSuccess } from '../actions/session.action';
 import { IUser } from '../../../../shared/models/user.model';
 

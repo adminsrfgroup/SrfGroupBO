@@ -1,4 +1,5 @@
 import { ITopHomeSlidesImages } from '../../../../../shared/models/top-home-slides-images.model';
+import { IPostHomeFeature } from '../../../../../shared/models/post-home-feature.model';
 
 export interface ITopSlides {
     loading: boolean;
@@ -18,9 +19,9 @@ export interface ITopSlides {
 
 export interface IFeatureHome {
     loading: boolean;
-    entity: any;
+    entity: IPostHomeFeature;
     loadingEntities: boolean;
-    entities: any[];
+    entities: IPostHomeFeature[];
     updateSuccess: boolean;
     loadingReport: boolean;
     reportSuccess: boolean;

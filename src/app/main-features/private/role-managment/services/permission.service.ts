@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { IPermission } from '../../../../shared/models/permission.model';
+import { PageCommon } from '../../../../shared/models/page.common';
 
 @Injectable({
     providedIn: 'root',
@@ -13,7 +14,7 @@ export class PermissionService {
         return this.httpClient.post<IPermission>(`${environment.baseUrl}api/permission/admin/create`, data);
     }
 
-    fetchPermissions(page: number, size: number): Observable<any> {
-        return this.httpClient.get<any>(`${environment.baseUrl}api/permission/admin?page=${page}&size=${size}`);
+    fetchPermissions(page: number, size: number): Observable<PageCommon<IPermission>> {
+        return this.httpClient.get<PageCommon<IPermission>>(`${environment.baseUrl}api/permission/admin?page=${page}&size=${size}`);
     }
 }

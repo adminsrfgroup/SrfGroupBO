@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { INewsLetterState } from '../../store/state/support.state';
-import { LazyLoadEvent, PrimeNGConfig } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { Subject, takeUntil } from 'rxjs';
 import { selectorNewsLetter } from '../../store/selectors/support.selectors';
@@ -17,8 +17,8 @@ export class ListNewsletterComponent implements OnInit, OnDestroy {
     store = inject(Store<INewsLetterState>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
-    statuses!: any[];
-    representatives!: any[];
+    statuses = [];
+    representatives = [];
 
     listNewsLetter = signal<INewsLetter[]>([]);
 

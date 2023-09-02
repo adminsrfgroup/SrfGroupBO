@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { INewsLetter } from '../../../../shared/models/newsletter.model';
 import { environment } from '../../../../../environments/environment';
 import { ICgu } from '../../../../shared/models/cgu.model';
 
