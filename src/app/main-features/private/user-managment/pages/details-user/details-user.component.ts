@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit, signal, ViewEncapsulation, WritableSignal } from '@angular/core';
+import {Component, inject, OnDestroy, OnInit, signal, ViewEncapsulation, WritableSignal} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../store/state/user.state';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { IdEntity } from '../../../../../shared/models/id-entity.model';
-import {loadDetailsUser, updateAuthorityUser} from '../../store/actions/details-user.actions';
+import { loadDetailsUser, updateAuthorityUser } from '../../store/actions/details-user.actions';
 import { Subject, takeUntil } from 'rxjs';
 import { selectorUser } from '../../store/selectors/user.selectors';
 import { IUser } from '../../../../../shared/models/user.model';
@@ -12,7 +12,10 @@ import { IRoleAuthority } from '../../../role-managment/store/state/init.state';
 import { loadListRoles } from '../../../role-managment/store/actions/role.action';
 import { AllAppConfig } from '../../../../../config';
 import { IAuthority } from '../../../../../shared/models/authority.model';
-import {UpdateUserAuthorities} from "../../models/update-user-authorities";
+import { UpdateUserAuthorities } from '../../models/update-user-authorities';
+import {hasAnyAuthority, protectedDefaultAuthorities} from "../../../../../shared/utils/utils-functions";
+import {EPermission} from "../../../../../shared/constants/authorities";
+import {StorageService} from "../../../../../shared/services/storage.service";
 
 @Component({
     selector: 'app-details-user',
@@ -39,32 +42,31 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
     selectedAuthorities: IAuthority[] = [];
     valuesAuthorities: IAuthority[] = [];
 
+    router = inject(Router);
+
     constructor(
         private store: Store<UserState>,
         private activatedRoute: ActivatedRoute
-    ) {
-        this.activatedRoute.params.subscribe({
-            next: params => {
-                this.idEntity = params['id'];
-                if (this.idEntity) {
-                    const requestData: IdEntity = {
-                        id: this.idEntity,
-                    };
-                    this.store.dispatch(loadDetailsUser(requestData));
-                }
-            },
-        });
-    }
+    ) {}
     ngOnInit(): void {
+        const id = this.activatedRoute.snapshot.paramMap.get('id');
+        this.idEntity = Number(id);
+        if ( this.idEntity > 0 ) {
+            const requestData: IdEntity = {
+                id: this.idEntity,
+            };
+            this.store.dispatch(loadDetailsUser(requestData));
+        }
+
         this.store
             .select(selectorUser)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: UserState) => {
-                    if ( result.updateAuthoritiesSuccess ){
+                    if (result.updateAuthoritiesSuccess) {
                         this.detailsUser = {
                             ...this.detailsUser,
-                            authorities: result.authorities.slice()
+                            authorities: result.authorities.slice(),
                         };
                         this.valuesAuthorities = [];
                         result.authorities?.forEach(item => {
@@ -76,13 +78,12 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
                                 })
                             );
                         });
-                    }else if (result.entity && !result.loading) {
+                    } else if (result.entity && !result.loading) {
                         this.detailsUser = result.entity;
                         this.detailsUser.authorities?.forEach(item => {
                             this.valuesAuthorities?.push(item);
                         });
                     }
-
                 },
             });
     }
@@ -122,7 +123,6 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
                                 name: value.name,
                             });
                         });
-                        console.log('this.selectedAuthorities === ',this.selectedAuthorities)
                     }
                 },
             });
@@ -142,9 +142,24 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
             userId: this.detailsUser.id,
             nameAuthority: this.selectedAuthorities.map(value => {
                 return value.name;
-            })
-        }
+            }),
+        };
         this.store.dispatch(updateAuthorityUser(requestData));
+    }
+
+    isDisabledAuthority(authority: IAuthority): boolean{
+        return protectedDefaultAuthorities(authority);
+    }
+
+    hasAuthority(namePermission: string): boolean{
+        switch (namePermission){
+            case 'EPermission.UPDATE_USER_AUTHORITY':
+                return hasAnyAuthority([EPermission.UPDATE_USER_AUTHORITY]);
+            case 'EPermission.BLOCKED_USER':
+                return hasAnyAuthority([EPermission.BLOCKED_USER]);
+            default:
+                return false;
+        }
     }
 
     ngOnDestroy(): void {

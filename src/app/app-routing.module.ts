@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuardService } from './config/guards/auth-guard.service';
+import { canActivatePrivate } from './config/guards/auth-guard.service';
 
 const routes: Routes = [
     {
@@ -11,17 +11,22 @@ const routes: Routes = [
     {
         path: 'private',
         loadChildren: () => import('./main-features/private/private.module').then(m => m.PrivateModule),
-        canActivate: [AuthGuardService],
+        canActivate: [canActivatePrivate],
     },
     {
-        path: '**',
+        path: '',
         redirectTo: 'login',
         pathMatch: 'full',
     },
+    // {
+    //     path: '**',
+    //     component: PageNotFoundComponent
+    // }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, { useHash: true })],
+    // imports: [RouterModule.forRoot(routes, { useHash: true })],
+    imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })
 export class AppRoutingModule {}

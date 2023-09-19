@@ -30,21 +30,19 @@ export class AddUpdateCategoryComponent implements OnInit, OnDestroy {
     constructor(
         private fb: FormBuilder,
         private activatedRoute: ActivatedRoute
-    ) {
-        this.activatedRoute.params.subscribe({
-            next: params => {
-                this.idEntity.set(params['id']);
-                if (Number(this.idEntity()) > 0) {
-                    const requestData: IdEntity = {
-                        id: Number(this.idEntity()),
-                    };
-                    this.store.dispatch(fetchOneCategory(requestData));
-                }
-            },
-        });
-    }
+    ) {}
 
     ngOnInit(): void {
+
+        const id = this.activatedRoute.snapshot.paramMap.get('id');
+        this.idEntity.set(Number(id));
+        if (this.idEntity() > 0) {
+            const requestData: IdEntity = {
+                id: Number(this.idEntity()),
+            };
+            this.store.dispatch(fetchOneCategory(requestData));
+        }
+
         this.initForm();
 
         this.store

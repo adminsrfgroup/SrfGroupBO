@@ -7,13 +7,23 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DashboardStatService } from '../../services/dashboard-stat.service';
 import { loadListMetrics, loadMetricsFailure, loadMetricsSuccess } from '../actions/metrics.actions';
 import { IMetrics } from '../../../../../shared/models/metrics.model';
+import {OrganigrammeService} from "../../services/organigramme.service";
+import {IOrganigramme} from "../../../../../shared/models/organigramme.model";
+import {
+    addOrganigramme, addOrganigrammeFailure, addOrganigrammeSuccess,
+    loadOrganigramme,
+    loadOrganigrammeFailure,
+    loadOrganigrammeSuccess,
+    updateOrganigramme, updateOrganigrammeFailure, updateOrganigrammeSuccess
+} from "../actions/organigramme.actions";
 
 @Injectable()
 export class DashboardEffects {
     constructor(
         private actions$: Actions,
         private logService: LogService,
-        private dashboardStatService: DashboardStatService
+        private dashboardStatService: DashboardStatService,
+        private organigrammeService: OrganigrammeService
     ) {}
 
     fetchListMetrics$ = createEffect(() =>
@@ -47,4 +57,55 @@ export class DashboardEffects {
             })
         )
     );
+
+    fetchOrganigramme$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(loadOrganigramme.type),
+            switchMap(() => {
+                return this.organigrammeService.fetchOrganigramme().pipe(
+                    map((data: IOrganigramme) => {
+                        return loadOrganigrammeSuccess({ payload: data });
+                    }),
+                    catchError((exception: HttpErrorResponse) => {
+                        return of(loadOrganigrammeFailure({ error: exception.error }));
+                    })
+                );
+            })
+        )
+    );
+
+    addOrganigramme$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(addOrganigramme.type),
+            switchMap((payload: IOrganigramme) => {
+                return this.organigrammeService.addOrganigramme(payload).pipe(
+                    map((data: IOrganigramme) => {
+                        return addOrganigrammeSuccess({ payload: data });
+                    }),
+                    catchError((exception: HttpErrorResponse) => {
+                        return of(addOrganigrammeFailure({ error: exception.error }));
+                    })
+                );
+            })
+        )
+    );
+
+
+    updateOrganigramme$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(updateOrganigramme.type),
+            switchMap((payload: IOrganigramme) => {
+                return this.organigrammeService.updateOrganigramme(payload).pipe(
+                    map((data: IOrganigramme) => {
+                        return updateOrganigrammeSuccess({ payload: data });
+                    }),
+                    catchError((exception: HttpErrorResponse) => {
+                        return of(updateOrganigrammeFailure({ error: exception.error }));
+                    })
+                );
+            })
+        )
+    );
+
+
 }

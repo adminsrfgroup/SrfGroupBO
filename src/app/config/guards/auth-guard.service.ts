@@ -1,15 +1,20 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { SessionFacadeService } from '../../main-features/login/store/facade/session-facade.service';
-import { CanActivate, UrlTree } from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, CanActivateFn, RouterStateSnapshot, UrlTree} from '@angular/router';
 import { Observable } from 'rxjs';
 
-@Injectable({
-    providedIn: 'root',
-})
-export class AuthGuardService implements CanActivate {
-    constructor(private sessionFacadeService: SessionFacadeService) {}
+// @Injectable({
+//     providedIn: 'root',
+// })
+// export class AuthGuardService implements CanActivate {
+//     constructor(private sessionFacadeService: SessionFacadeService) {}
+//
+//     canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+//         return this.sessionFacadeService.isAuthenticated();
+//     }
+// }
 
-    canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        return this.sessionFacadeService.isAuthenticated();
-    }
-}
+
+export const canActivatePrivate: CanActivateFn = () => {
+    return inject(SessionFacadeService).isAuthenticated();
+};

@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation} from '@angular/core';
 
 @Component({
     selector: 'app-side-bar',
@@ -6,4 +6,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
     styleUrls: ['./side-bar.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class SideBarComponent {}
+export class SideBarComponent{
+
+}

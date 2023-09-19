@@ -31,21 +31,18 @@ export class AddTopSlideComponent implements OnInit, OnDestroy {
         private store: Store<HomeState>,
         private router: Router,
         private activatedRoute: ActivatedRoute
-    ) {
-        this.activatedRoute.params.subscribe({
-            next: params => {
-                this.idEntity = params['id'];
-                if (this.idEntity) {
-                    const requestData: IdEntity = {
-                        id: this.idEntity,
-                    };
-                    this.store.dispatch(fetchOneTopSlides(requestData));
-                }
-            },
-        });
-    }
+    ) {}
 
     ngOnInit(): void {
+        const id = this.activatedRoute.snapshot.paramMap.get('id');
+        this.idEntity = Number(id);
+        if (this.idEntity > 0) {
+            const requestData: IdEntity = {
+                id: this.idEntity,
+            };
+            this.store.dispatch(fetchOneTopSlides(requestData));
+        }
+
         this.store
             .select(selectorTopSlides)
             .pipe(takeUntil(this.destroy$))

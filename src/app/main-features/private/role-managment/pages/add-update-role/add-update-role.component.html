@@ -1,12 +1,13 @@
 <div class="card flex justify-content-center">
     <div class="flex flex-column pr-3">
         <h5 class="mb-2" for="password">Authority</h5>
-        <!--        <input type="text" pInputText [(ngModel)]="nameAuthority" [disabled]="idEntity() < 0" />-->
         <p-dropdown [options]="listauthorities" [(ngModel)]="nameAuthority" optionLabel="label" [disabled]="idEntity() > 0"></p-dropdown>
     </div>
     <div class="flex flex-column pl-3">
         <div *ngFor="let permission of listPermissions()" class="field-checkbox">
-            <p-checkbox name="group" [value]="permission" [(ngModel)]="selectedAuthorities" [inputId]="inputValueId(permission)"></p-checkbox>
+            <p-checkbox name="group" [value]="permission"
+                        [(ngModel)]="selectedAuthorities"
+                        [inputId]="inputValueId(permission)"></p-checkbox>
             <label [for]="permission.id">{{ permission.name }}</label>
         </div>
     </div>

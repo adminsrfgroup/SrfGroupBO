@@ -10,7 +10,7 @@ import { PageCommon } from '../../../../../shared/models/page.common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthoritiesService } from '../../services/authorities.service';
 import { UpdateUserAuthorities } from '../../models/update-user-authorities';
-import {IAuthority} from "../../../../../shared/models/authority.model";
+import { IAuthority } from '../../../../../shared/models/authority.model';
 
 @Injectable()
 export class ListUserEffects {

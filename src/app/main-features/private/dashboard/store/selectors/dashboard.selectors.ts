@@ -7,3 +7,4 @@ export const selectDashboardState = createFeatureSelector<IDashboardState>(dashb
 
 export const selectorDashboardStat = createSelector(selectDashboardState, (state: IDashboardState) => state.metrics);
 export const selectorLog = createSelector(selectDashboardState, (state: IDashboardState) => state.log);
+export const selectorOrganigramme = createSelector(selectDashboardState, (state: IDashboardState) => state.organigramme);

@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { IUser } from '../../../../../shared/models/user.model';
 import { IdEntity } from '../../../../../shared/models/id-entity.model';
 import { UpdateUserAuthorities } from '../../models/update-user-authorities';
-import {IAuthority} from "../../../../../shared/models/authority.model";
+import { IAuthority } from '../../../../../shared/models/authority.model';
 
 export const loadDetailsUser = createAction('[DetailsUser] Load Details User', props<IdEntity>());
 

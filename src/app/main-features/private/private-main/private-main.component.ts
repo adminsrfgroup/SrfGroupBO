@@ -5,4 +5,9 @@ import { Component } from '@angular/core';
     templateUrl: './private-main.component.html',
     styleUrls: ['./private-main.component.scss'],
 })
-export class PrivateMainComponent {}
+export class PrivateMainComponent {
+
+    receiverDescription(value: string){
+        console.log('event ', value)
+    }
+}

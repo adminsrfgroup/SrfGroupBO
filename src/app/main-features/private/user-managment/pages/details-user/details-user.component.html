@@ -7,8 +7,8 @@
         </div>
         <div class="col-9">
             <div class="p-buttonset">
-                <button pButton pRipple type="button" label="Update Authority" class="p-button-outlined p-button-success" (click)="updateAuthority()"></button>
-                <button pButton pRipple type="button" label="UnBlock" class="p-button-outlined p-button-danger"></button>
+                <button *ngIf="hasAuthority('EPermission.UPDATE_USER_AUTHORITY')" pButton pRipple type="button" label="Update Authority" class="p-button-outlined p-button-success" (click)="updateAuthority()"></button>
+                <button *ngIf="hasAuthority('EPermission.BLOCKED_USER')" pButton pRipple type="button" label="UnBlock" class="p-button-outlined p-button-danger"></button>
             </div>
 
             <div class="card">
@@ -128,7 +128,10 @@
     <div class="card flex justify-content-center">
         <div class="flex flex-column gap-2">
             <div *ngFor="let role of listRole()" class="field-checkbox">
-                <p-checkbox name="group" [value]="role" [(ngModel)]="selectedAuthorities" [inputId]="inputValueId(role)"></p-checkbox>
+                <p-checkbox name="group" [value]="role"
+                            [(ngModel)]="selectedAuthorities"
+                            [inputId]="inputValueId(role)"
+                            [disabled]="isDisabledAuthority(role)"></p-checkbox>
                 <label [for]="role.id">{{ role.name }}</label>
             </div>
         </div>

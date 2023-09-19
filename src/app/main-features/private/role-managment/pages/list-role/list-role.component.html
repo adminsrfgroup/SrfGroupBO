@@ -68,7 +68,7 @@
                     <div class="image-text" [innerHTML]="customer.descriptionEn"></div>
                 </td>
                 <td style="text-align: center">
-                    <a pButton class="p-button-success" icon="pi pi-pencil" routerLink="/private/role/add-update-role/{{ customer.id }}"></a>
+                    <a *ngIf="!isEditableProtectedAuthority(customer)" pButton class="p-button-success" icon="pi pi-pencil" routerLink="/private/role/add-update-role/{{ customer.id }}"></a>
                 </td>
             </tr>
         </ng-template>

@@ -3,7 +3,7 @@ import { UpdateUserAuthorities } from '../models/update-user-authorities';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import {IAuthority} from "../../../../shared/models/authority.model";
+import { IAuthority } from '../../../../shared/models/authority.model';
 
 @Injectable({
     providedIn: 'root',

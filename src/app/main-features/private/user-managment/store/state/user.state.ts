@@ -1,5 +1,5 @@
 import { IUser } from '../../../../../shared/models/user.model';
-import {IAuthority} from "../../../../../shared/models/authority.model";
+import { IAuthority } from '../../../../../shared/models/authority.model';
 
 export interface UserState {
     loading: boolean;

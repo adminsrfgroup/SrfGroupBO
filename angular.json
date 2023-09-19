@@ -40,7 +40,8 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/quill/dist/quill.js"
+              "node_modules/quill/dist/quill.js",
+              "src/assets/scripts/orgchart.js"
             ],
             "serviceWorker": true,
             "ngswConfigPath": "ngsw-config.json"
