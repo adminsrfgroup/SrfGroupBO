@@ -5,6 +5,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { PasswordModule } from 'primeng/password';
 import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { SharedModule } from '../../../../shared/shared.module';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -19,7 +20,7 @@ describe('LoginComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [PasswordModule, ReactiveFormsModule],
+            imports: [PasswordModule, ReactiveFormsModule, SharedModule],
             declarations: [LoginComponent],
             providers: [provideMockStore({ initialState })],
         }).compileComponents();

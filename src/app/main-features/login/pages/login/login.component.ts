@@ -1,50 +1,43 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginFacadeService } from '../../store/facade/login-facade.service';
 import { ILogin, IResponseLogin, IResponseSession } from '../../models/login.model';
-import { SessionFacadeService } from '../../store/facade/session-facade.service';
 import { Subject, takeUntil } from 'rxjs';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { AllAppConfig } from '../../../../config';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { SessionState } from '../../store/state/session.state';
+import { selectorSession } from '../../store/selectors/session.selectors';
+import { sessionAction } from '../../store/actions/session.action';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit, OnDestroy {
     fgLogin!: FormGroup;
     submited = false;
 
-    value1!: string;
+    storeSession = inject(Store<SessionState>);
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
     constructor(
         private fb: FormBuilder,
         private loginFacadeService: LoginFacadeService,
-        private sessionFacadeService: SessionFacadeService,
+        // private sessionFacadeService: SessionFacadeService,
         private router: Router
     ) {}
 
     ngOnInit(): void {
         this.initForm();
 
-        this.loginFacadeService
-            .fetchToken()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((response: IResponseLogin) => {
-                if (response?.token && response?.refreshToken) {
-                    StorageService.local.set(AllAppConfig.NAME_TOKEN_CURRENT_USER, response?.token);
-                    StorageService.local.set(AllAppConfig.NAME_REFRESH_TOKEN_CURRENT_USER, response?.refreshToken);
-                    this.sessionFacadeService.fetchCurrentSession();
-                }
-            });
-
-        this.sessionFacadeService
-            .currentSession()
+        this.storeSession
+            .select(selectorSession)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (response: IResponseSession) => {
@@ -53,6 +46,17 @@ export class LoginComponent implements OnInit, OnDestroy {
                         this.router.navigate(['/private/dashboard/metrics']);
                     }
                 },
+            });
+
+        this.loginFacadeService
+            .fetchToken()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((response: IResponseLogin) => {
+                if (response?.token && response?.refreshToken) {
+                    StorageService.local.set(AllAppConfig.NAME_TOKEN_CURRENT_USER, response?.token);
+                    StorageService.local.set(AllAppConfig.NAME_REFRESH_TOKEN_CURRENT_USER, response?.refreshToken);
+                    this.storeSession.dispatch(sessionAction());
+                }
             });
     }
 

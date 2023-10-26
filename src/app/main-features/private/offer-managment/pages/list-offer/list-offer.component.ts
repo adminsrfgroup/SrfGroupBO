@@ -1,20 +1,20 @@
-import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
+import { Component, inject, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { IMainOfferState, IOfferState } from '../../store/state/offer.state';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { IOffer } from '../../../../../shared/models/offer.model';
 import { loadListOffers, resetListOffers } from '../../store/actions/offer.actions';
-import { Subject, takeUntil } from 'rxjs';
 import { selectorOffers } from '../../store/selectors/offer.selectors';
 import { MultiSelectChangeEvent } from 'primeng/multiselect';
 import { AllAppConfig } from '../../../../../config';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'app-list-offer',
     templateUrl: './list-offer.component.html',
     styleUrls: ['./list-offer.component.scss'],
 })
-export class ListOfferComponent implements OnInit, OnDestroy {
+export class ListOfferComponent implements OnInit {
     selectedOffers = [];
     representatives = [];
     listOffers: WritableSignal<IOffer[]> = signal<IOffer[]>([]);
@@ -22,9 +22,7 @@ export class ListOfferComponent implements OnInit, OnDestroy {
     @ViewChild('dt') table!: Table;
     statuses = [];
 
-    destroy$: Subject<boolean> = new Subject<boolean>();
-
-    store = inject(Store<IMainOfferState>);
+    private readonly store = inject(Store<IMainOfferState>);
     primengConfig = inject(PrimeNGConfig);
 
     // sizePage = 5;
@@ -43,7 +41,7 @@ export class ListOfferComponent implements OnInit, OnDestroy {
 
         this.store
             .select(selectorOffers)
-            .pipe(takeUntil(this.destroy$))
+            .pipe(takeUntilDestroyed())
             .subscribe({
                 next: (result: IOfferState) => {
                     if (this.isFirstLoading() && result.totalPages === -1) {
@@ -105,21 +103,13 @@ export class ListOfferComponent implements OnInit, OnDestroy {
             }
         }
     }
-
     onRepresentativeChange(event: MultiSelectChangeEvent): void {
         this.table.filter(event.value, 'representative', 'in');
     }
-
     filter(event: Event, filed: string, matchMode: string): void {
         this.table.filter((event.target as HTMLInputElement).value, filed, matchMode);
     }
-
     filterGlobal(event: Event, matchMode: string): void {
         this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
-    }
-
-    ngOnDestroy(): void {
-        this.destroy$.next(true);
-        this.destroy$.unsubscribe();
     }
 }

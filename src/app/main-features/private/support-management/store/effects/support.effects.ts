@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, map, of, shareReplay, switchMap } from 'rxjs';
 import { PageCommon, Pagination } from '../../../../../shared/models/page.common';
 import { SupportService } from '../../services/support.service';
 import { loadListContactUs, loadListContactUsFailure, loadListContactUsSuccess } from '../actions/contact-us.actions';
@@ -139,7 +139,7 @@ export class SupportEffects {
             ofType(loadListFaq.type),
             switchMap((payload: Pagination) => {
                 return this.faqService.fetchAllFaq(payload.page, payload.size).pipe(
-                    map((data: any) => {
+                    map((data: PageCommon<IFaq>) => {
                         return loadListFaqSuccess({ payload: data });
                     }),
                     catchError((exception: HttpErrorResponse) => {

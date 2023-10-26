@@ -15,3 +15,9 @@ export const updateAuthorityUser = createAction('[UpdateAuthorityUser] Update Up
 export const updateAuthorityUserSuccess = createAction('[UpdateAuthorityUser] Update UpdateAuthorityUser Success', props<{ payload: IAuthority[] }>());
 
 export const updateAuthorityUserFailure = createAction('[UpdateAuthorityUser] Update UpdateAuthorityUser Failure', props<{ error: string }>());
+
+export const blockedUnblockedUser = createAction('[BlockedUnblockedUser] Update BlockedUnblockedUser', props<{ id: number; blockUnblock: string }>());
+
+export const blockedUnblockedUserSuccess = createAction('[BlockedUnblockedUser] Update BlockedUnblockedUser Success', props<{ payload: { blockUnblock: string } }>());
+
+export const blockedUnblockedUserFailure = createAction('[BlockedUnblockedUser] Update BlockedUnblockedUser Failure', props<{ error: string }>());

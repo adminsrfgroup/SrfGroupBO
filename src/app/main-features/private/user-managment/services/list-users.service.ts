@@ -4,7 +4,6 @@ import { environment } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { PageCommon } from '../../../../shared/models/page.common';
 import { IUser } from '../../../../shared/models/user.model';
-import { UpdateUserAuthorities } from '../models/update-user-authorities';
 
 @Injectable({
     providedIn: 'root',
@@ -18,5 +17,9 @@ export class ListUsersService {
 
     fetchDetailsUser(id: number): Observable<IUser> {
         return this.httpClient.get(`${environment.baseUrl}api/user/admin/profile/${id}`);
+    }
+
+    blockedUnblockedUser(id: number, blockUnblock: string): Observable<{ blockUnblock: string }> {
+        return this.httpClient.post<{ blockUnblock: string }>(`${environment.baseUrl}api/user/blocked-user/${id}`, { blockUnblock: blockUnblock });
     }
 }

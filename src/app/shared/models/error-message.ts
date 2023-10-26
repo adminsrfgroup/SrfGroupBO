@@ -1,4 +1,4 @@
-export interface IErrorMessage{
+export interface IErrorMessage {
     error?: string;
     message?: string;
     path?: string;

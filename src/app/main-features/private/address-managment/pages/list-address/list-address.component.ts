@@ -1,34 +1,33 @@
-import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {Component, DestroyRef, inject, OnInit, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { PrimeNGConfig } from 'primeng/api';
 import { AddressState } from '../../store/state/init.state';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
-import { Subject, takeUntil } from 'rxjs';
 import { selectorAddress } from '../../store/serlectors/address.selector';
 import { importAddress, loadListAddress } from '../../store/actions/address.action';
 import { IAddress } from '../../../../../shared/models/address.model';
 import { MultiSelectChangeEvent } from 'primeng/multiselect';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-list-address',
     templateUrl: './list-address.component.html',
     styleUrls: ['./list-address.component.scss'],
 })
-export class ListAddressComponent implements OnInit, OnDestroy {
+export class ListAddressComponent implements OnInit {
     store = inject(Store<AddressState>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
     statuses!: any[];
     representatives!: any[];
-
-    destroy$: Subject<boolean> = new Subject<boolean>();
-
     listAddress: IAddress[] = [];
     loading = false;
     totalElements = 0;
     totalPages = 0;
 
     sizePage = 5;
+
+    destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
         this.representatives = [
@@ -56,7 +55,7 @@ export class ListAddressComponent implements OnInit, OnDestroy {
 
         this.store
             .select(selectorAddress)
-            .pipe(takeUntil(this.destroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
                 next: (result: AddressState) => {
                     if (result.entities.length === 0 && result.totalPages === -1) {
@@ -111,10 +110,5 @@ export class ListAddressComponent implements OnInit, OnDestroy {
 
     filterGlobal(event: Event, matchMode: string): void {
         this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
-    }
-
-    ngOnDestroy(): void {
-        this.destroy$.next(true);
-        this.destroy$.unsubscribe();
     }
 }

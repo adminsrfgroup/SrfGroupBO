@@ -1,11 +1,11 @@
-import {Component, inject, OnDestroy, OnInit, signal, ViewEncapsulation, WritableSignal} from '@angular/core';
+import { Component, inject, OnInit, signal, ViewEncapsulation, WritableSignal } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { UserState } from '../../store/state/user.state';
-import {ActivatedRoute, Router} from '@angular/router';
+import { IDetailsUsers } from '../../store/state/user.state';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IdEntity } from '../../../../../shared/models/id-entity.model';
-import { loadDetailsUser, updateAuthorityUser } from '../../store/actions/details-user.actions';
-import { Subject, takeUntil } from 'rxjs';
-import { selectorUser } from '../../store/selectors/user.selectors';
+import { blockedUnblockedUser, loadDetailsUser, updateAuthorityUser } from '../../store/actions/details-user.actions';
+import { takeUntil } from 'rxjs';
+import { selectorDetailsUser } from '../../store/selectors/user.selectors';
 import { IUser } from '../../../../../shared/models/user.model';
 import { selectorRole } from '../../../role-managment/store/selectors/role.selectors';
 import { IRoleAuthority } from '../../../role-managment/store/state/init.state';
@@ -13,9 +13,8 @@ import { loadListRoles } from '../../../role-managment/store/actions/role.action
 import { AllAppConfig } from '../../../../../config';
 import { IAuthority } from '../../../../../shared/models/authority.model';
 import { UpdateUserAuthorities } from '../../models/update-user-authorities';
-import {hasAnyAuthority, protectedDefaultAuthorities} from "../../../../../shared/utils/utils-functions";
-import {EPermission} from "../../../../../shared/constants/authorities";
-import {StorageService} from "../../../../../shared/services/storage.service";
+import { protectedDefaultAuthorities } from '../../../../../shared/utils/utils-functions';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-details-user',
@@ -23,14 +22,13 @@ import {StorageService} from "../../../../../shared/services/storage.service";
     styleUrls: ['./details-user.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class DetailsUserComponent implements OnInit, OnDestroy {
+export class DetailsUserComponent implements OnInit {
     idEntity!: number;
 
     detailsUser: IUser = {};
 
     displayModal = false;
-
-    destroy$: Subject<boolean> = new Subject<boolean>();
+    displayModalBlocUser = false;
     sizePage: WritableSignal<number> = signal<number>(AllAppConfig.CATEGORY_MODULE.ITEMS_PER_PAGINATION);
     newPage: WritableSignal<number> = signal<number>(0);
 
@@ -45,13 +43,13 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
     router = inject(Router);
 
     constructor(
-        private store: Store<UserState>,
+        private store: Store<IDetailsUsers>,
         private activatedRoute: ActivatedRoute
     ) {}
     ngOnInit(): void {
         const id = this.activatedRoute.snapshot.paramMap.get('id');
         this.idEntity = Number(id);
-        if ( this.idEntity > 0 ) {
+        if (this.idEntity > 0) {
             const requestData: IdEntity = {
                 id: this.idEntity,
             };
@@ -59,10 +57,10 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
         }
 
         this.store
-            .select(selectorUser)
-            .pipe(takeUntil(this.destroy$))
+            .select(selectorDetailsUser)
+            .pipe(takeUntilDestroyed())
             .subscribe({
-                next: (result: UserState) => {
+                next: (result: IDetailsUsers) => {
                     if (result.updateAuthoritiesSuccess) {
                         this.detailsUser = {
                             ...this.detailsUser,
@@ -84,6 +82,13 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
                             this.valuesAuthorities?.push(item);
                         });
                     }
+
+                    // if( result.isBlocked != null && !result.loading ){
+                    //     this.detailsUser = {
+                    //         ...this.detailsUser,
+                    //         blocked: result.isBlocked,
+                    //     }
+                    // }
                 },
             });
     }
@@ -92,7 +97,7 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
         this.displayModal = true;
         this.store
             .select(selectorRole)
-            .pipe(takeUntil(this.destroy$))
+            .pipe(takeUntilDestroyed())
             .subscribe({
                 next: (result: IRoleAuthority) => {
                     if (result.entities.length === 0 && result.totalPages === -1) {
@@ -133,7 +138,7 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
     }
 
     getValueAddress(): string {
-        return this.detailsUser?.address?.city + ', ' + this.detailsUser?.address?.country;
+        return (this.detailsUser?.address ? this.detailsUser?.address?.city : '') + ', ' + (this.detailsUser?.address ? this.detailsUser?.address?.country : '');
     }
 
     updateUserAuthority(): void {
@@ -147,23 +152,33 @@ export class DetailsUserComponent implements OnInit, OnDestroy {
         this.store.dispatch(updateAuthorityUser(requestData));
     }
 
-    isDisabledAuthority(authority: IAuthority): boolean{
+    isDisabledAuthority(authority: IAuthority): boolean {
         return protectedDefaultAuthorities(authority);
     }
 
-    hasAuthority(namePermission: string): boolean{
-        switch (namePermission){
-            case 'EPermission.UPDATE_USER_AUTHORITY':
-                return hasAnyAuthority([EPermission.UPDATE_USER_AUTHORITY]);
-            case 'EPermission.BLOCKED_USER':
-                return hasAnyAuthority([EPermission.BLOCKED_USER]);
-            default:
-                return false;
-        }
+    hasAuthority(namePermission: string): boolean {
+        return true;
+        // switch (namePermission){
+        //     case 'UPDATE_USER_AUTHORITY':
+        //         return hasAnyAuthority([EPermission.UPDATE_USER_AUTHORITY]);
+        //     case 'BLOCKED_USER':
+        //         return hasAnyAuthority([EPermission.BLOCKED_USER]);
+        //     default:
+        //         return false;
+        // }
     }
 
-    ngOnDestroy(): void {
-        this.destroy$.next(true);
-        this.destroy$.unsubscribe();
+    blockUnblockUser(): void {
+        this.displayModalBlocUser = true;
+    }
+
+    updateBlockedUser(): void {
+        this.displayModalBlocUser = false;
+        this.store.dispatch(
+            blockedUnblockedUser({
+                id: this.detailsUser.id || -1,
+                blockUnblock: this.detailsUser.blocked == null ? 'block' : 'unblock',
+            })
+        );
     }
 }

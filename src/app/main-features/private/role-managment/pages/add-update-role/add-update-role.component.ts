@@ -12,7 +12,7 @@ import { IPermission } from '../../../../../shared/models/permission.model';
 import { IAuthority } from '../../../../../shared/models/authority.model';
 import { CheckboxChangeEvent } from 'primeng/checkbox';
 import { LIST_AUTHORITIES } from '../../../../../shared/constants/authorities';
-import {protectedDefaultAuthorities} from "../../../../../shared/utils/utils-functions";
+import { protectedDefaultAuthorities } from '../../../../../shared/utils/utils-functions';
 
 @Component({
     selector: 'app-add-update-role',
@@ -161,6 +161,4 @@ export class AddUpdateRoleComponent implements OnInit {
             }
         }
     }
-
-
 }

@@ -1,5 +1,5 @@
-import {IOrganigramme} from "../../../../../shared/models/organigramme.model";
-import {IErrorMessage} from "../../../../../shared/models/error-message";
+import { IOrganigramme } from '../../../../../shared/models/organigramme.model';
+import { IErrorMessage } from '../../../../../shared/models/error-message';
 
 export interface ILogState {
     loadingEntities: boolean;

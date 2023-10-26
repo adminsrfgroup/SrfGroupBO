@@ -15,7 +15,7 @@ describe('Support  Selectors', () => {
         expect(resultAboutUs.entities.length).toEqual(0);
         expect(resultAboutUs.totalElements).toEqual(-1);
         expect(resultAboutUs.totalPages).toEqual(-1);
-        expect(resultAboutUs.errorMessage).toEqual(null);
+        expect(resultAboutUs.errorMessage).toEqual('');
         expect(resultAboutUs.addSuccess).toEqual(false);
         expect(resultAboutUs.updateSuccess).toEqual(false);
     });

@@ -7,15 +7,19 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DashboardStatService } from '../../services/dashboard-stat.service';
 import { loadListMetrics, loadMetricsFailure, loadMetricsSuccess } from '../actions/metrics.actions';
 import { IMetrics } from '../../../../../shared/models/metrics.model';
-import {OrganigrammeService} from "../../services/organigramme.service";
-import {IOrganigramme} from "../../../../../shared/models/organigramme.model";
+import { OrganigrammeService } from '../../services/organigramme.service';
+import { IOrganigramme } from '../../../../../shared/models/organigramme.model';
 import {
-    addOrganigramme, addOrganigrammeFailure, addOrganigrammeSuccess,
+    addOrganigramme,
+    addOrganigrammeFailure,
+    addOrganigrammeSuccess,
     loadOrganigramme,
     loadOrganigrammeFailure,
     loadOrganigrammeSuccess,
-    updateOrganigramme, updateOrganigrammeFailure, updateOrganigrammeSuccess
-} from "../actions/organigramme.actions";
+    updateOrganigramme,
+    updateOrganigrammeFailure,
+    updateOrganigrammeSuccess,
+} from '../actions/organigramme.actions';
 
 @Injectable()
 export class DashboardEffects {
@@ -90,7 +94,6 @@ export class DashboardEffects {
         )
     );
 
-
     updateOrganigramme$ = createEffect(() =>
         this.actions$.pipe(
             ofType(updateOrganigramme.type),
@@ -106,6 +109,4 @@ export class DashboardEffects {
             })
         )
     );
-
-
 }

@@ -1,4 +1,4 @@
-export interface IOrganigramme{
+export interface IOrganigramme {
     id?: number;
     content?: string;
 }

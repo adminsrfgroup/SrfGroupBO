@@ -1,6 +1,6 @@
-import {createAction, props} from "@ngrx/store";
-import {IOrganigramme} from "../../../../../shared/models/organigramme.model";
-import {IErrorMessage} from "../../../../../shared/models/error-message";
+import { createAction, props } from '@ngrx/store';
+import { IOrganigramme } from '../../../../../shared/models/organigramme.model';
+import { IErrorMessage } from '../../../../../shared/models/error-message';
 
 export const loadOrganigramme = createAction('[Organigramme] Load Organigramme');
 
@@ -13,7 +13,6 @@ export const updateOrganigramme = createAction('[Organigramme] Update Organigram
 export const updateOrganigrammeSuccess = createAction('[Organigramme] Update Organigramme Success', props<{ payload: IOrganigramme }>());
 
 export const updateOrganigrammeFailure = createAction('[Organigramme] Update Organigramme Failure', props<{ error: IErrorMessage }>());
-
 
 export const addOrganigramme = createAction('[Organigramme] Add Organigramme', props<IOrganigramme>());
 

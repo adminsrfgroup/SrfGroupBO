@@ -1230,11 +1230,11 @@ declare namespace OrgChart {
         selectorBackgroundColor?: string;
         backgroundColor?: string;
         focusStroke?: string;
-        opacity?: Number;
+        opacity?: number;
         border?: string;
-        width?: Number;
-        height?: Number;
-        padding?: Number;
+        width?: number;
+        height?: number;
+        padding?: number;
         position?: OrgChart.position;
         draggable?: boolean;
     }

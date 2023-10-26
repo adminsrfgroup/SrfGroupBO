@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, DoCheck, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IContactUsState } from '../../store/state/support.state';
 import { PrimeNGConfig } from 'primeng/api';
@@ -13,7 +13,7 @@ import { loadListContactUs } from '../../store/actions/contact-us.actions';
     templateUrl: './list-contact-us.component.html',
     styleUrls: ['./list-contact-us.component.scss'],
 })
-export class ListContactUsComponent implements OnInit, OnDestroy {
+export class ListContactUsComponent implements OnInit, DoCheck, OnDestroy {
     store = inject(Store<IContactUsState>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
@@ -50,6 +50,10 @@ export class ListContactUsComponent implements OnInit, OnDestroy {
                     }
                 },
             });
+    }
+
+    ngDoCheck(): void {
+        console.log('ngDoCheck');
     }
 
     nextPage(event: TableLazyLoadEvent): void {

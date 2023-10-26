@@ -22,6 +22,8 @@ export interface IUser {
     linkProfileFacebook?: string;
     registerDate?: string;
     activatedAccount?: boolean;
+
+    blocked?: string;
 }
 
 export const defaultValue: Readonly<IUser> = {};

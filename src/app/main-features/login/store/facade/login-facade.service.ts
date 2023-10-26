@@ -16,7 +16,10 @@ export class LoginFacadeService {
         this.store.dispatch(loginAction(user));
     }
 
-    fetchToken(): Observable<any> {
+    fetchToken(): Observable<{
+        token: string;
+        refreshToken: string;
+    }> {
         return this.store.select(selectorTokenLogin);
     }
 

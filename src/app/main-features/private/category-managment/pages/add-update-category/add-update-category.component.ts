@@ -33,7 +33,6 @@ export class AddUpdateCategoryComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-
         const id = this.activatedRoute.snapshot.paramMap.get('id');
         this.idEntity.set(Number(id));
         if (this.idEntity() > 0) {

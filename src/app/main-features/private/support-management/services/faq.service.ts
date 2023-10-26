@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { IFaq } from '../../../../shared/models/faq.model';
+import { PageCommon } from '../../../../shared/models/page.common';
 
 @Injectable({
     providedIn: 'root',
@@ -10,8 +11,8 @@ import { IFaq } from '../../../../shared/models/faq.model';
 export class FaqService {
     constructor(private httpClient: HttpClient) {}
 
-    fetchAllFaq(page: number, size: number): Observable<IFaq> {
-        return this.httpClient.get<IFaq>(`${environment.baseUrl}api/faq/public?page=${page}&size=${size}`);
+    fetchAllFaq(page: number, size: number): Observable<PageCommon<IFaq>> {
+        return this.httpClient.get<PageCommon<IFaq>>(`${environment.baseUrl}api/faq/public?page=${page}&size=${size}`);
     }
 
     addFaq(data: IFaq): Observable<IFaq> {

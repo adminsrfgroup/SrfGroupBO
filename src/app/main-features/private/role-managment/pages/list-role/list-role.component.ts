@@ -7,8 +7,8 @@ import { IAuthority } from '../../../../../shared/models/authority.model';
 import { loadListRoles } from '../../store/actions/role.action';
 import { IRoleAuthority, RoleState } from '../../store/state/init.state';
 import { selectorRole } from '../../store/selectors/role.selectors';
-import {EAuthority} from "../../../../../shared/constants/authorities";
-import {protectedDefaultAuthorities} from "../../../../../shared/utils/utils-functions";
+import { EAuthority } from '../../../../../shared/constants/authorities';
+import { protectedDefaultAuthorities } from '../../../../../shared/utils/utils-functions';
 
 @Component({
     selector: 'app-list-role',
@@ -66,7 +66,7 @@ export class ListRoleComponent implements OnInit, OnDestroy {
                     size: this.sizePage,
                 })
             );
-        // } else {
+            // } else {
             this.isFirstLoading.set(false);
         }
     }
@@ -75,7 +75,7 @@ export class ListRoleComponent implements OnInit, OnDestroy {
         this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
     }
 
-    isEditableProtectedAuthority(authority: IAuthority): boolean{
+    isEditableProtectedAuthority(authority: IAuthority): boolean {
         return protectedDefaultAuthorities(authority);
     }
 

@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, ElementRef, inject, signal, ViewChild, WritableSignal} from '@angular/core';
-import {Store} from "@ngrx/store";
-import {IOrganigrammeState} from "../../store/state/dashboard.state";
-import {Subject, takeUntil} from "rxjs";
-import {selectorOrganigramme} from "../../store/selectors/dashboard.selectors";
-import {isEmpty} from "lodash";
-import {addOrganigramme, loadOrganigramme, updateOrganigramme} from "../../store/actions/organigramme.actions";
-import {IOrganigramme} from "../../../../../shared/models/organigramme.model";
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, signal, ViewChild, WritableSignal } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { IOrganigrammeState } from '../../store/state/dashboard.state';
+import { selectorOrganigramme } from '../../store/selectors/dashboard.selectors';
+import { isEmpty } from 'lodash';
+import { addOrganigramme, loadOrganigramme, updateOrganigramme } from '../../store/actions/organigramme.actions';
+import { IOrganigramme } from '../../../../../shared/models/organigramme.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 declare const OrgChart: any;
 
 @Component({
@@ -14,6 +14,7 @@ declare const OrgChart: any;
     styleUrls: ['./organigramme.component.scss'],
 })
 export class OrganigrammeComponent implements AfterViewInit {
+    cd = inject(ChangeDetectorRef);
     @ViewChild('chartContainer') chartContainer!: ElementRef;
 
     defaultListOrganisation = [
@@ -23,44 +24,41 @@ export class OrganigrammeComponent implements AfterViewInit {
 
     chart!: OrgChart;
 
-    store = inject(Store<IOrganigrammeState>);
-    destroy$: Subject<boolean> = new Subject<boolean>();
+    private readonly store = inject(Store<IOrganigrammeState>);
 
     isUpdate: WritableSignal<boolean> = signal<boolean>(false);
 
     idEntity: WritableSignal<number> = signal<number>(-1);
 
     ngAfterViewInit(): void {
-        // this.store.dispatch(loadOrganigramme());
         this.store
             .select(selectorOrganigramme)
-            .pipe(takeUntil(this.destroy$))
+            .pipe(takeUntilDestroyed())
             .subscribe({
                 next: (result: IOrganigrammeState) => {
-                    console.log('result ', result);
-                    if( isEmpty(result.entity) && !result.loading && !result.errorMessage?.error){
+                    if (isEmpty(result.entity) && !result.loading && !result.errorMessage?.error) {
                         this.store.dispatch(loadOrganigramme());
-                    }
-                    else if(!isEmpty(result.entity)){
+                    } else if (!isEmpty(result.entity)) {
                         this.isUpdate.set(true);
                         this.idEntity.set(result.entity.id || -1);
                         this.defaultListOrganisation = JSON.parse(result.entity.content || '');
                         this.drawChart();
+                        this.cd.detectChanges();
                     }
 
                     // First time without save in DB
-                    if( isEmpty(result.entity) && !result.loading && result.errorMessage?.error ){
+                    if (isEmpty(result.entity) && !result.loading && result.errorMessage?.error) {
                         this.defaultListOrganisation = [
                             { id: 1, name: 'Taki Eddine Rahal', title: 'CEO', img: './src/assets/images/defaults/avatar.png' },
                             { id: 2, pid: 1, name: 'Aya Rahal', title: 'Sales Manager', img: './src/assets/images/defaults/avatar.png' },
                         ];
                         this.drawChart();
                     }
-                }
+                },
             });
     }
 
-    private drawChart(): void{
+    private drawChart(): void {
         this.chart = new OrgChart(this.chartContainer.nativeElement, {
             mouseScrool: OrgChart.action.ctrlZoom,
             template: 'ana',
@@ -169,30 +167,30 @@ export class OrganigrammeComponent implements AfterViewInit {
             clinks: [{ from: 11, to: 18 }],
         });
 
-        this.chart.on("added", (sender: OrgChart, id: string) => {
-            console.log('added ', id, sender)
+        this.chart.on('added', (sender: OrgChart, id: string) => {
+            console.log('added ', id, sender);
             sender.editUI.show(id);
         });
 
         this.chart.load(this.defaultListOrganisation);
     }
 
-    updateOrganisation(): void{
+    updateOrganisation(): void {
         const requestDate: IOrganigramme = {
             id: this.isUpdate() ? this.idEntity() : undefined,
-            content: JSON.stringify(this.chart.config.nodes?.map(item => {
-                return {
-                    ...item,
-                    img: './src/assets/images/defaults/avatar.png'
-                }
-            }))
-        }
-        if( !this.isUpdate() ){
+            content: JSON.stringify(
+                this.chart.config.nodes?.map(item => {
+                    return {
+                        ...item,
+                        img: './src/assets/images/defaults/avatar.png',
+                    };
+                })
+            ),
+        };
+        if (!this.isUpdate()) {
             this.store.dispatch(addOrganigramme(requestDate));
-        }
-        else{
+        } else {
             this.store.dispatch(updateOrganigramme(requestDate));
         }
-
     }
 }

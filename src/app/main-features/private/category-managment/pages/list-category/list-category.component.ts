@@ -1,28 +1,26 @@
-import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
+import {Component, DestroyRef, inject, OnInit, signal, ViewChild, WritableSignal} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { PrimeNGConfig } from 'primeng/api';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
-import { Subject, takeUntil } from 'rxjs';
 import { CategoryState } from '../../store/state/init.state';
 import { selectorCategory } from '../../store/selectors/category.selector';
 import { importCategories, loadListCategories, resetCategories } from '../../store/actions/category.action';
 import { ICategory } from '../../../../../shared/models/category.model';
 import { MultiSelectChangeEvent } from 'primeng/multiselect';
 import { AllAppConfig } from '../../../../../config';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-list-category',
     templateUrl: './list-category.component.html',
     styleUrls: ['./list-category.component.scss'],
 })
-export class ListCategoryComponent implements OnInit, OnDestroy {
+export class ListCategoryComponent implements OnInit {
     store = inject(Store<CategoryState>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
     statuses = [];
     representatives = [];
-
-    destroy$: Subject<boolean> = new Subject<boolean>();
 
     listCategories: WritableSignal<ICategory[]> = signal<ICategory[]>([]);
     loadListCategories: WritableSignal<ICategory[]> = signal<ICategory[]>([]);
@@ -36,12 +34,14 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
     isFirstLoading: WritableSignal<boolean> = signal<boolean>(true);
     currentIndex: WritableSignal<number> = signal<number>(0);
 
+    destroyRef = inject(DestroyRef);
+
     ngOnInit(): void {
         this.primengConfig.ripple = true;
 
         this.store
             .select(selectorCategory)
-            .pipe(takeUntil(this.destroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
                 next: (result: CategoryState) => {
                     // if (result.entities.length === 0 && result.totalPages === -1) {
@@ -119,10 +119,5 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
 
     filterGlobal(event: Event, matchMode: string): void {
         this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
-    }
-
-    ngOnDestroy(): void {
-        this.destroy$.next(true);
-        this.destroy$.unsubscribe();
     }
 }

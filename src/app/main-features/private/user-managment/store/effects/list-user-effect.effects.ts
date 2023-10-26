@@ -4,7 +4,17 @@ import { catchError, map, of, switchMap } from 'rxjs';
 import { ListUsersService } from '../../services/list-users.service';
 import { loadListUsers, loadListUsersFailure, loadListUsersSuccess } from '../actions/list-user.actions';
 import { IdEntity } from '../../../../../shared/models/id-entity.model';
-import { loadDetailsUser, loadDetailsUserFailure, loadDetailsUserSuccess, updateAuthorityUser, updateAuthorityUserFailure, updateAuthorityUserSuccess } from '../actions/details-user.actions';
+import {
+    blockedUnblockedUser,
+    blockedUnblockedUserFailure,
+    blockedUnblockedUserSuccess,
+    loadDetailsUser,
+    loadDetailsUserFailure,
+    loadDetailsUserSuccess,
+    updateAuthorityUser,
+    updateAuthorityUserFailure,
+    updateAuthorityUserSuccess,
+} from '../actions/details-user.actions';
 import { IUser } from '../../../../../shared/models/user.model';
 import { PageCommon } from '../../../../../shared/models/page.common';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -62,6 +72,22 @@ export class ListUserEffects {
                     }),
                     catchError((exception: HttpErrorResponse) => {
                         return of(updateAuthorityUserFailure({ error: exception.error }));
+                    })
+                );
+            })
+        )
+    );
+
+    blockedUnblockedUser$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(blockedUnblockedUser.type),
+            switchMap((payload: { id: number; blockUnblock: string }) => {
+                return this.listUsersService.blockedUnblockedUser(payload.id, payload.blockUnblock).pipe(
+                    map((data: { blockUnblock: string }) => {
+                        return blockedUnblockedUserSuccess({ payload: data });
+                    }),
+                    catchError((exception: HttpErrorResponse) => {
+                        return of(blockedUnblockedUserFailure({ error: exception.error }));
                     })
                 );
             })

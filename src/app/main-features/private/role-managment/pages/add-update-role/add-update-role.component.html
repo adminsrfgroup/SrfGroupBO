@@ -5,9 +5,7 @@
     </div>
     <div class="flex flex-column pl-3">
         <div *ngFor="let permission of listPermissions()" class="field-checkbox">
-            <p-checkbox name="group" [value]="permission"
-                        [(ngModel)]="selectedAuthorities"
-                        [inputId]="inputValueId(permission)"></p-checkbox>
+            <p-checkbox name="group" [value]="permission" [(ngModel)]="selectedAuthorities" [inputId]="inputValueId(permission)"></p-checkbox>
             <label [for]="permission.id">{{ permission.name }}</label>
         </div>
     </div>

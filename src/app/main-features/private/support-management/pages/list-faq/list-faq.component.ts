@@ -14,7 +14,7 @@ import { loadListFaq } from '../../store/actions/faq.actions';
     styleUrls: ['./list-faq.component.scss'],
 })
 export class ListFaqComponent implements OnInit, OnDestroy {
-    store = inject(Store<IFaqState>);
+    private readonly store = inject(Store<IFaqState>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
     statuses = [];
@@ -30,19 +30,18 @@ export class ListFaqComponent implements OnInit, OnDestroy {
 
     sizePage = 5;
 
+    checkRender(): void {
+        console.log('checkRender');
+    }
+
     ngOnInit(): void {
         this.store
             .select(selectorFaq)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (result: IFaqState) => {
+                    console.log('result ====> ', result);
                     if (result.entities.length === 0 && result.totalPages === -1) {
-                        // this.store.dispatch(
-                        //     loadListFaq({
-                        //         page: 0,
-                        //         size: 5,
-                        //     })
-                        // );
                     } else if (result.entities.length) {
                         this.listFaq.set(result.entities.slice());
                         this.totalElements.set(result.totalElements);

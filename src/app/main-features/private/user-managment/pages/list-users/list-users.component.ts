@@ -2,14 +2,14 @@ import { Component, OnInit, signal, ViewChild, ViewEncapsulation, WritableSignal
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { PrimeNGConfig } from 'primeng/api';
 import { Store } from '@ngrx/store';
-import { UserState } from '../../store/state/user.state';
+import { IListUsers } from '../../store/state/user.state';
 import { loadListUsers } from '../../store/actions/list-user.actions';
 import { IUser } from '../../../../../shared/models/user.model';
-import { Subject, takeUntil } from 'rxjs';
 import { MultiSelectChangeEvent } from 'primeng/multiselect';
-import { selectorUser } from '../../store/selectors/user.selectors';
+import { selectorListUser } from '../../store/selectors/user.selectors';
 import { AllAppConfig } from '../../../../../config';
 import { resetCategories } from '../../../category-managment/store/actions/category.action';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-list-users',
@@ -38,21 +38,19 @@ export class ListUsersComponent implements OnInit {
 
     @ViewChild('dt') table!: Table;
 
-    destroy$: Subject<boolean> = new Subject<boolean>();
-
     constructor(
         private primengConfig: PrimeNGConfig,
-        private store: Store<UserState>
+        private store: Store<IListUsers>
     ) {}
 
     ngOnInit(): void {
         this.primengConfig.ripple = true;
 
         this.store
-            .select(selectorUser)
-            .pipe(takeUntil(this.destroy$))
+            .select(selectorListUser)
+            .pipe(takeUntilDestroyed())
             .subscribe({
-                next: (result: UserState) => {
+                next: (result: IListUsers) => {
                     if (this.isFirstLoading() && result.totalPages === -1) {
                         this.store.dispatch(
                             loadListUsers({

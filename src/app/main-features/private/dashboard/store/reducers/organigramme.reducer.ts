@@ -1,12 +1,16 @@
-import {ActionReducer, createReducer, on} from "@ngrx/store";
-import { initDashboardState, IOrganigrammeState} from "../state/dashboard.state";
+import { ActionReducer, createReducer, on } from '@ngrx/store';
+import { initDashboardState, IOrganigrammeState } from '../state/dashboard.state';
 import {
-    addOrganigramme, addOrganigrammeFailure, addOrganigrammeSuccess,
-    loadOrganigramme, loadOrganigrammeFailure, loadOrganigrammeSuccess,
+    addOrganigramme,
+    addOrganigrammeFailure,
+    addOrganigrammeSuccess,
+    loadOrganigramme,
+    loadOrganigrammeFailure,
+    loadOrganigrammeSuccess,
     updateOrganigramme,
     updateOrganigrammeFailure,
-    updateOrganigrammeSuccess
-} from "../actions/organigramme.actions";
+    updateOrganigrammeSuccess,
+} from '../actions/organigramme.actions';
 
 export const organigrammeReducer: ActionReducer<IOrganigrammeState> = createReducer(
     initDashboardState.organigramme,
@@ -59,7 +63,7 @@ export const organigrammeReducer: ActionReducer<IOrganigrammeState> = createRedu
     on(loadOrganigramme, (state: IOrganigrammeState) => {
         return {
             ...state,
-            loading: true
+            loading: true,
         };
     }),
     on(loadOrganigrammeSuccess, (state: IOrganigrammeState, action: ReturnType<typeof loadOrganigrammeSuccess>) => {

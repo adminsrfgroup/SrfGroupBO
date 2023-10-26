@@ -26,7 +26,7 @@ export class NotificationInterceptor implements HttpInterceptor {
                     }
                 },
                 error: (err: HttpErrorResponse) => {
-                    this.messageService.add({ severity: 'error', summary: 'Service Message', detail: 'Via MessageService' });
+                    this.messageService.add({ severity: 'error', summary: 'Service Message', detail: err.error });
                 },
             })
         );

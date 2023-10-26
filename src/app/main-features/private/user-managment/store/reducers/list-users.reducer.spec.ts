@@ -1,8 +1,9 @@
 import { userReducer } from './user.reducer';
-import { initUserState, UserState } from '../state/user.state';
+import { IListUsers, initUserState } from '../state/user.state';
 import { loadListUsersSuccess } from '../actions/list-user.actions';
 import { PageCommon } from '../../../../../shared/models/page.common';
 import { IUser } from '../../../../../shared/models/user.model';
+import { listUserReducer } from './list-users.reducer';
 
 describe('User Reducers', () => {
     it('should return init state', () => {
@@ -15,7 +16,7 @@ describe('User Reducers', () => {
     });
 
     it('should update the loading state in an immutable way', () => {
-        const newState: UserState = {
+        const newState: IListUsers = {
             loading: false,
             entity: {},
             loadingEntities: false,
@@ -23,6 +24,8 @@ describe('User Reducers', () => {
             entities: [],
             totalElements: 0,
             totalPages: 0,
+            updateAuthoritiesSuccess: false,
+            authorities: [],
         };
         const responseMock: PageCommon<IUser> = {
             content: [],
@@ -31,7 +34,7 @@ describe('User Reducers', () => {
             numberOfElements: 0,
         };
         const action = loadListUsersSuccess({ payload: responseMock });
-        const state = userReducer(initUserState, action);
+        const state = listUserReducer(initUserState.listUsers, action);
 
         expect(state).toEqual(newState);
         expect(state).not.toBe(newState);

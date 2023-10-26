@@ -1,20 +1,20 @@
-import { Component, inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
+import { Component, inject, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { IDescriptionAddOffer } from '../../../../../shared/models/description-add-offer.model';
-import { Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { PrimeNGConfig } from 'primeng/api';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { selectorDescriptionAddNewOffer } from '../../store/selectors/offer.selectors';
 import { IDescriptionNewOfferState } from '../../store/state/offer.state';
 import { loadListDescriptionNewOffer } from '../../store/actions/offer.actions';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-description-add-new-offer',
     templateUrl: './description-add-new-offer.component.html',
     styleUrls: ['./description-add-new-offer.component.scss'],
 })
-export class DescriptionAddNewOfferComponent implements OnInit, OnDestroy {
-    store = inject(Store<IDescriptionNewOfferState>);
+export class DescriptionAddNewOfferComponent implements OnInit {
+    private readonly store = inject(Store<IDescriptionNewOfferState>);
     primengConfig = inject(PrimeNGConfig);
     @ViewChild('dt') table!: Table;
     statuses = [];
@@ -25,8 +25,6 @@ export class DescriptionAddNewOfferComponent implements OnInit, OnDestroy {
     totalElements = signal<number>(0);
     totalPages = signal<number>(0);
 
-    destroy$: Subject<boolean> = new Subject<boolean>();
-
     sizePage = 5;
 
     ngOnInit(): void {
@@ -34,7 +32,7 @@ export class DescriptionAddNewOfferComponent implements OnInit, OnDestroy {
 
         this.store
             .select(selectorDescriptionAddNewOffer)
-            .pipe(takeUntil(this.destroy$))
+            .pipe(takeUntilDestroyed())
             .subscribe({
                 next: (result: IDescriptionNewOfferState) => {
                     if (result.entities.length === 0 && result.totalPages === -1) {
@@ -66,10 +64,5 @@ export class DescriptionAddNewOfferComponent implements OnInit, OnDestroy {
 
     filterGlobal(event: Event, matchMode: string): void {
         this.table.filterGlobal((event.target as HTMLInputElement).value, matchMode);
-    }
-
-    ngOnDestroy(): void {
-        this.destroy$.next(true);
-        this.destroy$.unsubscribe();
     }
 }
